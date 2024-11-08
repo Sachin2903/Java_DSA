@@ -1,24 +1,15 @@
-import java.util.zip.CheckedInputStream;
-
 public class JavaBasic {
 
-  public static void removeDublicate(Strign str,int idx,StringBuilder newStr,boolean){
-    if(idx==str.length()){
-        System.out.println(newStr);
-        return 
+    public static long findTotalPair(long n) {
+        if (n < 3) {
+            return n;
+        }
+        return findTotalPair(n-1)+(n-1)*findTotalPair(n-2);
     }
-    char currChar=str.charAt(idx);
-    if(map[currChar-"a"]==true){
-        removeDublicate(str,idx+1,newStr,map)
-    }else{
-        map[currChar-"a"]=true;
-        removeDuplicate(str,idx+1,newStr.append(currChar), map)
-    }
-
-  }
 
     public static void main(String[] args) {
-        
-        System.out.println(tileProblem(4));
+        long n = 1000000000;
+        System.out.println(findTotalPair(n));
+
     }
 }

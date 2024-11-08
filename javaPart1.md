@@ -104,7 +104,7 @@ if one operand is long , float or double the whole expression is promoted to lon
 symbols that tells compiler to perform some operatios
 
 1. Arithemetic operators (Binay / Uniary / Ternary) Binary --> + ,- \* ,/,% uniary --> ++, -- pre increment and postIncrement , ternary a>b?10:5;
-2. Relational Operators 
+2. Relational Operators
 3. Logical Operators == ,!=, > ,< , >= , <=
 4. Bitwise Operatos
 5. Assignment Operators
@@ -883,13 +883,15 @@ public static void checkWhetherOddOrEven(int n) {
 
 1. Get ith bit
 
-```java 
+```java
  public static int ithValue(int no,int po){
        int bitMask=1<<po;
        return (no&bitMask)==0?0:1;
     }
 ```
+
 2. Set ith Bit ( make 1 at ith position )
+
 ```java
  public static int setIth(int n , int p){
         int bitMask=1<<p;
@@ -897,7 +899,8 @@ public static void checkWhetherOddOrEven(int n) {
     }
 ```
 
-3. Clear ith bit 
+3. Clear ith bit
+
 ```java
   public static int clearIth(int n , int p){
         int bitMask=~(1<<p);
@@ -905,20 +908,21 @@ public static void checkWhetherOddOrEven(int n) {
     }
 ```
 
-4. Update ith bit 
-if(newBit==0){
-clearBit
-}else{
-    setBit
-}
+4. Update ith bit
+   if(newBit==0){
+   clearBit
+   }else{
+   setBit
+   }
 
-or 
+or
 
 n=clearBut(n,i);
 int bitmask=newBit<<i;
 return n|bitMask;
 
 5. Clear Last i bits
+
 ```java
     public static int clearLastITh(int n, int i){
       int bitWise=(~0)<<i;
@@ -935,11 +939,11 @@ return n|bitMask;
 
 2^b --> 1 << b
 
-```java 
+```java
 public static int clearRangeOfBit(int n, int s, int e) {
         int bitMask1 = (~0) << (e + 1);
         int bitMask2 = (int) Math.pow(2, s) - 1;
-        // or 
+        // or
         // int bitMask2 =(1<<s)-1;
         int newBitMask= bitMask1|bitMask2;
 
@@ -947,31 +951,33 @@ public static int clearRangeOfBit(int n, int s, int e) {
     }
 ```
 
-7. Check if a number is a power of 2 or not 
-2^2 --> 4
-2^3 --> 8
+7. Check if a number is a power of 2 or not
+   2^2 --> 4
+   2^3 --> 8
 
 8&8-1 or 8&7 --> 0 then it is power of 2
 
 8. Count set bits in a number
-1010 -> no of set bit is 2
+   1010 -> no of set bit is 2
 
 16 --> 10000 -> length would be log16 -> 4+1
->> length --> logn + 1 
+
+> > length --> logn + 1
 
 let count =0;
 while(n>0){
-    if((n&1)!=0){
-        count++;
-    }
-    n=n>>1;
+if((n&1)!=0){
+count++;
 }
-return count 
+n=n>>1;
+}
+return count
 
-9. fast exponentiation 
-a*n --> a*a*a*---n ---> O(n)
+9. fast exponentiation
+   a*n --> a*a*a*---n ---> O(n)
 
 O(n) ---> O(logn) // using fast exponentiation
+
 ```java
  public statuc int fatExpo(int a,int n){
         int ans =1;
@@ -988,10 +994,11 @@ O(n) ---> O(logn) // using fast exponentiation
 # OOP ( Object Orineted programming )
 
 ## Classes & Object
-object  --> entites int he world
-classes -->  group / collection of these entities
 
-pen 
+object --> entites int he world
+classes --> group / collection of these entities
+
+pen
 blue is property
 
 car is an object it color and size is property and it start is function/behaviour
@@ -1001,7 +1008,7 @@ public class Opps{
 
 }
 
-object 
+object
 className p1=new className()
 Pen p1=new Pen();
 
@@ -1017,53 +1024,58 @@ Set: function/behaviour in object to modify the value
 this: this leyword is use to refer to the curent object
 
 void setTip(int tip){
-    this.tip=tip;
+this.tip=tip;
 }
 
 void setTip(int tipvalue){
-     tip=tipvalue;
+tip=tipvalue;
 }
 
 ## 4 pillars in oops
+
 1. Encapsulation
 2. Inheritance
 3. Abstraction
 4. Polymorphism
 
-## Encapsulation 
+## Encapsulation
+
 encapsulation is defined as the wrapping up of data & methods under a single unit. it also implements data hiding.
 
 access specifier
-1. private 
-2. default 
-3. protected
-4. public 
 
-## constructor 
+1. private
+2. default
+3. protected
+4. public
+
+## constructor
 
 constructor is a special method which is invoked automatically at the time of object creation
 
 it have the same name as class
 
 class Student{
-    String name ;
-    int roll;
+String name ;
+int roll;
 
     Student(){
 
     }
+
 }
 
-### type of constructor 
-1. non parameterized 
-Pen()
+### type of constructor
+
+1. non parameterized
+   Pen()
 
 2. parameterized
-Pen(sachin)
+   Pen(sachin)
 
 3. copy constructor
-have to create manually 
-copy of one object property to another
+   have to create manually
+   copy of one object property to another
 
 Student s1=new Student();
 s1.name="shradha";
@@ -1073,12 +1085,12 @@ s1.password="abcd";
 Student s2=new Student(s1);
 
 Student(Student s1){
-    this.name=s1.name;
-    this.roll=s1.roll;
+this.name=s1.name;
+this.roll=s1.roll;
 }
 
+### constructor overloading
 
-### constructor overloading 
 class Student{
 
     Student(){
@@ -1087,16 +1099,18 @@ class Student{
     Student(String name){
 
     }
+
 }
 
 ### Shallow & deep copy & lazy copy
 
-
 ### destructors
-java have garbage collector 
+
+java have garbage collector
 that done automatically are known as destructors
 
 ## Inheritance
+
 inheritance is when properties & methods of base calss passed on to a derived class
 
 base class / parent class
@@ -1104,56 +1118,58 @@ base class / parent class
 child class / derived class
 
 class fish extends animal{
-     
+
 }
 
 ### type of inheritance
 
-1. Single level inheritance  A --> B
-2. Multi level inheritance   A --> B ---> C
+1. Single level inheritance A --> B
+2. Multi level inheritance A --> B ---> C
 3. Hierarchial Inheritance  
-     A
-    / \
-   /   \
-   B    C
+    A
+   / \
+   / \
+   B C
 4. Hybrid Inheritance
-       A
-      / \
-     /   \
-     B    C
-     D
+   A
+   / \
     / \
-   /   \
-  E    F
-5. Multiple Inheritance :- java does not have direct way to achieve Multiple inheritance 
-but we can achive indirectly 
-A    B
-\    /
- \  /
+    B C
+   D
+   / \
+    / \
+   E F
+5. Multiple Inheritance :- java does not have direct way to achieve Multiple inheritance
+   but we can achive indirectly
+   A B
+   \ /
+   \ /
    C
 
 can be achieve through Interface
 
-## Plymorphism 
+## Plymorphism
+
 1. compile Time Polymorphism (static)
- (i). method overloading  :- mutilple function with the same nam ebut different oarameters
+   (i). method overloading :- mutilple function with the same nam ebut different oarameters
 
- sun(int a , int b)
- sum(float a, float b)
+sun(int a , int b)
+sum(float a, float b)
 
-2. run time pilymorphism  (dynamic)
-(ii). method overriding 
-parent and child classes both contain the same function with a different definition
-
+2. run time pilymorphism (dynamic)
+   (ii). method overriding
+   parent and child classes both contain the same function with a different definition
 
 ## packages in java
+
 package is a group of similar types of classes, interfaces and sub-packages.
 --> build In packages / user defined packages
 
 ## Abstarction
+
 Hiding all the unnecessary details and shiwing inly the important parts to the user.
 
-1. Abstract classes 
+1. Abstract classes
 
 (i). cannot create an instance of t=abstract class
 (ii). can have abstract/non-abstract methods
@@ -1167,33 +1183,34 @@ abstract void eat(){
 }
 
 abstract class Animal{
-    String color;
-    Animal(){
-    color="brown";
-    }
-    void ear(){
+String color;
+Animal(){
+color="brown";
+}
+void ear(){
 
     }
     abstract void walk();
+
 }
 
 class Horse extends Animal{
-    void walk(){
+void walk(){
 
     }
 
 }
 
 2. Interfaces
-Interface is a bulepr int of a class
-and to achive total abstraction
+   Interface is a bulepr int of a class
+   and to achive total abstraction
 
 All methods are public , abstract & without implementation
 used to achive total abstraction
-variables in the interface are final, public and static 
+variables in the interface are final, public and static
 
 interface ChessPlayer{
-    void moves();
+void moves();
 }
 class Queen implements ChessPlayer{
 
@@ -1208,17 +1225,20 @@ class C implements A,B{
 }
 
 ## Static Keyword
+
 Statuc keyword in java is used to share the same variable or method of a given class
-- Properties   ( variables)
-- Function 
-- Bloacks   {  {  }  }
-- Nested Classes 
-class A{
 
-    class B{
+- Properties ( variables)
+- Function
+- Bloacks { { } }
+- Nested Classes
+  class A{
 
-    }
-}
+      class B{
+
+      }
+
+  }
 
 class Student{
 String name;
@@ -1242,11 +1262,12 @@ String getName(){
 Student s =new Student();
 Student.schollName="sachin";
 
-* if a Object of class change static varibale then it will be changes for all object and upcomming objects
-and memory alocation for that ocure once 
-for all object
+- if a Object of class change static varibale then it will be changes for all object and upcomming objects
+  and memory alocation for that ocure once
+  for all object
 
 ## super keyword
+
 super keyword is used to refer immediate parent class object
 
 to access parent's properties
@@ -1257,23 +1278,22 @@ class A{
 String color;
 }
 class B{
-    B(){
-        super(); // is used to call A constructor
-        super.color="brown";
-    }
+B(){
+super(); // is used to call A constructor
+super.color="brown";
+}
 }
 
 ## constructor chaining
 
-
-
 ## Extra
-* private and protected class are useless
-class can not private and protected
 
-* can use private and protected in nested class
+- private and protected class are useless
+  class can not private and protected
 
-* class A{
+- can use private and protected in nested class
+
+- class A{
 
 }
 class B extends A{
@@ -1282,25 +1302,28 @@ class B extends A{
 A a=new B()
 
 # Recursion
+
 is a method of solving a computational problem where the solution depends on solutions to smaller instance os the same problem
 
 1. base case or final case
-2. code 
+2. code
 3. call again
 
 call stack
-| f(1)   |
-| f(2)   |
-| f(3)   |
-| f(4)   |
-| f(5)   |
-|________|
+| f(1) |
+| f(2) |
+| f(3) |
+| f(4) |
+| f(5) |
+|**\_\_\_\_**|
 
 stack overflow
 no memory
 
-## sum of n natural number 
+## sum of n natural number
+
 O(n-1) --> O(n)
+
 ```java
 
     public static int recurssionSum(int n){
@@ -1315,20 +1338,25 @@ O(n-1) --> O(n)
 ```
 
 ## print nth fibonacci number
+
 0 1 1 2 3 5 8 13 21
 space --> O(n)
-time ---> O (2^n) 
+time ---> O (2^n)
+
 ```java
     public static int nthFibonacci(int n){
         if(n==0||n==1)
-        return n; 
+        return n;
         return nthFibonacci(n-1)+nthFibonacci(n-2);
-       
+
     }
-``` 
+```
+
 ## check if a given array is sorted or not
+
 Tc -> O(n)
 Sc -> O(n)
+
 ```java
 
     public static boolean CheckArraysorted(int arr[],int i){
@@ -1341,22 +1369,27 @@ Sc -> O(n)
         return CheckArraysorted(arr, i+1);
     }
 ```
+
 ## First ocucrence of an element in an array
+
 Tc -> O(n)
 Sc -> O(n)
- ```java
- public static int findNumber(int arr[], int i, int k) {
-        if (i >= arr.length) {
-            return -1;
-        }
-        if (arr[i] == k) {
-            return i;
-        }
-        return findNumber(arr, i+1, k);
 
-    }
+```java
+public static int findNumber(int arr[], int i, int k) {
+       if (i >= arr.length) {
+           return -1;
+       }
+       if (arr[i] == k) {
+           return i;
+       }
+       return findNumber(arr, i+1, k);
+
+   }
 ```
+
 ## Last occurence of an element in an array
+
 ```java
 Tc -> O(n)
 Sc -> O(n)
@@ -1370,10 +1403,13 @@ public static int lastOcccurence(int arr[], int i, int k) {
         }
         return isFound;
     }
-``` 
+```
+
 ## Power x to the power of n
+
 Tc -> O(n)
 Sc -> O(n)
+
 ```java
 public static int power(int x,int n){
     if(n==0){
@@ -1382,7 +1418,9 @@ public static int power(int x,int n){
     return x*power(x,n-1);
 }
 ```
+
 ### Optimised Approach
+
 ```java
 public statc int optimisedPower(int a , int n){
     if(n==0){
@@ -1397,23 +1435,28 @@ public statc int optimisedPower(int a , int n){
     return halfPowerSq;
 }
 ```
+
 ## Tiling power
-given a 2*n board and titles of asize 2*1 count the number od ways to the given board using the 2*1 titles (A tile can either be olaced horizontally or vertically)
+
+given a 2*n board and titles of asize 2*1 count the number od ways to the given board using the 2\*1 titles (A tile can either be olaced horizontally or vertically)
 
 ```java
     public static int tileProblem(int n) {
         if(n<=1)
         return 1;
-        return tileProblem(n-1)+tileProblem(n-2); 
+        return tileProblem(n-1)+tileProblem(n-2);
     }
 ```
+
 ## Remove dublicate in a string a-z
+
 "appnnacollege"
+
 ```java
  public static void removeDublicate(Strign str,int idx,StringBuilder newStr,boolean){
     if(idx==str.length()){
         System.out.println(newStr);
-        return 
+        return
     }
     char currChar=str.charAt(idx);
     if(map[currChar-"a"]==true){
@@ -1425,40 +1468,17 @@ given a 2*n board and titles of asize 2*1 count the number od ways to the given 
 
   }
 ```
+
 ## Friends pairing problem
+
 given n friends, each one can remain single or can be paired up with some other friends. Each friends can be paired only once. find out the totola number of ways in which friends can remain single or can be paired up.
 
+```java
+public static long findTotalPair(long n) {
+        if (n < 3) {
+            return n;
+        }
+        return findTotalPair(n-1)+(n-1)*findTotalPair(n-2);
+    }
 
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-   
+```
