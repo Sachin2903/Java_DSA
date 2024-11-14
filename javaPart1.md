@@ -1637,12 +1637,18 @@ if(lastPlace==0){
 ```
 
 # Time & space complexity
-
+time taken by the proccess with respect to t  ime
 #### Bog 0 Notation
 O -> upper bound
 time and input size relation
 
+![alt text](./assests/nestedloop.png)
 
-
+![alt text](./assests/ntimenestedloop.png )
+ 
+###### time complexity in recursion
+Work done  =no of calls * time in each call;
+ 
+space complexity is total stack created * space per level
 
 > ----------------------------------------Till Recursion---------------------------------------------
