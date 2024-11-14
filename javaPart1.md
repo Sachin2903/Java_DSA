@@ -449,8 +449,10 @@ arranging things in a order , it can be decrease and increase
 2. Selection Sort :-best O(n2) worst O(n2)
 3. Insertion Sort :- best O(n2) worst O(n2)
 4. Counting Sort
+5. Merge Sort
+6. Quick Sort
 
-1> Bubble sort ------------->
+##### 1> Bubble sort ------------->
 
 ```java
 for (int i = 0; i < arr.length - 1; i++) {
@@ -472,7 +474,7 @@ for (int i = 0; i < arr.length - 1; i++) {
         }
 ```
 
-2> Selection Sort ---------------->
+##### 2> Selection Sort ---------------->
 
 ```java
  public static void selctionSort(int arr[]) {
@@ -495,7 +497,7 @@ for (int i = 0; i < arr.length - 1; i++) {
     }
 ```
 
-3> Insersion Sort ----------------->
+##### 3> Insersion Sort ----------------->
 
 ```java
 public static void InsertionSort(int arr[]) {
@@ -515,7 +517,7 @@ public static void InsertionSort(int arr[]) {
     }
 ```
 
-4> Count Sort -------------------->
+##### 4> Count Sort -------------------->
 
 ```java
 public static void CountingSort(int arr[]) {
@@ -541,6 +543,136 @@ public static void CountingSort(int arr[]) {
         }
 
     }
+```
+> Divide and Conquer
+##### 5> Merge Sort ------------> O(nlogn)
+
+mid = (startIndex+endIndex)/2
+
+this is good when start index and end index are too large 
+mid = startIndex+(endIndex-startIndex)/2
+
+```java
+
+public static void mergeSort(int s, int e, int arr[]) {
+        if (s >= e) {
+            return;
+        }
+
+        int mid = s + (e - s) / 2;
+
+        mergeSort(s, mid, arr);
+        mergeSort(mid + 1, e, arr);
+
+        sortTwoArray(arr, s, mid, e);
+    }
+
+    public static void sortTwoArray(int arr[], int si, int mid, int ei) {
+        int temp[] = new int[ei - si + 1];
+        int i = si;
+        int j = mid + 1;
+        int k = 0;
+
+        while (i <= mid && j <= ei) {
+            if (arr[i] < arr[j]) {
+                temp[k++] = arr[i++];
+            } else {
+                temp[k++] = arr[j++];
+            }
+        }
+
+        while (i <= mid) {
+            temp[k++] = arr[i++];
+        }
+
+        while (j <= ei) {
+            temp[k++] = arr[j++];
+        }
+
+        for (k = 0, i = si; k < temp.length; k++, i++) {
+            arr[i] = temp[k];
+        }
+    }
+
+
+```
+##### 6> Quick Sort ------------> 
+average case -> O(nlogn)
+in worst case -> O(n2)
+
+use no array
+
+work in pivot & partition logic
+
+```java 
+   public static void quickSort(int[] arr, int s, int e) {
+      if (s >= e)
+         return;
+
+      int pivot = sortAndGetPivot(arr, s, e);
+      quickSort(arr, s, pivot - 1);
+      quickSort(arr, pivot + 1, e);
+   }
+
+   public static int sortAndGetPivot(int[] arr, int s, int e) {
+      int pivot = arr[e];
+      int i = s - 1;
+
+      for (int j = s; j < e; j++) {
+         if (arr[j] <= pivot) {
+            i++;
+            int temp = arr[j];
+            arr[j] = arr[i];
+            arr[i] = temp;
+         }
+      }
+      i++;
+      int temp = pivot;
+      arr[e] = arr[i];
+      arr[i] = temp;
+      return i;
+   }
+```
+
+> work case occurs  when pivot is always the smallest or the largest element. (means already sorted in increasing , decreasing)
+
+on each level the traverse goes n ->n n-1 n-2 ...n-(n-1) --> n(n+1)/2 ->O(n2) 
+
+## sorted and rotate array  ------>
+sorted,rotated array with distinct numbers ( in ascending order ) it is rotated at a pivot point. find the index of given element.
+
+[4,5,6,7,0,1,2]  target:0 output:4
+
+using modified binary search
+
+```java
+  public static int targetsearch(int arr[], int tar, int si, int ei) {
+      if (si > ei) {
+         return -1;
+      }
+      int mid = si + (ei - si) / 2;
+
+      if (arr[mid] == tar)
+         return mid;
+
+      if (arr[si] <= arr[mid]) {
+         if (arr[si] <= tar && tar <= arr[mid]) {
+            return targetsearch(arr, tar, si, mid-1);
+         } else {
+            return targetsearch(arr, tar, mid + 1, ei);
+         }
+
+      } else {
+         if (arr[mid] <= tar && tar <= arr[ei]) {
+            return targetsearch(arr, tar, mid + 1, ei);
+         } else {
+            return targetsearch(arr, tar, si, mid - 1);
+         }
+
+      }
+
+   }
+
 ```
 
 # 2-D Array
@@ -1482,3 +1614,35 @@ public static long findTotalPair(long n) {
     }
 
 ```
+
+## BInary String Problem
+
+print all binary string of size N without consecutive ones.
+
+```java
+public static void printBinStrings(int n,int lastPlace,String str){
+  if(n==0){
+    System.out.println(str);
+    return;
+  }
+
+  printBinStrngs(n-1,0,str+"0")
+if(lastPlace==0){
+    printBinStrings(n-1,1,str+"1");
+}
+
+}
+
+
+```
+
+# Time & space complexity
+
+#### Bog 0 Notation
+O -> upper bound
+time and input size relation
+
+
+
+
+> ----------------------------------------Till Recursion---------------------------------------------
