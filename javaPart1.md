@@ -1398,6 +1398,84 @@ Student.schollName="sachin";
   and memory alocation for that ocure once
   for all object
 
+* Static Variables
+A static variable is shared among all instances of a class.
+
+```java
+class Counter {
+    static int count = 0; // Static variable
+
+    public Counter() {
+        count++; // Increments the shared static variable
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Counter c1 = new Counter();
+        Counter c2 = new Counter();
+        Counter c3 = new Counter();
+
+        System.out.println(Counter.count); // Output: 3
+    }
+}
+```
+* Static Methods
+A static method belongs to the class and can be called without an object.
+
+```java
+class MathUtils {
+    static int square(int x) { // Static method
+        return x * x;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        int result = MathUtils.square(5); // Call without an object
+        System.out.println(result); // Output: 25
+    }
+}
+```
+
+* Static Blocks
+A static block is used to initialize static variables when the class is loaded.
+```java
+class StaticBlockExample {
+    static int x;
+
+    static { // Static block
+        x = 10;
+        System.out.println("Static block executed");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(StaticBlockExample.x); // Output: Static block executed, then 10
+    }
+}
+```
+
+* Static Nested Classes
+A static nested class can be accessed without creating an object of the enclosing class.
+```java
+class OuterClass {
+    static class NestedClass { // Static nested class
+        void display() {
+            System.out.println("Inside static nested class");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        OuterClass.NestedClass nested = new OuterClass.NestedClass(); // No instance of OuterClass needed
+        nested.display();
+    }
+}
+
+```
 ## super keyword
 
 super keyword is used to refer immediate parent class object

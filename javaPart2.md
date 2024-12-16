@@ -609,6 +609,11 @@ list =[11,15,6,8,9,10] target=16
 
 # LinkedList
 
+> > the LinkedList class is an inner class of JavaBasic, and you are trying to create an instance of it directly within the main method without creating an instance of JavaBasic.
+
+JavaBasic javaBasic = new JavaBasic();
+LinkedList li = javaBasic.new LinkedList();
+
 [data | next] -> [data | next] -> [data | next] -> [data | null]
 
 Head Node
@@ -619,24 +624,257 @@ each node is a object of a class
 public class LinkedList{
 public static class Node{
 int data;
-int next;
+Node next;
 
     public Node(int data){
-
        this.data=data;
        this.next=null;
-     }
+    }
+
 }
 
 public static Node Head;
 public static Node tail;
 
+public void addFirst(int data){
+// create new node
+Node newNode =new Node(data);
+
+    if(head==null){
+     head=tail=newNode;
+     return ;
+    }
+
+    // newNode next =head;
+    newNode.next=head;
+
+    // head = newNode;
+    head=newNode;
+
+}
+
 public static void main(String args[]){
-    linkedList li =new LinkedList();
-    li.head=new Node(1);
-    li.head.next=new Node(2);
+linkedList li =new LinkedList();
+li.head=new Node(1);
+li.head.next=new Node(2);
 
 }
 
 }
- 
+
+### Add in linked list
+
+1. add First O(1)
+
+public class LinkedList{
+public static class Node{
+int data;
+Node next;
+
+    public Node(int data){
+       this.data=data;
+       this.next=null;
+    }
+
+}
+
+public static Node Head;
+public static Node tail;
+
+public void addFirst(int data){
+// create new node
+Node newNode =new Node(data);
+
+    if(head==null){
+     head=tail=newNode;
+     return ;
+    }
+
+    // newNode next =head;
+    newNode.next=head;
+
+    // head = newNode;
+    head=newNode;
+
+}
+
+public static void main(String args[]){
+linkedList li =new LinkedList();
+li.addFirst(2)
+
+}
+
+}
+
+2. add Last
+   create a node
+   if(head==null){
+   head=tail=newNode;
+   }
+   tail.next=newNode;
+   tail=newNode;
+
+### print linked list
+
+Node temp=head;
+while(temp!=null){
+print(temp.data)
+temp=temp.next;
+}
+
+### Add in the middle
+
+add(index,data)
+
+if(idx==0){
+addFirst(data);
+return;
+}
+Node newNode=newNode(data)
+Node temp=head;
+int i=0;
+
+while(i<idx-1){
+temp=temp.next;
+i++;
+}
+newNode.next=temp.next;
+temp.next=newNode;
+
+### size of linkedlist
+
+will maintain a size in the class
+if add a node it will increase and if remove it will descrease
+
+### remove in a linked list
+
+1. Remove First
+
+2. Remove Last
+
+```java
+import java.util.*;
+
+public class JavaBasic {
+    public static class LinkedList {
+        public static Node head;
+        public static Node tail;
+        public static int size = 0;
+
+        public class Node {
+            int data;
+            Node next;
+
+            public Node(int data) {
+                this.data = data;
+                this.next = null;
+            }
+        }
+
+        public void addFirst(int data) {
+            Node newNode = new Node(data);
+            size++;
+            if (head == null) {
+                head = tail = newNode;
+                return;
+            }
+
+            newNode.next = head;
+            head = newNode;
+        }
+
+        void printList() {
+            Node currentNode = head;
+            while (currentNode != null) {
+                System.out.print(currentNode.data + "-->");
+                currentNode = currentNode.next;
+            }
+            System.out.println("null");
+        }
+
+        void removeFirst() {
+            if (head == null) {
+                return;
+            }
+            if(tail==head){
+                tail=null;
+            }
+            head=head.next;
+            --size;
+        }
+
+        void removeLast(){
+            if(tail==null){
+               return;
+            }
+            if(head==tail){
+                tail=head=null;
+                size--;
+                return;
+            }
+
+            Node currentNode=head;
+            while(currentNode.next != tail){
+                currentNode=currentNode.next;
+            }
+            size--;
+            currentNode.next=null;
+            tail = currentNode;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        LinkedList li = new LinkedList();
+        li.printList();
+        li.printList();
+        li.printList();
+    }
+}
+```
+
+### search ( iterative )
+
+Search for a key in a linked list. return the position where it is found. if not found, return -1.
+
+```java
+int Search(int n){
+            if(head==null){
+                return -1;
+            }
+
+            int i=0;
+            Node currentNode=head;
+            while(i<size){
+              if(currentNode.data==n){
+                return i;
+              }
+              currentNode=currentNode.next;
+              i++;
+            }
+            return -1;
+        }
+```
+
+### search ( recursive )
+Search for a key in a linked list. return the position where it is found. if not found return -.use recursion.
+
+```java
+public int helper(Node head,int key){
+            if(head==null){
+                return -1;
+            }
+
+            if(head.data==key){
+              return 0;
+            }
+
+            int idx=helper(head.next, key);
+            if(idx==-1){
+                return -1;
+            }
+            return idx+1;
+        }
+```
+
+### Reverse a linked list ( iterative approach )
