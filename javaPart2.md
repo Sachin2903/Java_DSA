@@ -878,3 +878,372 @@ public int helper(Node head,int key){
 ```
 
 ### Reverse a linked list ( iterative approach )
+```java
+void IterativeReverse() {
+    if (head == null || head.next == null) {
+        return;
+    }
+
+    Node prevNode = null;
+    Node currNode = head;
+    Node nextNode;
+
+    while (currNode != null) {
+        nextNode = currNode.next;
+        currNode.next = prevNode;
+        prevNode = currNode;
+        currNode = nextNode;
+    }
+
+    head = prevNode;
+}
+
+```
+
+## find & Remove Nth node from end ( iterative approach )
+Nstart=N−Nend +1    for 1 2 3 4 5
+Nstart=N−Nend    for 0 1 2 3 4
+```java
+void DeleteNFromEnd(int n){
+            int sz=0;
+            Node temp=head;
+            while(temp!=null){
+                temp=temp.next;
+                sz++;
+            }
+
+            if(n == sz){
+             head=head.next;
+            return;
+            }
+
+            int i=1;
+            int iToFind=sz-n;
+            Node prev=head;
+            while(i<iToFind){
+                prev=prev.next;
+                i++;
+            }
+
+            prev.next=prev.next.next;
+
+        }
+```
+## Check if LL is a Palindrome
+stote data in another datastructre to calculate the palindrom Tc -> O(n) Sc -> O(n)
+find mid node -> 2nd half reverse -> check if 1st half
+
+* to find mid 
+1. calculate lotal size than n/2
+2. using slow fast method
+```java
+public Node findMid(Node head){
+            Node slow=head;
+            Node fast=head;
+
+            while(fast!=null&&fast.next!=null){
+                fast=fast.next.next;
+                slow=slow.next;
+            }
+            return slow;
+
+        }
+```
+```java
+public boolean checkPalindrome() {
+            if (head == null || head.next == null) {
+                return true;
+            }
+
+            Node midNode = findMid(head);
+
+            Node prev = null;
+            Node curr = midNode;
+            Node next;
+
+            while (curr != null) {
+                next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }
+
+            // right half head
+            Node right = prev;
+            Node left = head;
+
+            while (right != null) {
+                if (left.data != right.data) {
+                    return false;
+                }
+
+                left = left.next;
+                right = right.next;
+
+            }
+            return true;
+        }
+```
+
+## Detect a loop/cycle in a LL
+>> floyd's cycle finding algorithm
+```java
+public boolean isCycle(){
+            Node slow=head;
+            Node fast=head;
+
+            while(fast!=null||fast.next!=null){
+                slow=slow.next;
+                fast=fast.next.next;
+
+                if(slow==fast){
+                    return true;
+                }
+            }
+
+            return false;
+        }
+```
+
+# remove a loop/cycle in a ll
+```java
+void removeCycle() {
+            Node slow = head;
+            Node fast = head;
+            boolean flag = false;
+            while (fast != null || fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+                if (fast == slow) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+                return;
+            
+            slow=head;
+
+            while(slow.next!=fast.next){
+                slow=slow.next;
+                fast=fast.next;
+            }
+            fast.next=null;
+        }
+```
+>> this fail if linked list is cyclic list
+
+import java.util.LinkedList;
+// create
+LinkedList<Integer> li=new LinkedList<>()
+
+// add
+li.addLast(2)
+li.addFirst(1)
+
+// remove
+li.removeLast()
+li.removeFirst()
+
+// print
+(li)
+
+## Merge Sort on a Linked List
+
+## Collection FrameWord
+The Java Collections Framework (JCF) is a set of classes and interfaces that allow developers to represent and manipulate object collections in Java. 
+![alt text](./assests/collectionFramework.png)
+ 
+ ```java
+
+  Node getMid(Node head) {
+            Node slow = head;
+            Node fast = head.next;
+
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            return slow;
+        }
+
+        Node merge(Node head1, Node head2) {
+            Node mergeLL = new Node(-1);
+            Node temp = mergeLL;
+
+            while (head != null && head2 != null) {
+                if (head1.data <= head2.data) {
+                    temp.next = head1;
+                    head1 = head.next;
+                    temp = temp.next;
+
+                } else {
+                    temp.next = head2;
+                    head2 = head2.next;
+                    temp = temp.next;
+                }
+            }
+
+            while (head1 != null) {
+                temp.next = head1;
+                head1 = head1.next;
+                temp = temp.next;
+            }
+
+            while (head2 != null) {
+                temp.next = head2;
+                head2 = head2.next;
+                temp = temp.next;
+            }
+
+            return mergeLL.next;
+        }
+
+        public Node mergeSort(Node head) {
+
+            if (head == null || head.next != null) {
+                return head;
+            }
+
+            Node mid = getMid(head);
+
+            Node rightHead = mid.next;
+            mid.next = null;
+
+            Node newLeft = mergeSort(head);
+            Node newRight = mergeSort(rightHead);
+
+            return merge(newLeft, newRight);
+        }
+```
+
+## Zig-Zag linked list 
+for a linked list of the form 1 -> 2 -> 3 -> 4 -> n-1 -> n
+
+convert it into a zig-zag form i.e 1 -> n -> 2 -> n-1 -> 3 -> n-2
+
+```java
+public void zigZagLinkedList() {
+            if (head == null || head.next == null) {
+                return;
+            }
+            
+            Node slow=head;
+            Node fast=head.next;
+
+            while(fast!=null&&fast.next!=null){
+                slow=slow.next;
+                fast=fast.next;
+            }
+
+            Node mid=slow;
+
+            Node curr=mid.next;
+            mid.next=null;
+
+            Node prev=null;
+            Node next;
+
+            while(curr!=null){
+                next=curr.next;
+                curr.next=prev;
+                prev=curr;
+                curr=next;
+            }
+
+            Node left=head;
+            Node right=prev;
+            Node nextL,nextR;
+
+            while(left!=null&&right!=null){
+                nextL=left.next;
+                left.next=right;
+                nextR=right.next;
+                right.next=nextL;
+
+                left=nextL;
+                right=nextR;
+            }
+        }
+```
+
+## Doubly Linked list
+```java
+import java.util.*;
+
+public class JavaBasic {
+    public class DoubleLL {
+        public class Node {
+            int data;
+            Node next;
+            Node prev;
+
+            public Node(int data) {
+                this.data = data;
+                this.next = null;
+                this.prev = null;
+            }
+        }
+
+        public static Node head;
+        public static Node tail;
+        public static int size=0;
+
+        void addNew(){
+            Node newNode =new Node(2);
+            if(head==null){
+                head=tail=newNode;
+                return;
+            }
+
+            tail.next=newNode;
+            newNode.prev=tail;
+            tail=newNode;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        JavaBasic.DoubleLL dllist = new JavaBasic().new DoubleLL();
+
+    }
+}
+```
+
+## reverse a doubly linked list
+```java
+public void reverse(){
+            Node curr=head;
+            Node prev=null;
+            Node next;
+
+
+            while(curr!=null){
+                next=curr.next;
+                curr.next=prev;
+                 curr.prev=next;
+
+                 prev=curr;
+                 curr=next;
+            }
+
+            head=prev;
+            
+        }
+```
+
+## circular linked list
+sinle and doubly linked list can be a circular list
+
+
+# Stack ( Last In First Out )  ( LIFO )
+explicit stack
+memory stack -> implicit stack
+
+* push O(1)
+* pop O(1)
+* Peek O(1)
+
+>> Stack can be created using Array (issue , it is fixed ), ArrayList , LinkedList
+
+
