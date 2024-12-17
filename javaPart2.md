@@ -857,6 +857,7 @@ int Search(int n){
 ```
 
 ### search ( recursive )
+
 Search for a key in a linked list. return the position where it is found. if not found return -.use recursion.
 
 ```java
@@ -878,6 +879,7 @@ public int helper(Node head,int key){
 ```
 
 ### Reverse a linked list ( iterative approach )
+
 ```java
 void IterativeReverse() {
     if (head == null || head.next == null) {
@@ -901,8 +903,10 @@ void IterativeReverse() {
 ```
 
 ## find & Remove Nth node from end ( iterative approach )
-Nstart=N−Nend +1    for 1 2 3 4 5
-Nstart=N−Nend    for 0 1 2 3 4
+
+Nstart=N−Nend +1 for 1 2 3 4 5
+Nstart=N−Nend for 0 1 2 3 4
+
 ```java
 void DeleteNFromEnd(int n){
             int sz=0;
@@ -929,13 +933,17 @@ void DeleteNFromEnd(int n){
 
         }
 ```
+
 ## Check if LL is a Palindrome
+
 stote data in another datastructre to calculate the palindrom Tc -> O(n) Sc -> O(n)
 find mid node -> 2nd half reverse -> check if 1st half
 
-* to find mid 
+- to find mid
+
 1. calculate lotal size than n/2
 2. using slow fast method
+
 ```java
 public Node findMid(Node head){
             Node slow=head;
@@ -949,6 +957,7 @@ public Node findMid(Node head){
 
         }
 ```
+
 ```java
 public boolean checkPalindrome() {
             if (head == null || head.next == null) {
@@ -986,7 +995,9 @@ public boolean checkPalindrome() {
 ```
 
 ## Detect a loop/cycle in a LL
->> floyd's cycle finding algorithm
+
+> > floyd's cycle finding algorithm
+
 ```java
 public boolean isCycle(){
             Node slow=head;
@@ -1006,6 +1017,7 @@ public boolean isCycle(){
 ```
 
 # remove a loop/cycle in a ll
+
 ```java
 void removeCycle() {
             Node slow = head;
@@ -1021,7 +1033,7 @@ void removeCycle() {
             }
             if (!flag)
                 return;
-            
+
             slow=head;
 
             while(slow.next!=fast.next){
@@ -1031,7 +1043,8 @@ void removeCycle() {
             fast.next=null;
         }
 ```
->> this fail if linked list is cyclic list
+
+> > this fail if linked list is cyclic list
 
 import java.util.LinkedList;
 // create
@@ -1051,73 +1064,75 @@ li.removeFirst()
 ## Merge Sort on a Linked List
 
 ## Collection FrameWord
-The Java Collections Framework (JCF) is a set of classes and interfaces that allow developers to represent and manipulate object collections in Java. 
+
+The Java Collections Framework (JCF) is a set of classes and interfaces that allow developers to represent and manipulate object collections in Java.
 ![alt text](./assests/collectionFramework.png)
- 
- ```java
 
-  Node getMid(Node head) {
-            Node slow = head;
-            Node fast = head.next;
+```java
 
-            while (fast != null && fast.next != null) {
-                slow = slow.next;
-                fast = fast.next.next;
-            }
-            return slow;
-        }
+ Node getMid(Node head) {
+           Node slow = head;
+           Node fast = head.next;
 
-        Node merge(Node head1, Node head2) {
-            Node mergeLL = new Node(-1);
-            Node temp = mergeLL;
+           while (fast != null && fast.next != null) {
+               slow = slow.next;
+               fast = fast.next.next;
+           }
+           return slow;
+       }
 
-            while (head != null && head2 != null) {
-                if (head1.data <= head2.data) {
-                    temp.next = head1;
-                    head1 = head.next;
-                    temp = temp.next;
+       Node merge(Node head1, Node head2) {
+           Node mergeLL = new Node(-1);
+           Node temp = mergeLL;
 
-                } else {
-                    temp.next = head2;
-                    head2 = head2.next;
-                    temp = temp.next;
-                }
-            }
+           while (head != null && head2 != null) {
+               if (head1.data <= head2.data) {
+                   temp.next = head1;
+                   head1 = head.next;
+                   temp = temp.next;
 
-            while (head1 != null) {
-                temp.next = head1;
-                head1 = head1.next;
-                temp = temp.next;
-            }
+               } else {
+                   temp.next = head2;
+                   head2 = head2.next;
+                   temp = temp.next;
+               }
+           }
 
-            while (head2 != null) {
-                temp.next = head2;
-                head2 = head2.next;
-                temp = temp.next;
-            }
+           while (head1 != null) {
+               temp.next = head1;
+               head1 = head1.next;
+               temp = temp.next;
+           }
 
-            return mergeLL.next;
-        }
+           while (head2 != null) {
+               temp.next = head2;
+               head2 = head2.next;
+               temp = temp.next;
+           }
 
-        public Node mergeSort(Node head) {
+           return mergeLL.next;
+       }
 
-            if (head == null || head.next != null) {
-                return head;
-            }
+       public Node mergeSort(Node head) {
 
-            Node mid = getMid(head);
+           if (head == null || head.next != null) {
+               return head;
+           }
 
-            Node rightHead = mid.next;
-            mid.next = null;
+           Node mid = getMid(head);
 
-            Node newLeft = mergeSort(head);
-            Node newRight = mergeSort(rightHead);
+           Node rightHead = mid.next;
+           mid.next = null;
 
-            return merge(newLeft, newRight);
-        }
+           Node newLeft = mergeSort(head);
+           Node newRight = mergeSort(rightHead);
+
+           return merge(newLeft, newRight);
+       }
 ```
 
-## Zig-Zag linked list 
+## Zig-Zag linked list
+
 for a linked list of the form 1 -> 2 -> 3 -> 4 -> n-1 -> n
 
 convert it into a zig-zag form i.e 1 -> n -> 2 -> n-1 -> 3 -> n-2
@@ -1127,7 +1142,7 @@ public void zigZagLinkedList() {
             if (head == null || head.next == null) {
                 return;
             }
-            
+
             Node slow=head;
             Node fast=head.next;
 
@@ -1168,6 +1183,7 @@ public void zigZagLinkedList() {
 ```
 
 ## Doubly Linked list
+
 ```java
 import java.util.*;
 
@@ -1211,6 +1227,7 @@ public class JavaBasic {
 ```
 
 ## reverse a doubly linked list
+
 ```java
 public void reverse(){
             Node curr=head;
@@ -1228,22 +1245,242 @@ public void reverse(){
             }
 
             head=prev;
-            
+
         }
 ```
 
 ## circular linked list
+
 sinle and doubly linked list can be a circular list
 
+# Stack ( Last In First Out ) ( LIFO )
 
-# Stack ( Last In First Out )  ( LIFO )
 explicit stack
 memory stack -> implicit stack
 
-* push O(1)
-* pop O(1)
-* Peek O(1)
+- push O(1)
+- pop O(1)
+- Peek O(1)
 
->> Stack can be created using Array (issue , it is fixed ), ArrayList , LinkedList
+> > Stack can be created using Array (issue , it is fixed ), ArrayList , LinkedList
 
+> > In arrayLIst the last one is top and in linked list top is head
+
+### Stack using Array list
+
+```java
+import java.util.*;
+
+public class JavaBasic {
+
+    public static class Stack {
+        static ArrayList<Integer> list = new ArrayList<>();
+
+        public boolean isEmpty() {
+                    return list.size() == 0;
+                }
+
+                public void push(int data) {
+                            list.add(data);
+                        }
+
+                        public  int pop() {
+                            if(isEmpty()){
+                                return -1
+                            }
+                            int top = list.get(list.size() - 1);
+                            list.remove(list.size() - 1);
+                            return top;
+                        }
+
+                        public static int peek() {
+                            if(isEmpty()){
+                                return -1
+                            }
+                            return list.get(list.size() - 1);
+                        }
+                    }
+
+                    public static void main(String[] args) {
+                        Stack s = new Stack();
+                        s.push(0);
+                        s.push(1);
+                        s.push(2);
+
+                        while(!s.isEmpty()){
+                         System.out.println(s.pop());
+                        }
+
+    }
+}
+```
+
+### Stack using linked list
+
+```java
+import java.util.*;
+
+public class JavaBasic {
+
+    public static class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    public static class Stack {
+        static Node head = null;
+
+        public boolean isEmpty() {
+            return head == null;
+        }
+
+        public void push(int data) {
+            Node newNode = new Node(data);
+            if (head == null) {
+                head = newNode;
+                return;
+            }
+
+            newNode.next = head;
+            head = newNode;
+
+        }
+
+        public int pop() {
+            if (isEmpty()) {
+                return -1;
+            }
+            int top = head.data;
+            head = head.next;
+            return top;
+        }
+
+        public int peek() {
+            if (isEmpty()) {
+                return -1;
+            }
+            return head.data;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Stack s = new Stack();
+
+    }
+}
+```
+
+### stack using collection framework
+
+```java
+import java.util.*;
+
+public class JavaBasic {
+    public static void main(String[] args) {
+       Stack<Integer> stack=new Stack<>();
+       stack.push(2);
+
+       stack.isEmpty();
+       stack.pop();
+       stack.peek();
+
+    }
+}
+```
+
+## Push at the Bottom of the Stack O(n)
+
+```java
+  public static void pushBottom(Stack<Integer> stack, int n){
+     if(stack.isEmpty()){
+        stack.push(n);
+        return;
+     }
+     int pop=stack.pop();
+     pushBottom(stack, n);
+     stack.push(pop);
+    }
+```
+
+# Reverse a string using stack
+
+```java
+public static void main(String[] args) {
+        Stack<Character> stack = new Stack<>();
+        String str = "abc";
+
+        for (int i = 0; i < str.length(); i++) {
+            stack.push(str.charAt(i));
+        }
+        str = "";
+        while (!stack.isEmpty()) {
+            str += stack.pop();
+        }
+        System.out.println(str);
+
+    }
+```
+
+## Reverse a stack
+
+```java
+  public static void reverStack(Stack<Integer> stack){
+     if(stack.isEmpty()){
+        return;
+     }
+     int pop=stack.pop();
+     reverStack(stack);
+     pushBottom(stack,pop)
+    }
+```
+
+## stcok span problem
+
+span -->  max no of consecutive days for which price <=today's price
+
+span = index-preHighIndex
+
+```java
+ public static void stockSpan(int stocks[],int span[]){
+        Stack<Integer> s =new Stack<>();
+        span[0]=1;
+        s.push(0);
+
+        for(int i=1;i<stocks.length;i++){
+            int currPrice=stocks[i];
+
+            while(!s.isEmpty()&&currPrice>stocks[s.peek()]){
+              s.pop();
+            }
+            if(s.isEmpty()){
+                span[i]=i+1;
+            }else{
+                int prevHigh=s.peek();
+                span[i]=i-prevHigh;
+            }
+        }
+    }
+    public static void main(String[] args) {
+       int stocks[] ={100,80,60,70,60,85,100};
+    int span[] = new int[stocks.length];
+    stockSpan(stocks,span);
+
+    for(int i=0;i<span.length;i++){
+        System.out.println(span[i]+" ");
+    }
+    }
+```
+
+## Next Greate ekement
+the next greater element of some element x in an array is the first greater elemnt that is to the right of x in the same array.
+
+arr=[6,8,0,1,3]
+
+next Greater =[8,-1,1,3,-1]
 

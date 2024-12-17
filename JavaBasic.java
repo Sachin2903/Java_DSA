@@ -1,58 +1,33 @@
 import java.util.*;
 
 public class JavaBasic {
-    public class DoubleLL {
-        public class Node {
-            int data;
-            Node next;
-            Node prev;
 
-            public Node(int data) {
-                this.data = data;
-                this.next = null;
-                this.prev = null;
+    public static void stockSpan(int stocks[],int span[]){
+        Stack<Integer> s =new Stack<>();
+        span[0]=1;
+        s.push(0);
+
+        for(int i=1;i<stocks.length;i++){
+            int currPrice=stocks[i];
+
+            while(!s.isEmpty()&&currPrice>stocks[s.peek()]){
+              s.pop();
+            }
+            if(s.isEmpty()){
+                span[i]=i+1;
+            }else{
+                int prevHigh=s.peek();
+                span[i]=i-prevHigh;
             }
         }
-
-        public static Node head;
-        public static Node tail;
-        public static int size=0;
-
-        void addNew(){
-            Node newNode =new Node(2);
-            if(head==null){
-                head=tail=newNode;
-                return;
-            }
-
-            tail.next=newNode;
-            newNode.prev=tail;
-            tail=newNode;
-        }
-
-        public void reverse(){
-            Node curr=head;
-            Node prev=null;
-            Node next;
-
-
-            while(curr!=null){
-                next=curr.next;
-                curr.next=prev;
-                 curr.prev=next;
-
-                 prev=curr;
-                 curr=next;
-            }
-
-            head=prev;
-            
-        }
-
     }
-
     public static void main(String[] args) {
-        JavaBasic.DoubleLL dllist = new JavaBasic().new DoubleLL();
+       int stocks[] ={100,80,60,70,60,85,100};
+    int span[] = new int[stocks.length];
+    stockSpan(stocks,span);
 
+    for(int i=0;i<span.length;i++){
+        System.out.println(span[i]+" ");
+    }
     }
 }
