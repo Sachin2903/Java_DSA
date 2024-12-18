@@ -1442,7 +1442,7 @@ public static void main(String[] args) {
 
 ## stcok span problem
 
-span -->  max no of consecutive days for which price <=today's price
+span --> max no of consecutive days for which price <=today's price
 
 span = index-preHighIndex
 
@@ -1478,9 +1478,228 @@ span = index-preHighIndex
 ```
 
 ## Next Greate ekement
+
 the next greater element of some element x in an array is the first greater elemnt that is to the right of x in the same array.
 
 arr=[6,8,0,1,3]
 
 next Greater =[8,-1,1,3,-1]
 
+```java
+public static void main(String[] args) {
+        int arr[] = { 6, 8, 0, 1, 3 };
+        Stack<Integer> stack = new Stack<>();
+        int greaterNext[] = new int[arr.length];
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+
+            while (!stack.isEmpty() && stack.peek() < arr[i]) {
+                stack.pop();
+            }
+
+            greaterNext[i]=stack.isEmpty()?-1:stack.peek();
+            stack.push(arr[i]);
+            System.out.println(stack+" "+i);
+
+        }
+        System.out.println(stack+Arrays.toString(greaterNext));
+
+    }
+```
+
+## valis parantheses
+
+given a string s containing just the characters
+( ) ( ) [ ] determine if the input string is valid.
+An input string is valid if.
+
+- Open brackets must be closed by the same type of brackets
+- OPen brackets must be closed in the correct order.
+- Every close bracket has a correcponding open bracket of the same type.
+
+```java
+public static boolean invalid(String str){
+        Stack<Character> s =new Stack<>();
+
+        for(int i=0;i<str.length();i++){
+            char ch=str.charAt(i);
+
+            if(ch=='('||ch =='{'||ch=='['){
+               s.push(ch);
+            }else{
+                if(s.isEmpty()){
+                    return false;
+                }
+                if(s.peek()=='('&&ch==')'){
+                    s.pop();
+                }else{
+                    return false;
+                }
+            }
+        }
+
+        return s.isEmpty();
+
+    }
+```
+
+## dublicate paranthesis
+
+given a balanced expression. find if it contains dublicate parantheses or not. A set od parantheses are duplicate of the same subexpression is surrounded by multiple parantheses.
+
+return a true if it contains dublicate else return false.
+
+((a+b)+c) -> false
+(((a+b)+c)) -> true;
+
+O(n)
+
+```java
+public static boolean isDublicate(String str) {
+        Stack<Character> s = new Stack<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            if (ch == ')') {
+                int count = 0;
+                while (!s.isEmpty() && s.peek() != '(') {
+                    s.pop();
+                    count++;
+                }
+
+                if (count < 1) {
+                    return true;
+                } else {
+                    s.pop();
+                }
+            } else {
+                s.push(ch);
+            }
+        }
+        return false;
+    }
+```
+
+## maximum area in a histogram
+
+GIven a array of integer heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
+
+heights=[2,1,5,6,2,3];
+
+```java
+ public static void maxArea(int arr[]) {
+        int maxArea = 0;
+        int nsr[] = new int[arr.length];
+        int nsl[] = new int[arr.length];
+
+        Stack<Integer> s = new Stack<>();
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            while (s.isEmpty() && arr[s.peek()] <= arr[i]) {
+                s.pop();
+            }
+
+            if (s.isEmpty()) {
+                nsr[i] = arr.length;
+            } else {
+                nsr[i] = s.peek();
+            }
+            s.push(i);
+        }
+
+       s=new Stack<>();
+
+        for (int i =0;i<arr.length; i++) {
+            while (s.isEmpty() && arr[s.peek()] >= arr[i]) {
+                s.pop();
+            }
+
+            if (s.isEmpty()) {
+                nsl[i] = -1;
+            } else {
+                nsr[i] = s.peek();
+            }
+            s.push(i);
+        }
+
+
+        // width =j-i-1;
+
+        for(int i=0;i<arr.length;i++){
+            int height=arr[i];
+            int width=nsr[i]-nsl[i]-1;
+            int currArea=height*width;
+            maxArea=Math.max(currArea,maxArea);
+        }
+
+        System.out.println(maxArea);
+    }
+```
+
+# Queue ( FIFO )
+
+Add O(1) Enque
+Remove O(1) dequeue
+Peek O(1) front
+
+#### Implementation
+
+> > Using Array
+Add O(1) Enque
+Remove O(n) dequeue
+Peek O(1) front
+
+```java
+static class Queue{
+    static int arr[];
+    static int size;
+    static int rear;
+
+    Queue(int n){
+        arr=new int[n];
+        size=0;
+        rear=-1;
+    }
+
+    public static boolean isEmpty(){
+        return rear == -1;
+    }
+
+    public static void add(int data){
+        if(rear==size-1){
+          System.out.println("queue is full");
+        }
+
+        rear=rear+1;
+        arr[rear]=data;
+    }
+
+    public static int remove(){
+        if(isEmpty()){
+            System.out.println("empty queue");
+            return -1;
+        }
+
+        int front =arr[0];
+        for(int i=0;i<rear;i++){
+            arr[i]=arr[i+1];
+        }
+        rear--;
+        return front;
+    }
+
+    public static int peek(){
+        if(isEmpty()){
+            System.out.println("empty queue");
+            return -1;
+        }
+
+        return arr[0];
+    }
+
+   }
+```
+
+>> Circular array queue
+this help us to reduce remove TC O(n) to O(1)
