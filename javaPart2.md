@@ -1702,4 +1702,4 @@ static class Queue{
 ```
 
 >> Circular array queue
-this help us to reduce remove TC O(n) to O(1)
+this help us to reduce  remove TC O(n) to O(1)
