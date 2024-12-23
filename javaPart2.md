@@ -1646,9 +1646,9 @@ Peek O(1) front
 #### Implementation
 
 > > Using Array
-Add O(1) Enque
-Remove O(n) dequeue
-Peek O(1) front
+> > Add O(1) Enque
+> > Remove O(n) dequeue
+> > Peek O(1) front
 
 ```java
 static class Queue{
@@ -1701,5 +1701,317 @@ static class Queue{
    }
 ```
 
->> Circular array queue
-this help us to reduce  remove TC O(n) to O(1)
+> > Circular array queue
+> > this help us to reduce remove TC O(n) to O(1)
+
+(f+1)%size;
+
+```java
+
+    public static class Queue {
+        static int arr[];
+        static int size;
+        static int rear;
+        static int front;
+
+        Queue(int n) {
+            arr = new int[n];
+            size = n;
+            rear = -1;
+            front = -1;
+        }
+
+        public static boolean isEmpty() {
+            return rear == front;
+        }
+
+        public static boolean isFull() {
+            return (rear + 1) % size == front;
+        }
+
+        public static void add(int n) {
+            if (isFull()) {
+                return;
+            }
+            if (front == -1) {
+                front = 0;
+            }
+            arr[(++rear) % size] = n;
+        }
+
+        public static int remove() {
+            if(isEmpty()) {
+                return -1;
+            }
+            int remove=arr[front];
+            if(rear==front){
+                rear=front=-1;
+            }else{
+                front =(front=1)%size;
+            }
+            return remove;
+        }
+
+        public static int peek() {
+            if(isEmpty()) {
+                return -1;
+            }
+            return arr[front];
+        }
+
+    }
+```
+
+> > Queue using Linked List
+
+```java
+public static class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    public static class Queue {
+        static Node head = null;
+        static Node tail = null;
+
+        public static boolean isEmpty() {
+            return head == null && tail == null;
+        }
+
+        public static void add(int n) {
+            Node newNode = new Node(n);
+            if (head == null) {
+                head = tail = newNode;
+                return;
+            }
+            newNode.next = head;
+            head = newNode;
+
+        }
+
+        public static int remove() {
+            if (isEmpty()) {
+                return -1;
+            }
+            int data=head.data;
+            if(head==tail){
+                head=tail=null;
+            }else{
+            head=head.next;
+            }
+            return data;
+        }
+
+        public static int peek() {
+            if (isEmpty()) {
+                return -1;
+            }
+           return head.data;
+        }
+
+    }
+```
+>> Queue using java collection framework
+Queue is an interface 
+Queue<Integer> q=new LinkedList<>();
+                            or
+                         ArrayDeque
+
+q.add(1);
+q.add(2);
+
+q.isEmpty();
+q.peek();
+q.remove();
+
+## Queue using 2 stack
+Push O(n)               Pop O(n)
+add O(n)                add O(1)                      
+remove & pop O(1)   remove & pop O(n)
+
+if new in bottom of stack   if new in top of stack
+
+Push O(n) 
+```java
+static class Queue {
+        static Stack<Integer> s1 = new Stack<>();
+        static Stack<Integer> s2 = new Stack<>();
+
+        public static boolean isEmpty() {
+            return s1.isEmpty();
+        }
+
+        public static void add(int data) {
+            if (s1.isEmpty()) {
+                s1.add(data);
+                return;
+            }
+            while (!s1.isEmpty()) {
+                s2.add(s1.pop());
+            }
+            s1.add(data);
+            while (!s2.isEmpty()) {
+                s1.add(s2.pop());
+            }
+        }
+
+        public static int remove(){
+            if(s1.isEmpty()){
+                return -1;
+            }
+            return s1.pop();
+        }
+
+        public static int peek(){
+            if(s1.isEmpty()){
+                return -1;
+            }
+            return s1.peek();
+        }
+    }
+```
+
+## FIrst non-repeating Letter in a stream of characters.
+"aabccxb"
+
+add in queue -> update frequency -> check non-repeating letter in queue , if  frequency >1 remove that and if queue empty return -1
+
+```java
+public static void printNonrepeating(String str){
+        int freq[]=new int[26];
+        Queue<Character> q=new LinkedList<>();
+
+        for(int i=0;i<str.length();i++){
+            char ch=str.charAt(i);
+            q.add(ch);
+            freq[ch-'a']++;
+
+            while(!q.isEmpty()&&freq[q.peek()-'a']>1){
+                q.remove();
+            }
+
+            if(q.isEmpty()){
+                System.out.println("-1"+" ");
+            }else{
+                System.out.println(q.peek()+" ");
+            }
+        }
+
+    }
+```
+
+## INterleave 2 Halves of a Queue (even length)
+1 2 3 4 5 6 7 8 9 10
+1 6 2 7 3 8 4 9 5 10
+
+```java
+public static void interLeave(Queue<Integer> q) {
+        Queue<Integer> firstHalf = new LinkedList<>();
+        int size = q.size();
+
+        for (int i = 0; i < size / 2; i++) {
+            firstHalf.add(q.remove());
+        }
+
+        while(!firstHalf.isEmpty()){
+            q.add(firstHalf.remove());
+            q.add(q.remove());
+        }
+    }
+```
+
+## Queue reverse
+1 2 3 4 5 
+5 4 3 2 1
+
+Queu -> Stack -> Queue
+```java
+    public static void reverseStack(Queue<Integer> q){
+        Stack<Integer> stack=new Stack<>();
+        while(!q.isEmpty()){
+            stack.push(q.remove());
+        }
+        while(!stack.isEmpty()){
+            q.add(stack.pop());
+        }
+    }
+```
+
+## Deque Double ended queue
+addFirst();
+addLast();
+removeFirst()
+removeLast();
+getFirst();
+getLast();
+
+>> Deque<Integer> dequeu=new LinkedList<>();
+deque.addFirst();
+deque.addLast();
+deque.removeFirst();
+deque.removeLast();
+deque.getFirst();
+deque.getLast();
+
+## Stack & Queue using deque
+>> Stack
+```java
+    public class Stack{
+        Deque<Integer> deque=new LinkedList<>();
+
+        public void push(int data){
+            deque.addLast(data);
+        }
+
+        public int pop(){
+          return  deque.removeLast();
+        }
+
+        
+        public void peek(int data){
+            deque.getLast();
+        }
+    }
+```
+
+>> Queue
+```java
+public class Queue{
+        Deque<Integer> deque=new LinkedList<>();
+
+        public void add(int data){
+            deque.addFirst(data);
+        }
+
+        public int remove(){
+          return  deque.removeFirst();
+        }
+
+        
+        public void peek(int data){
+            deque.getFirst();
+        }
+    }
+```
+# Greedy Algorithms
+* to find optimization when find min , max or simillar things
+* no fixed rule
+
+> GA is the problme solving technique where we make the locally optimum choice at each stage
+
+
+## Activity Selection
+You are given a activities with their start and end times, select the maximum number of activities that can be performed by a single person, assuming that a person can only work an a single activity at a time. Activities are sorted according to end time.
+start=[10,12,20]
+end = [20,25,30]
+
+
+
+
+
+
