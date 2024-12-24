@@ -1816,9 +1816,11 @@ public static class Node {
 
     }
 ```
->> Queue using java collection framework
-Queue is an interface 
-Queue<Integer> q=new LinkedList<>();
+
+> > Queue using java collection framework
+> > Queue is an interface
+> > Queue<Integer> q=new LinkedList<>();
+
                             or
                          ArrayDeque
 
@@ -1830,13 +1832,15 @@ q.peek();
 q.remove();
 
 ## Queue using 2 stack
-Push O(n)               Pop O(n)
-add O(n)                add O(1)                      
-remove & pop O(1)   remove & pop O(n)
 
-if new in bottom of stack   if new in top of stack
+Push O(n) Pop O(n)
+add O(n) add O(1)  
+remove & pop O(1) remove & pop O(n)
 
-Push O(n) 
+if new in bottom of stack if new in top of stack
+
+Push O(n)
+
 ```java
 static class Queue {
         static Stack<Integer> s1 = new Stack<>();
@@ -1877,9 +1881,10 @@ static class Queue {
 ```
 
 ## FIrst non-repeating Letter in a stream of characters.
+
 "aabccxb"
 
-add in queue -> update frequency -> check non-repeating letter in queue , if  frequency >1 remove that and if queue empty return -1
+add in queue -> update frequency -> check non-repeating letter in queue , if frequency >1 remove that and if queue empty return -1
 
 ```java
 public static void printNonrepeating(String str){
@@ -1906,6 +1911,7 @@ public static void printNonrepeating(String str){
 ```
 
 ## INterleave 2 Halves of a Queue (even length)
+
 1 2 3 4 5 6 7 8 9 10
 1 6 2 7 3 8 4 9 5 10
 
@@ -1926,10 +1932,12 @@ public static void interLeave(Queue<Integer> q) {
 ```
 
 ## Queue reverse
-1 2 3 4 5 
+
+1 2 3 4 5
 5 4 3 2 1
 
 Queu -> Stack -> Queue
+
 ```java
     public static void reverseStack(Queue<Integer> q){
         Stack<Integer> stack=new Stack<>();
@@ -1943,6 +1951,7 @@ Queu -> Stack -> Queue
 ```
 
 ## Deque Double ended queue
+
 addFirst();
 addLast();
 removeFirst()
@@ -1950,16 +1959,18 @@ removeLast();
 getFirst();
 getLast();
 
->> Deque<Integer> dequeu=new LinkedList<>();
-deque.addFirst();
-deque.addLast();
-deque.removeFirst();
-deque.removeLast();
-deque.getFirst();
-deque.getLast();
+> > Deque<Integer> dequeu=new LinkedList<>();
+> > deque.addFirst();
+> > deque.addLast();
+> > deque.removeFirst();
+> > deque.removeLast();
+> > deque.getFirst();
+> > deque.getLast();
 
 ## Stack & Queue using deque
->> Stack
+
+> > Stack
+
 ```java
     public class Stack{
         Deque<Integer> deque=new LinkedList<>();
@@ -1972,14 +1983,15 @@ deque.getLast();
           return  deque.removeLast();
         }
 
-        
+
         public void peek(int data){
             deque.getLast();
         }
     }
 ```
 
->> Queue
+> > Queue
+
 ```java
 public class Queue{
         Deque<Integer> deque=new LinkedList<>();
@@ -1992,26 +2004,324 @@ public class Queue{
           return  deque.removeFirst();
         }
 
-        
+
         public void peek(int data){
             deque.getFirst();
         }
     }
 ```
+
 # Greedy Algorithms
-* to find optimization when find min , max or simillar things
-* no fixed rule
+
+- to find optimization when find min , max or simillar things
+- no fixed rule
 
 > GA is the problme solving technique where we make the locally optimum choice at each stage
 
-
 ## Activity Selection
+
 You are given a activities with their start and end times, select the maximum number of activities that can be performed by a single person, assuming that a person can only work an a single activity at a time. Activities are sorted according to end time.
 start=[10,12,20]
 end = [20,25,30]
 
+> > sorted Activities
+
+```java
+public static void main(String[] args) {
+      int start[]={1,3,0,5,8,5};
+      int end[]={2,4,6,7,9,9};
+
+      int maxAct=0;
+      ArrayList<Integer> ans=new ArrayList<>();
+
+      maxAct=1;
+      ans.add(0);
+      int lastEnd=end[0];
+
+      for(int i=1;i<end.length;i++){
+        if(start[i]>=lastEnd){
+            maxAct++;
+            ans.add(i);
+            lastEnd=end[i];
+        }
+      }
+
+      System.out.println("max activities ="+maxAct);
+      for(int i=0;i<ans.size();i++){
+        System.out.println("A"+ans.get(i));
+      }
+
+    }
+```
+
+> > non sorted activities
+
+```java
+public static void main(String[] args) {
+      int start[]={1,3,0,5,8,5};
+      int end[]={2,4,6,7,9,9};
+
+int activities[][] = new int[start.length][3];
+     for (int i=0;i<start.length;i++){
+        activities[i][0]=i
+        activities[i][1]=start[i]
+        activities[i][2]=end[i]
+     }
+
+// comparitor
+Arrays.sort(activities,Comparator.comparingDouble(o -> o[2]));
 
 
+      int maxAct=0;
+      ArrayList<Integer> ans=new ArrayList<>();
+
+      maxAct=1;
+      ans.add(activities[0][0]);
+      int lastEnd=activities[0][2];
+
+      for(int i=1;i<end.length;i++){
+        if(activities[i]>=lastEnd){
+            maxAct++;
+            ans.add(activities[i][0]);
+            lastEnd=activities[i][2];
+        }
+      }
+
+      System.out.println("max activities ="+maxAct);
+      for(int i=0;i<ans.size();i++){
+        System.out.println("A"+ans.get(i));
+      }
+
+    }
+```
+
+## Fractional Knapsack
+
+given the weight and values of N items, put these items in a knapsack ( bag ) of capacity W to get the maximum total value in the knapsack.
+
+value=[60,100,120]
+weight=[10,20,30]
+W=50
+ans=240
+
+```java
+public static void main(String[] args) {
+        int val[] = { 60, 100, 120 };
+        int weight[] = { 10, 20, 30 };
+
+        int W = 50;
+
+        double ratio[][] = new double[val.length][2];
+
+        for (int i = 0; i < val.length; i++) {
+            ratio[i][0] = i;
+            ratio[i][1] = val[i] / (double) weight[i];
+        }
+
+        Arrays.sort(ratio, Comparator.comparingDouble(o -> o[1]));
+
+        int capacity = W;
+        int finalVal = 0;
+        for (int i = ratio.length - 1; i >= 0; i--) {
+            int idx = (int) ratio[i][0];
+            if (capacity >= weight[idx]) {
+                finalVal += val[idx];
+                capacity -= weight[idx];
+            } else {
+                finalVal += (ratio[i][1]) * capacity;
+                capacity=0;
+                break;
+            }
+        }
+
+        System.out.println(finalVal);
+
+    }
+```
+
+## Min absolute difference pairs
+
+given two arrays A and B of equal length n. Pair each element of array A to an element in array B, such S of absolute differences of all the pairs is minimum.
+
+A=[1,2,3];
+B=[2,1,3];
+ans=0;
+
+closet the number , aboslute difference is less
+
+```java
+int A[]={1,2,3};
+int B[]={2,1,3};
+
+Arrays.sort(A);
+Arrays.sort(B);
+
+int minDiff=0;
+
+for(int i=0;i<A.length;i++){
+    minDiff+=Math.abs(B[i]-A[i]);
+}
+
+System.out.prinln(minDiff)
+```
+
+## Max length chain of pairs
+
+you are given n pairs of numbers. IN every pair, the first number is always smaller than the second number. A pair (c,d) can come after pair (a,b) if b < c. find the longest chain which can be formed from a given set of pairs.
+
+pair=
+(5,24)
+(39,60)
+(5,28)
+(27,40)
+(50,90)
+
+ans=3
+
+```java
+int pairs[][]={{5,24},{39,60},{5,28},{27,40},{50,90}};
+
+Arrays.sort(pairs,Comparator.comparingDouble(o->o[1]));
+
+int chainLen=1;
+int chainEnd= pairs[0][1];
+
+for(int i=1;i<pairs.length;i++){
+    if(pairs[i][0]>chainEnd){
+        chainLen++;
+        chainEnd=pair[i][1];
+    }
+}
+
+System.out.println("max length of chain ="+chainLen)
+
+```
+
+## Indian Coins
+
+we are given an infinite supply of denominations find no od coins/notes to make changes for a value V
+
+V=121
+ans=3 (100+20+1)
+
+V = 590
+ans =4 (500+50+20+20)
+
+```java
+
+Integer coins[] ={1,2,5,10,20,50,100,500,2000}
+
+Arrays.sort(coins,Comparator.reverseOrder());
+
+int countOfCoins=0;
+int amount=590;
+ArrayList<Integer> ans =new ArrayList<>();
+
+for(int i=0;i<coins.length;i++){
+    if(coins[i]<=amount){
+        while(coins[i]<=amount){
+            countOfCoins++;
+            ans.add(coins[i]);
+            amount-=coins[i];
+        }
+    }
+}
+
+System.out.println("total (min) coin",+ countOfCoins)
+```
+
+## JOb Sequencing Problem
+
+given an array of jobs where every job has a deadline and profit if the job is finished before the deadline. it is also given that every job takes a single unit of time, so the minimum possible deadline for any job is 1. Maximize the total profit if only one job can be scheduled at a time.
+
+Job A =4,20
+Job B= 1,10
+Job C= 1,40
+Job D= 1,30
+
+ans = C,A
+
+```java
+static class Job{
+    int deadline;
+    int profit;
+    int id;
+
+    public Job(int i,int d,int p){
+        id=i;
+        deadline=d;
+        profit=p;
+    }
+}
+int jobsInfo[][]={{4,20,{1,10},{1,40},{1,30}}};
+
+ArrayList<Job> jobs[]=new ArrayList<>();
+
+for(int i=0;i<jobs.length;i++){
+jobs.add(new Job(i,jobsInfo[i][0],jobsInfo[i][1]));
+
+}
+
+Collections.sort(jobs,(a,b)=>b.profit-a.profit );
+
+ArrayList<Integer> seq=new ArrayList<>();
+int time=0
+for(int i=0;i<jobs.size();i++){
+    Job cirr=jobs.get(i);
+    if(curr.deadline>time){
+        seq.add(curr.id);
+        time++; //  this may be time+=curr.deadline
+    }
+}
+
+System.out.println("max jobs ="+seq.size());
 
 
+```
 
+## Chocola problem or minimum cost to cut board
+
+We are given a var of chocolate composed of mxn square pieces. ONe should break the chocolate into singl esquares. Each break of a part of the chocolate is charges a cost expressed by a positive integer. this cost does not depend on the size of the part that is being broken but only depends on the line the break goes along. let is denote the cost of breaking along consecutive vertical lines with x1,x2...xm-1 and along horizontal lines with y1,y2..yn-1.
+
+compute the minimal cost of breaking the whole chocolate into single squares.
+
+![alt text](./assests/choco.png)
+
+```java
+
+int n=4 m=6;
+Integer costVar[]={2,1,3,1,4};
+Integer costHor[]={4,1,2};
+Arrays.sort(constVar,Collections.reverseOrder());
+Arrays.sort(constHor,Collections.reverseOrder());
+
+int h=0,v=0;
+int h=0,vp=0;
+int cost=0;
+while(h<costHor.length&&costVer.length){
+   if(costVer[v]<=costHor[h]){
+      cost+=(costHor[h]*vp);
+      hp++;
+   }else{
+    cost+=(costVer[v]*hp);
+    vp++;
+    v++;
+   }
+}
+
+while(h<costHor.length){
+    cost+=(costHor[h]*vp);
+    hp++;
+    h++;
+}
+
+
+while(v<costVer.length){
+    cost+=(costVer[v]*hp);
+    vp++;
+    v++;
+}
+
+print --> cost 
+
+```
