@@ -103,9 +103,24 @@ public class JavaBasic {
             if (node == null) {
                 return 0;
             }
-            int left =  calculateSumOfNodes(node.left);
+            int left = calculateSumOfNodes(node.left);
             int right = calculateSumOfNodes(node.right);
             return (node.data + left + right);
+        }
+
+        public static int diameter(Node root) {
+            if (root == null) {
+                return 0;
+            }
+
+            int leftDiam=diameter(root.left);
+            int leftHt=calculateHeight(root.left);
+            int rightDiam=diameter(root.right);
+            int rightHt=calculateHeight(root.right);
+
+            int selfDiam=leftHt+rightHt+1;
+            return Math.max(selfDiam,Math.max(rightDiam, leftDiam));
+
         }
     }
 
