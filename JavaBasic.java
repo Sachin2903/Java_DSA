@@ -113,15 +113,68 @@ public class JavaBasic {
                 return 0;
             }
 
-            int leftDiam=diameter(root.left);
-            int leftHt=calculateHeight(root.left);
-            int rightDiam=diameter(root.right);
-            int rightHt=calculateHeight(root.right);
+            int leftDiam = diameter(root.left);
+            int leftHt = calculateHeight(root.left);
+            int rightDiam = diameter(root.right);
+            int rightHt = calculateHeight(root.right);
 
-            int selfDiam=leftHt+rightHt+1;
-            return Math.max(selfDiam,Math.max(rightDiam, leftDiam));
+            int selfDiam = leftHt + rightHt + 1;
+            return Math.max(selfDiam, Math.max(rightDiam, leftDiam));
 
         }
+    }
+
+    static class Info {
+        int diam;
+        int ht;
+
+        public Info(int diam, int ht) {
+            this.diam = diam;
+            this.ht = ht;
+        }
+    }
+
+    public static Info diameterWithClass(Node root) {
+        Info leftInfo = diameterWithClass(root.left);
+        Info rightInfo = diameterWithClass(root.right);
+        int diam = Math.max(Math.max(leftInfo.diam, rightInfo.diam), leftInfo.ht + rightInfo.ht + 1);
+        int ht = Math.max(leftInfo.ht, rightInfo.ht);
+
+        return new Info(diam, ht);
+    }
+
+    public static boolean isIdentical(Node root, Node subRoot) {
+        if (root == null && subRoot == null) {
+            return true;
+        } else if (root == null || subRoot == null || root.data != subRoot.data) {
+            return false;
+        }
+
+        if (!isIdentical(root.left, subRoot.left)) {
+            return false;
+        }
+
+        if (!isIdentical(root.right, subRoot.right)) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public static boolean isSubtree(Node root, Node subRoot) {
+        if (root == null) {
+            return false;
+        }
+        if (root.data == subRoot.data) {
+            if (isIdentical(root, subRoot)) {
+                return true;
+            }
+        }
+
+        boolean leftAns = isSubtree(root.left, subRoot);
+        boolean rightAns = isSubtree(root.right, subRoot);
+
+        return leftAns || rightAns;
     }
 
     public static void main(String[] args) {

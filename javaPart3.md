@@ -172,6 +172,7 @@ public static int calculateNoOfNodes(Node node){
 ```
 
 ## Sum of Nodes
+
 ```java
 
         public static int calculateSumOfNodes(Node node) {
@@ -185,5 +186,90 @@ public static int calculateNoOfNodes(Node node){
 ```
 
 ## diameter of a tree
+
 no of nodes in longest path between 2 nodes in binary tree
 
+```java O(n^2)
+public static int diameter(Node root) {
+            if (root == null) {
+                return 0;
+            }
+
+            int leftDiam=diameter(root.left);
+            int leftHt=calculateHeight(root.left);
+            int rightDiam=diameter(root.right);
+            int rightHt=calculateHeight(root.right);
+
+            int selfDiam=leftHt+rightHt+1;
+            return Math.max(selfDiam,Math.max(rightDiam, leftDiam));
+
+        }
+```
+
+```java O(n)
+  static class Info {
+            int diam;
+            int ht;
+
+            public Info(int diam, int ht) {
+                this.diam = diam;
+                this.ht = ht;
+            }
+        }
+
+        public static Info diameterWithClass(Node root){
+        Info leftInfo=diameterWithClass(root.left);
+        Info rightInfo=diameterWithClass(root.right);
+        int diam=Math.max(Math.max(leftInfo.diam,rightInfo.diam),leftInfo.ht+rightInfo.ht+1);
+        int ht=Math.max(leftInfo.ht,rightInfo.ht);
+
+        return new Info(diam, ht);
+     }
+```
+
+## Subtree of another tree
+
+GIven the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same struture and node values of subroot and false otherwise.
+
+        1                         2
+      /  \                      /  \
+     2    3                    4    5
+    / \    \
+
+4 5 6
+
+```java
+public static boolean isIdentical(Node root, Node subRoot) {
+        if (root == null && subRoot == null) {
+            return true;
+        } else if (root == null || subRoot == null || root.data != subRoot.data) {
+            return false;
+        }
+
+        if (!isIdentical(root.left, subRoot.left)) {
+            return false;
+        }
+
+        if (!isIdentical(root.right, subRoot.right)) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public static boolean isSubtree(Node root, Node subRoot) {
+        if (root == null) {
+            return false;
+        }
+        if (root.data == subRoot.data) {
+            if (isIdentical(root, subRoot)) {
+                return true;
+            }
+        }
+
+        boolean leftAns = isSubtree(root.left, subRoot);
+        boolean rightAns = isSubtree(root.right, subRoot);
+
+        return leftAns || rightAns;
+    }
+```
