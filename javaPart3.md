@@ -273,3 +273,247 @@ public static boolean isIdentical(Node root, Node subRoot) {
         return leftAns || rightAns;
     }
 ```
+
+## Top View of a tree
+
+        1
+      /  \
+     2    3
+    / \   / \
+
+4 5 6 7
+output 4 , 2 , 1 ,3,6
+
+        1
+      /  \
+     2    3
+      \
+       4
+        \
+         5
+          \
+           6
+
+output 2 , 1 , 3 ,6
+
+> > HashMap<String,Integer> map=new HashMap<>();
+
+       | key  , value |
+
+to add -> put -> map.put(key,value)
+to get -> get -> map.get(key)
+to check -> containsKey(key)
+
+```java
+public static class Infoo {
+        Node node;
+        int hd;
+
+        public Infoo(Node node, int hd) {
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+
+    public static void topView(Node root) {
+        Queue<Infoo> q = new LinkedList<>();
+        HashMap<Integer, Node> map = new HashMap<>();
+
+        int min = 0, max = 0;
+        Infoo inf=new Infoo(root, 0);
+        q.add(inf);
+        q.add(null);
+
+        while (!q.isEmpty()) {
+            Infoo curr = q.remove();
+            if (curr == null) {
+                if (q.isEmpty()) {
+                    break;
+                } else {
+                    q.add(null);
+                }
+            }else{
+if (!map.containsKey(curr.hd)) {
+                map.put(curr.hd, curr.node);
+            }
+
+            if (curr.node.left != null) {
+                q.add(new Infoo(curr.node.left, curr.hd - 1));
+                min = Math.min(min,curr.hd - 1);
+            }
+
+            if (curr.node.right != null) {
+                q.add(new Infoo(curr.node.right, curr.hd + 1));
+                max = Math.max(max, curr.hd + 1);
+            }
+            }
+        }
+
+         for (int i = min; i <= max; i++) {
+                System.out.println(map.get(i).data);
+            }
+    }
+```
+
+## Kth Level of a Tree
+
+        1
+      /  \
+     2    3
+    / \   / \
+   4   5 6   7
+
+K=3
+output 4,5,6,7
+
+```java
+public static void KLevel(Node root, int level , int k){
+        if(root==null){
+            return;
+        }
+        if(level==k){
+            System.out.print(root.data+" ");
+            return;
+        }
+        KLevel(root.left, level+1, k);
+        KLevel(root.right, level+1, k);
+    }
+```
+
+## Lowest COmmon Ancestor
+           1                     
+         /  \
+        2    3
+       / \     \
+      4   5     6
+  n1=4,n2=6  output=1
+          1
+         /  \
+        2    3
+       / \   / \
+      4   5 6   7
+
+  n1=4,n2=5  output=2  
+
+
+ ```java
+ public static boolean getPath(Node root, int n,ArrayList<Node> path){
+        if(root==null){
+            return false;
+        }
+        path.add(root);
+
+        if(root.data==n){
+            return true;
+        }
+        boolean fuoundLeft=getPath(root.left,n,path);
+        boolean foundRight=getPath(root.right, n, path);
+
+        if(fuoundLeft||foundRight){
+            return true;
+        }
+
+        path.remove(path.size()-1);
+        return false;
+    }
+
+    public static Node lca(Node root, int n1, int n2){
+        ArrayList<Node> path1 = new ArrayList<>();
+        ArrayList<Node> path2 = new ArrayList<>();
+
+        getPath(root,n1,path1);
+        getPath(root,n2,path2);
+
+        int i =0;
+        for(;i<path1.size() && i<path2.size();i++){
+            if(path1.get(i)!=path2.get(i)){
+                    break;
+            }
+        }
+
+        Node lcs=path1.get(i-1);
+        return lcs;
+
+    }
+```
+
+
+## Min Distance between nodes
+```java
+public static int minDist(Node root, int n1, int n2) {
+        Node lca = lca(root, n1, n2);
+        int dist1 = lcaDist(lca, n1);
+        int dist2 = lcaDist(lca, n1);
+
+        return dist1 + dist2;
+    }
+
+    public static int lcaDist(Node root, int n) {
+        if (root == null) {
+            return -1;
+        }
+        if (root.data == n) {
+            return 0;
+        }
+
+        int leftDist = lcaDist(root.left, n);
+        int rightDist = lcaDist(root.right, n);
+
+        if (leftDist == -1 && rightDist == -1) {
+            return -1;
+        } else if (leftDist == -1) {
+            return rightDist + 1;
+        } else {
+            return leftDist + 1;
+        }
+
+    }
+```
+
+## Kth Ancestor of node
+           1                     
+         /  \
+        2    3
+       / \     \
+      4   5     6
+  node=5,k=5  ans=1
+```java
+public static int KAncestor(Node root, int n, int k) {
+        if (root == null) {
+            return -1;
+        }
+        if (root.data == n) {
+            return 0;
+        }
+
+        int leftDist = KAncestor(root.left, n, k);
+        int rightDist = KAncestor(root.right, n, k);
+
+        if (leftDist == -1 && rightDist == -1) {
+            return -1;
+        }
+
+        int max = Math.max(leftDist, rightDist);
+        if (max + 1 == k) {
+            System.out.println(root.data);
+        }
+        return max+1;
+    }
+```
+
+## TRansform to Sum Tree
+
+           1                     
+         /  \
+        2    3
+       / \   / \
+      4   5  7  6
+
+each node =sum of left & right sibtrees
+          27                     
+         /  \
+        9    13
+       / \   /  \
+      0   0  0   0
+
+# Binary Search Tree
