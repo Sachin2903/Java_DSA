@@ -103,6 +103,50 @@ public class JavaBasic {
 
     }
 
+    public static void printPath(ArrayList<Integer> path) {
+        for (int i = 0; i < path.size(); i++) {
+            System.out.print(path.get(i) + " ");
+        }
+        System.out.println();
+    }
+
+    public static void printRoot2Leaf(Node root, ArrayList<Integer> path) {
+        if (root == null) {
+            return;
+        }
+        path.add(root.data);
+        if (root.left == null && root.right == null) {
+            printPath(path);
+        }
+
+        printRoot2Leaf(root.left, path);
+        printRoot2Leaf(root.right, path);
+        path.remove(path.size() - 1);
+    }
+
+    public static boolean isValidBST(Node root, Node min, Node max) {
+        if (min != null && root.data <= min.data) {
+            return false;
+        } else if (max != null && root.data >= max.data) {
+            return false;
+        }
+
+        return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
+    }
+
+    public static void Mirror(Node root) {
+        if (root == null) {
+            return;
+        }
+
+        Mirror(root.left);
+        Mirror(root.right);
+
+        Node temp=root.left;
+        root.left=root.right;
+        root.right=temp;
+    }
+
     public static void main(String[] args) {
         int nodes[] = { 8, 5, 3, 1, 4, 6, 10, 11, 14 };
         Node root = null;

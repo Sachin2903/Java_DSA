@@ -714,8 +714,121 @@ k1 =5 & K2 = 12
 
     }
 ```
- 
 
+## Root to Leaf Paths
+
+          8                     
+         /  \
+        5    10
+       / \    \
+      3   6    11
+                \         
+                14 
+
+8 - 5 - 3
+8 - 10 -11 -14
+8 - 5 -6
+
+```js
+
+ public static void printPath(ArrayList<Integer> path) {
+        for (int i = 0; i < path.size(); i++) {
+            System.out.print(path.get(i) + " ");
+        }
+        System.out.println();
+    }
+
+    public static void printRoot2Leaf(Node root, ArrayList<Integer> path) {
+        if (root == null) {
+            return;
+        }
+        path.add(root.data);
+        if (root.left == null && root.right == null) {
+            printPath(path);
+        }
+
+        printRoot2Leaf(root.left, path);
+        printRoot2Leaf(root.right, path);
+        path.remove(path.size() - 1);
+    }
+```
+
+## Validate BST
+--> Approach 1
+comapare with left & right node
+
+if a inorder travel is sorted than it is called as Valid BST
+
+--> Approach 2
+check if max value in left subtree < node
+and min value in right subree > node
+
+```js
+public static boolean isValidBST(Node root,Node min,Node max){
+        if(root==null){
+            return true;
+        }
+
+        if(min!=null&&root.data<=min.data){
+            return false;
+        }else if(max!=null&&root.data>=max.data){
+            return false;
+        }
+
+        return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
+    }
+```
+
+## Mirror a BST 
+
+    8                     
+   /  \
+  5    10
+ / \    \
+3   6    11
+
+    to
+
+    8                     
+   /  \
+  10   5
+ /    / \    
+11   6   3      
+
+```js
+
+    public static void Mirror(Node root) {
+        if (root == null) {
+            return;
+        }
+
+        Mirror(root.left);
+        Mirror(root.right);
+
+        Node temp=root.left;
+        root.left=root.right;
+        root.right=temp;
+    }
+    
+    ------- OR ------
+    
+    public static void Mirror(Node root) {
+        if (root == null) {
+            return;
+        }
+
+       Node left =Mirror(root.left);
+       Node right= Mirror(root.right);
+
+        root.left=right;
+        root.left=left;
+        root.right=temp;
+
+        return root;
+    }
+```
+
+## Sorted Array to balanced BST
 
 
 
