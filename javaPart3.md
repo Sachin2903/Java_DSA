@@ -828,20 +828,118 @@ public static boolean isValidBST(Node root,Node min,Node max){
     }
 ```
 
-## Sorted Array to balanced BST
+## Sorted Array to balanced BST ( minimum possible height )
+--> mid from sorted array
+--> left section for left bst 
+--> right section for right bst
+```js
+    public static Node createBst(int arr[], int st, int end) {
+        if (st > end) {
+            return null;
+        }
+        int mid = (st + end) / 2;
+        Node root = new Node(arr[mid]);
+        root.left = createBst(arr, st, mid - 1);
+        root.right = createBst(arr, mid + 1, end);
+        return root;
+    }
+```
+
+## Convert BST to Balanced BST
+        8
+       / \
+     6    10
+    /      \  
+   5        11
+  /           \
+ 3            12
+
+       to
+
+       8
+     /   \
+    5     11
+   / \    / \
+  3   6  10  12
+
+--> Inorder traversal array to balanced BST
+
+use arrayList instead array in createBST 
+
+```js
+ public static void getInorder(Node root, ArrayList<Integer> inorder) {
+        if (root == null) {
+            return;
+        }
+        getInorder(root.left, inorder);
+        inorder.add(root.data);
+        getInorder(root.right, inorder);
+
+        
+    }
+
+    public static Node balanceBst(Node root) {
+        ArrayList<Integer> inorder = new ArrayList<>();
+        getInorder(root, inorder);
+
+        return createBst(inorder, 0, inorder.size()-1);
+
+    }
+
+```
+## Size of Largest BST in BT
+       50
+     /   \
+    30    60
+   / \    / \
+  5   20 45  70
+            /  \
+           65  80
 
 
+```js
+static class Info {
+        boolean isBST;
+        int size;
+        int min;
+        int max;
+        
+        public Info(boolean isBST,int size,int min,int max){
+            this.isBST=isBST;
+            this.size=size;
+            this.min=min;
+            this.max=max;
+        }
+    }
 
+    public static int maxBST=0;
 
+    public static Info largestBST(Node root){
+        if(root==null){
+            return new Info(true, 0, Integer.MAX_VALUE, Integer.MIN_VALUE);
+        }
+        Info left=largestBST(root.left);
+        Info right=largestBST(root.right);
+        int size=left.size+right.size+1;
+        int min=Math.min(root.data,Math.min(left.min,right.min));
+        int max=Math.max(root.data,Math.min(left.max,right.max));
 
+        if(root.data<=left.max||root.data>=right.min){
+            return new Info(false, size, min, max);
+        }
+        
+        if(left.isBST&&right.isBST){
+            maxBST=Math.max(maxBST,size);
+            return new Info(true, size, min, max);
+        }
 
+        return new Info(false, size, min, max);
 
+        
+    }
+```
 
-
-
-
-
-
+## Merge 2 BST
 
 
 

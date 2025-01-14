@@ -142,9 +142,60 @@ public class JavaBasic {
         Mirror(root.left);
         Mirror(root.right);
 
-        Node temp=root.left;
-        root.left=root.right;
-        root.right=temp;
+        Node temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+    }
+
+    public static Node createBst(int arr[], int st, int end) {
+        if (st > end) {
+            return null;
+        }
+        int mid = (st + end) / 2;
+        Node root = new Node(arr[mid]);
+        root.left = createBst(arr, st, mid - 1);
+        root.right = createBst(arr, mid + 1, end);
+        return root;
+    }
+
+    static class Info {
+        boolean isBST;
+        int size;
+        int min;
+        int max;
+        
+        public Info(boolean isBST,int size,int min,int max){
+            this.isBST=isBST;
+            this.size=size;
+            this.min=min;
+            this.max=max;
+        }
+    }
+
+    public static int maxBST=0;
+
+    public static Info largestBST(Node root){
+        if(root==null){
+            return new Info(true, 0, Integer.MAX_VALUE, Integer.MIN_VALUE);
+        }
+        Info left=largestBST(root.left);
+        Info right=largestBST(root.right);
+        int size=left.size+right.size+1;
+        int min=Math.min(root.data,Math.min(left.min,right.min));
+        int max=Math.max(root.data,Math.min(left.max,right.max));
+
+        if(root.data<=left.max||root.data>=right.min){
+            return new Info(false, size, min, max);
+        }
+        
+        if(left.isBST&&right.isBST){
+            maxBST=Math.max(maxBST,size);
+            return new Info(true, size, min, max);
+        }
+
+        return new Info(false, size, min, max);
+
+        
     }
 
     public static void main(String[] args) {
