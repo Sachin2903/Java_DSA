@@ -1174,10 +1174,49 @@ arr=1,2,4,5,3
   5   3  
 
 
-* maxHeapyfy 0 to n/2 to convert min to max Heap
+* maxHeapyfy n/2 to 0 ( non leaf node ) to convert min to max Heap
 * move first to last and make last as not a part of heap
-* call min heapy for 0
 
+```java 
+public static void heapifyMax(int arr[], int i, int size) {
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int maxIdx = i;
+
+            if (left < size && arr[left] > arr[maxIdx]) {
+                maxIdx = left;
+            }
+            if (right < size && arr[right] > arr[maxIdx]) {
+                maxIdx = right;
+            }
+
+            if (maxIdx != i) {
+                int temp = arr[i];
+                arr[i]=arr[maxIdx];
+                arr[i]=temp;
+                heapifyMax(arr, maxIdx, size);
+            }
+
+        }
+
+        public static void heapSort(int arr[]) {
+
+            int n = arr.length;
+            for (int i = n / 2; i >= 0; i--) {
+                heapifyMax(arr, i, n);
+            }
+
+            for (int i = n - 1; i > 0; i--) {
+                int temp = arr[0];
+                arr[0] = arr[i];
+                arr[i] = temp;
+
+                heapifyMax(arr, 0, i);
+            }
+        }
+```
+
+## Nearby Cars
 
 
  

@@ -33,13 +33,13 @@ public class JavaBasic {
             arr.set(arr.size() - 1, data);
             arr.set(0, temp);
             arr.remove(arr.size() - 1);
-            
+
             heapify(0);
             return data;
         }
 
-        public boolean isEmpty(){
-            return arr.size()==0;
+        public boolean isEmpty() {
+            return arr.size() == 0;
         }
 
         public void heapify(int i) {
@@ -52,17 +52,54 @@ public class JavaBasic {
             }
 
             if (right < arr.size() && arr.get(minIdx) > arr.get(right)) {
-               minIdx=right;
+                minIdx = right;
             }
 
-            if(minIdx!=i){
-                int temp=arr.get(i);
-                arr.set(i,arr.get(minIdx));
-                arr.set(minIdx,temp);
+            if (minIdx != i) {
+                int temp = arr.get(i);
+                arr.set(i, arr.get(minIdx));
+                arr.set(minIdx, temp);
 
                 heapify(minIdx);
             }
 
+        }
+
+        public static void heapifyMax(int arr[], int i, int size) {
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int maxIdx = i;
+
+            if (left < size && arr[left] > arr[maxIdx]) {
+                maxIdx = left;
+            }
+            if (right < size && arr[right] > arr[maxIdx]) {
+                maxIdx = right;
+            }
+
+            if (maxIdx != i) {
+                int temp = arr[i];
+                arr[i]=arr[maxIdx];
+                arr[i]=temp;
+                heapifyMax(arr, maxIdx, size);
+            }
+
+        }
+
+        public static void heapSort(int arr[]) {
+
+            int n = arr.length;
+            for (int i = n / 2; i >= 0; i--) {
+                heapifyMax(arr, i, n);
+            }
+
+            for (int i = n - 1; i > 0; i--) {
+                int temp = arr[0];
+                arr[0] = arr[i];
+                arr[i] = temp;
+
+                heapifyMax(arr, 0, i);
+            }
         }
 
     }
