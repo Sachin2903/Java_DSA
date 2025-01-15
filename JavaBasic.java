@@ -1,209 +1,74 @@
-import java.util.*;
+import java.util.ArrayList;
 
 public class JavaBasic {
 
-    public static class Node {
-        int data;
-        Node left;
-        Node right;
+    static class Heap {
+        ArrayList<Integer> arr = new ArrayList<>();
 
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-    }
+        public void add(int data) {
+            arr.add(data);
 
-    public static Node insert(Node root, int val) {
+            int x = arr.size() - 1;
+            int par = (x - 1) / 2;
 
-        if (root == null) {
-            root = new Node(val);
-            return root;
-        }
-
-        if (root.data > val) {
-            root.left = insert(root.left, val);
-        } else {
-            root.right = insert(root.right, val);
-        }
-        return root;
-    }
-
-    public static void inorder(Node root) {
-        if (root == null) {
-            return;
-        }
-
-        inorder(root.left);
-        System.out.print(root.data + " ");
-        inorder(root.right);
-
-    }
-
-    public static Boolean BinarySearchTree(Node root, int k) {
-        if (root == null) {
-            return false;
-        }
-        if (root.data == k) {
-            return true;
-        }
-
-        if (root.data > k) {
-            return BinarySearchTree(root.left, k);
-        } else {
-            return BinarySearchTree(root.right, k);
-        }
-    }
-
-    public static Node Delete(Node root, int data) {
-        if (root.data > data) {
-            return Delete(root.left, data);
-        } else if (root.data > data) {
-            return Delete(root.left, data);
-        } else {
-            if (root.right == null && root.left == null) {
-                return null;
+            while (arr.get(x) < arr.get(par)) {
+                int temp = arr.get(x);
+                arr.set(x, arr.get(par));
+                arr.set(par, temp);
+                x = par;
+                par = (x - 1) / 2;
             }
-            if (root.right == null) {
-                return root.left;
+        }
+
+        public int peek() {
+            if (arr.isEmpty()) {
+                return -1;
             }
-            if (root.left == null) {
-                return root.right;
+            return arr.get(0);
+        }
+
+        public int remove() {
+            int data = arr.get(0);
+            int temp = arr.get(arr.size() - 1);
+            arr.set(arr.size() - 1, data);
+            arr.set(0, temp);
+            arr.remove(arr.size() - 1);
+            
+            heapify(0);
+            return data;
+        }
+
+        public boolean isEmpty(){
+            return arr.size()==0;
+        }
+
+        public void heapify(int i) {
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int minIdx = i;
+
+            if (left < arr.size() && arr.get(minIdx) > arr.get(left)) {
+                minIdx = left;
             }
 
-            Node inorderSuccessor = findInorderSuccessor(root.right);
-            root.data = inorderSuccessor.data;
-            root.right = Delete(root.right, inorderSuccessor.data);
+            if (right < arr.size() && arr.get(minIdx) > arr.get(right)) {
+               minIdx=right;
+            }
+
+            if(minIdx!=i){
+                int temp=arr.get(i);
+                arr.set(i,arr.get(minIdx));
+                arr.set(minIdx,temp);
+
+                heapify(minIdx);
+            }
 
         }
-        return root;
-    }
 
-    public static Node findInorderSuccessor(Node root) {
-        while (root.left != null) {
-            root = root.left;
-        }
-        return root;
-    }
-
-    public static void printInRange(Node root, int k1, int k2) {
-        if (root == null) {
-            return;
-        }
-        if (root.data >= k1 && root.data <= k2) {
-            printInRange(root.left, k1, k2);
-            System.out.print(root.data + " ");
-            printInRange(root.right, k1, k2);
-        } else if (root.data < k1) {
-            printInRange(root.left, k1, k2);
-
-        } else {
-            printInRange(root.right, k1, k2);
-        }
-
-    }
-
-    public static void printPath(ArrayList<Integer> path) {
-        for (int i = 0; i < path.size(); i++) {
-            System.out.print(path.get(i) + " ");
-        }
-        System.out.println();
-    }
-
-    public static void printRoot2Leaf(Node root, ArrayList<Integer> path) {
-        if (root == null) {
-            return;
-        }
-        path.add(root.data);
-        if (root.left == null && root.right == null) {
-            printPath(path);
-        }
-
-        printRoot2Leaf(root.left, path);
-        printRoot2Leaf(root.right, path);
-        path.remove(path.size() - 1);
-    }
-
-    public static boolean isValidBST(Node root, Node min, Node max) {
-        if (min != null && root.data <= min.data) {
-            return false;
-        } else if (max != null && root.data >= max.data) {
-            return false;
-        }
-
-        return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
-    }
-
-    public static void Mirror(Node root) {
-        if (root == null) {
-            return;
-        }
-
-        Mirror(root.left);
-        Mirror(root.right);
-
-        Node temp = root.left;
-        root.left = root.right;
-        root.right = temp;
-    }
-
-    public static Node createBst(int arr[], int st, int end) {
-        if (st > end) {
-            return null;
-        }
-        int mid = (st + end) / 2;
-        Node root = new Node(arr[mid]);
-        root.left = createBst(arr, st, mid - 1);
-        root.right = createBst(arr, mid + 1, end);
-        return root;
-    }
-
-    static class Info {
-        boolean isBST;
-        int size;
-        int min;
-        int max;
-        
-        public Info(boolean isBST,int size,int min,int max){
-            this.isBST=isBST;
-            this.size=size;
-            this.min=min;
-            this.max=max;
-        }
-    }
-
-    public static int maxBST=0;
-
-    public static Info largestBST(Node root){
-        if(root==null){
-            return new Info(true, 0, Integer.MAX_VALUE, Integer.MIN_VALUE);
-        }
-        Info left=largestBST(root.left);
-        Info right=largestBST(root.right);
-        int size=left.size+right.size+1;
-        int min=Math.min(root.data,Math.min(left.min,right.min));
-        int max=Math.max(root.data,Math.min(left.max,right.max));
-
-        if(root.data<=left.max||root.data>=right.min){
-            return new Info(false, size, min, max);
-        }
-        
-        if(left.isBST&&right.isBST){
-            maxBST=Math.max(maxBST,size);
-            return new Info(true, size, min, max);
-        }
-
-        return new Info(false, size, min, max);
-
-        
     }
 
     public static void main(String[] args) {
-        int nodes[] = { 8, 5, 3, 1, 4, 6, 10, 11, 14 };
-        Node root = null;
-        for (int i = 0; i < nodes.length; i++) {
-            root = insert(root, nodes[i]);
-        }
-        inorder(root);
+        int arr[] = new int[1];
+        System.out.println(arr[5]);
     }
 }

@@ -729,7 +729,7 @@ k1 =5 & K2 = 12
 8 - 10 -11 -14
 8 - 5 -6
 
-```js
+```java
 
  public static void printPath(ArrayList<Integer> path) {
         for (int i = 0; i < path.size(); i++) {
@@ -763,7 +763,7 @@ if a inorder travel is sorted than it is called as Valid BST
 check if max value in left subtree < node
 and min value in right subree > node
 
-```js
+```java
 public static boolean isValidBST(Node root,Node min,Node max){
         if(root==null){
             return true;
@@ -795,7 +795,7 @@ public static boolean isValidBST(Node root,Node min,Node max){
  /    / \    
 11   6   3      
 
-```js
+```java
 
     public static void Mirror(Node root) {
         if (root == null) {
@@ -832,7 +832,7 @@ public static boolean isValidBST(Node root,Node min,Node max){
 --> mid from sorted array
 --> left section for left bst 
 --> right section for right bst
-```js
+```java
     public static Node createBst(int arr[], int st, int end) {
         if (st > end) {
             return null;
@@ -866,7 +866,7 @@ public static boolean isValidBST(Node root,Node min,Node max){
 
 use arrayList instead array in createBST 
 
-```js
+```java
  public static void getInorder(Node root, ArrayList<Integer> inorder) {
         if (root == null) {
             return;
@@ -897,7 +897,7 @@ use arrayList instead array in createBST
            65  80
 
 
-```js
+```java
 static class Info {
         boolean isBST;
         int size;
@@ -940,13 +940,247 @@ static class Info {
 ```
 
 ## Merge 2 BST
+1.
+       2
+     /   \
+    1     4
+2.
+       9
+     /   \
+    3     12
+       
+       to
+       
+       3
+     /   \
+    1     9
+     \    / \
+      2  4  12
+            
+* -> inorder requence of 2s
+* -> merge them 
+* -> than create a Balanced BST
+
+
+## AVL Trees ( Self - balanced BST )
+property : | HL - HR | < 2
+BALANCED FACTOR : -1, 0, 1
+bf = lh - rh
+
+total possible bst ( un-balance and balance ) n!
+
+
+# Heaps / Priority Queue
+
+###### concept of priority queues
+
+Priority Queues in JCF
+add() O(logn)
+remove() O(logn)
+peek() O(1)
+isEmpty() O(1)
+PQ Integer low int have high priporty
+
+```java
+import java.util.PriorityQueue;
+
+public class JavaBasic {
+ 
+    public static void main(String[] args) {
+       // in ascending order
+       PriorityQueue<Integer> pq=new PriorityQueue<>();
+
+       // in descending order
+       PriorityQueue<Integer> pq=new PriorityQueue<>(Comparato.reverseOrder());
+       pq.add(3);
+       pq.add(4);
+       pq.add(1);
+       pq.add(7);
+
+    }
+}
+```
+##### OBjects in PQ
+```java
+import java.util.PriorityQueue;
+
+public class JavaBasic {
+ 
+   static class Student implements Comparable<Student>{
+        String name;
+        int rank;
+
+        public Student(String name,int rank){
+            this.name=name;
+            this.rank=rank;
+        }
+        @Override
+        public int compareTo(Student s2) {
+        return this.rank-s2.rank;
+        }
+    }
+    public static void main(String[] args) {
+       PriorityQueue<Student> pq=new PriorityQueue<>();
+       pq.add(new Student("A", 4));
+       pq.add(new Student("B", 3));
+       pq.add(new Student("C", 2));
+       pq.add(new Student("D", 1));
+
+    }
+}
+``` 
+
+### Heaps
+visualize --> Heap
+implement -> Array
+
+Max heap
+       10
+     /   \
+    4     5
+   / \   
+  1   2  
+
+Min Heap
+       1
+     /   \
+    2     4
+   / \   
+  5   10 
+
+* Binary Tree
+at most 2 children
+
+* Complete BInary Tree
+CBT is a BT in which all the levels are completely filled except possibly the last one, which is filled from the left to right.
+
+* Heap Order Property
+Children >= Parent ( maxHeap )
+Children >= Parent ( maxHeap ) 
+
+* Heap is not implemented as a class
+ to insert
+insert than correct the heap
+
+* heap is visiually treated as tree because we want to show parent and child relation ship
+
+* Heap as an array/arraylist
+       1
+     /   \
+    2     4
+   / \   
+  5   10 
+
+2,3,4,5,10
+node idx = i
+left child=2i+1
+right child=2i+2
+
+>> to get parent index
+x-1/2 here x is child index 
+## Insert in min Heap
+1.  add a last
+2. fix heap (check parent  and if parent is large than swap )
+
+heap has n number than height is (O)logn
+
+```java
+static class Heap {
+        ArrayList<Integer> arr = new ArrayList<>();
+
+        public void add(int data) {
+            arr.add(data);
+
+            int x=arr.size()-1;
+            int par = (x - 1) / 2;
+
+            while(arr.get(x) < arr.get(par)){
+                  int temp=arr.get(x);
+                  arr.set(x,arr.get(par));
+                  arr.set(par,temp);
+                  x=par;
+                  par = (x - 1) / 2;
+            }
+        }
+    }
+```
+
+## get Min from Heap
+```java
+        public int peek(){
+            if(arr.isEmpty()){
+                return -1;
+            }
+            return arr.get(0);
+        }
+```
+
+## Delete in Heap
+2,3,4,5,10,6
+
+* first and last node swap
+* remove last idx
+* fix heap ( heapify )
+
+```java
+public int remove() {
+            int data = arr.get(0);
+            int temp = arr.get(arr.size() - 1);
+            arr.set(arr.size() - 1, data);
+            arr.set(0, temp);
+            arr.remove(arr.size() - 1);
+            
+            heapify(0);
+            return data;
+        }
+
+        public boolean isEmpty(){
+            return arr.size()==0;
+        }
+
+        public void heapify(int i) {
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int minIdx = i;
+
+            if (left < arr.size() && arr.get(minIdx) > arr.get(left)) {
+                minIdx = left;
+            }
+
+            if (right < arr.size() && arr.get(minIdx) > arr.get(right)) {
+               minIdx=right;
+            }
+
+            if(minIdx!=i){
+                int temp=arr.get(i);
+                arr.set(i,arr.get(minIdx));
+                arr.set(minIdx,temp);
+
+                heapify(minIdx);
+            }
+
+        }
+```
+
+## Heap Sort O(nlogn)
+>> asc -> Max Heap
+>> desc -> Min Heap
+arr=1,2,4,5,3
+
+       1
+     /   \
+    2     4
+   / \   
+  5   3  
+
+
+* maxHeapyfy 0 to n/2 to convert min to max Heap
+* move first to last and make last as not a part of heap
+* call min heapy for 0
 
 
 
-
-
-
-
+ 
 
 
 
