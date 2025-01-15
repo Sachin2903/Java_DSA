@@ -1217,6 +1217,93 @@ public static void heapifyMax(int arr[], int i, int size) {
 ```
 
 ## Nearby Cars
+we are given N points in a 2D plane which are locations of N cars . if we are at the origin, print the nearest k cars.
+
+CO (3,3)
+C1 (5,-1)
+C2 (-2,4)
+K = 2 
+ans = CO & C2
+
+```java
+    static class Point implements Comparable<Point>{
+        int x;
+        int y;
+        int distSq;
+        int idx;
+        public Point(int x,int y,int distSq,int idx){
+            this.idx=idx;
+            this.x=x;
+            this.y=y;
+            this.distSq=distSq;
+
+        }
+
+        @Override
+        public int compareTo(JavaBasic.Point arg0) {
+           return this.distSq-arg0.distSq;
+        }
+    }
+
+    public static void main(String[] args) {
+         int pts[][]={{3,3},{5,-1},{-2,4}};
+         int k=2;
+         PriorityQueue<Point> pq=new PriorityQueue<>();
+         for(int i=0;i<pts.length;i++){
+            int distSq=pts[i][0]*pts[i][0]+pts[i][1]*pts[i][1];
+            pq.add(new Point(pts[i][0],pts[i][1],distSq,i));
+         }
+         for(int i=0;i<k;i++){
+            System.out.println("C"+pq.remove().idx);
+         }
+    }
+```
+
+## Given are N ropes of different lengths, the task is to connect these ropes into one rope with minimum cose, such that the cost to connect two ropes is equal to the sum of their lengths.
+
+ropes={4,3,2,6};
+
+ans=29;
+
+connect 2 & 3 [5]
+connect 5  & 4 [9]
+connect 9 & 6 [15]
+
+```java
+ public static void main(String[] args) {
+        int ropes[] = { 2, 3, 3, 4, 6 };
+        PriorityQueue<Integer> pq=new PriorityQueue<>();
+
+        for(int i=0;i<ropes.length;i++){
+            pq.add(ropes[i]);
+        }
+
+        int cost=0;
+        while(pq.size()>1){
+            int min=pq.remove();
+            int min2=pq.remove();
+            cost+=min+min2;
+            pq.add(min+min2);
+        }
+        System.out.println("cost of connecting n ropes = "+cost);
+    }
+```
+
+
+## Weakest Soldier
+We are given an mxn binary matrix of 1's (soldiers) and O's (cicilians). the soldiers are positioned in front of the civilians. that is, all the 1's will appear to the left of alll the 0's in each row.
+
+A row is weaker than a row j if one of the following is true
+* the number of soldiers in row i is less than the number of soldiers in row j.
+* Both rows have the same number if soldiers and i<j.
+Fidn the K weakest rows.
+
+m=4,n=4,k=2  ans=row0 & row2
+1 0 0 0
+1 1 1 1
+1 0 0 0
+1 0 0 0
+
 
 
  
