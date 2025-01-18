@@ -1740,63 +1740,78 @@ arr={15,-2,2,-8,1.7.10,23};
 ans = 5
 
 arr = {3, 4, 5}
-ans = 0
+ans = 0;
 
+```java
+ int arr[] = { 15, -2, 2, -8, 1, 7, 10, 23 };
+        LinkedHashMap<Integer, Integer> hm = new LinkedHashMap<>();
+        int l = 0;
+        int sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i];
+            if (hm.containsKey(sum)) {
+               l=Math.max(l, hm.get(sum)+i);  
+            } else {
+                hm.put(sum, i);
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
+        System.out.println(sum+" "+l);
 ```
+
+## no of Sumarray sum equal to k
+arr={1,2,3} K=3 return number of such subarrays
+ans = (1,2)(3)
+
+arr={10,2,-2,-20,10} K=-10 
+
+```java
+ int arr[] = { 10,2,-2,-20,10};
+        LinkedHashMap<Integer, Integer> hm = new LinkedHashMap<>();
+        int k = -10;
+          HashMap<Integer,Integer> map=new HashMap<>();
+          map.put(0,1);
+
+          int sum=0;
+          int ans=0;
+
+          for(int j=0;j<arr.length;j++){
+            sum+=arr[j];
+            if(map.containsKey(sum-k)){
+                ans+=map.get(sum-k);
+            }
+            map.put(sum,map.getOrDefault(sum, 0)+1);
+          }
+          System.out.println(ans);
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
