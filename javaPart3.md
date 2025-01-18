@@ -361,7 +361,8 @@ if (!map.containsKey(curr.hd)) {
       /  \
      2    3
     / \   / \
-   4   5 6   7
+
+4 5 6 7
 
 K=3
 output 4,5,6,7
@@ -381,64 +382,65 @@ public static void KLevel(Node root, int level , int k){
 ```
 
 ## Lowest COmmon Ancestor
-           1                     
+
+           1
          /  \
         2    3
        / \     \
       4   5     6
-  n1=4,n2=6  output=1
-          1
-         /  \
-        2    3
-       / \   / \
-      4   5 6   7
 
-  n1=4,n2=5  output=2  
+n1=4,n2=6 output=1
+1
+/ \
+ 2 3
+/ \ / \
+ 4 5 6 7
 
+n1=4,n2=5 output=2
 
- ```java
- public static boolean getPath(Node root, int n,ArrayList<Node> path){
-        if(root==null){
-            return false;
-        }
-        path.add(root);
+```java
+public static boolean getPath(Node root, int n,ArrayList<Node> path){
+       if(root==null){
+           return false;
+       }
+       path.add(root);
 
-        if(root.data==n){
-            return true;
-        }
-        boolean fuoundLeft=getPath(root.left,n,path);
-        boolean foundRight=getPath(root.right, n, path);
+       if(root.data==n){
+           return true;
+       }
+       boolean fuoundLeft=getPath(root.left,n,path);
+       boolean foundRight=getPath(root.right, n, path);
 
-        if(fuoundLeft||foundRight){
-            return true;
-        }
+       if(fuoundLeft||foundRight){
+           return true;
+       }
 
-        path.remove(path.size()-1);
-        return false;
-    }
+       path.remove(path.size()-1);
+       return false;
+   }
 
-    public static Node lca(Node root, int n1, int n2){
-        ArrayList<Node> path1 = new ArrayList<>();
-        ArrayList<Node> path2 = new ArrayList<>();
+   public static Node lca(Node root, int n1, int n2){
+       ArrayList<Node> path1 = new ArrayList<>();
+       ArrayList<Node> path2 = new ArrayList<>();
 
-        getPath(root,n1,path1);
-        getPath(root,n2,path2);
+       getPath(root,n1,path1);
+       getPath(root,n2,path2);
 
-        int i =0;
-        for(;i<path1.size() && i<path2.size();i++){
-            if(path1.get(i)!=path2.get(i)){
-                    break;
-            }
-        }
+       int i =0;
+       for(;i<path1.size() && i<path2.size();i++){
+           if(path1.get(i)!=path2.get(i)){
+                   break;
+           }
+       }
 
-        Node lcs=path1.get(i-1);
-        return lcs;
+       Node lcs=path1.get(i-1);
+       return lcs;
 
-    }
+   }
 ```
 
-
 ## Min Distance between nodes
+
 ```java
 public static int minDist(Node root, int n1, int n2) {
         Node lca = lca(root, n1, n2);
@@ -471,12 +473,15 @@ public static int minDist(Node root, int n1, int n2) {
 ```
 
 ## Kth Ancestor of node
-           1                     
+
+           1
          /  \
         2    3
        / \     \
       4   5     6
-  node=5,k=5  ans=1
+
+node=5,k=5 ans=1
+
 ```java
 public static int KAncestor(Node root, int n, int k) {
         if (root == null) {
@@ -503,40 +508,41 @@ public static int KAncestor(Node root, int n, int k) {
 
 ## TRansform to Sum Tree
 
-           1                     
+           1
          /  \
         2    3
        / \   / \
       4   5  7  6
 
 each node =sum of left & right sibtrees
-          27                     
-         /  \
-        9    13
-       / \   /  \
-      0   0  0   0
+27  
+ / \
+ 9 13
+/ \ / \
+ 0 0 0 0
 
 # Binary Search Tree
 
-BT                    O(N)
-   ----> Seacrh ---->  
-BST                   O(H)
+BT O(N)
+----> Seacrh ---->  
+BST O(H)
 
-
-           4                     
+           4
          /  \
         2    5
        / \    \
       1   3    6
 
-* Left subtree Node < Root
-* Right Subtree Node > Root
-* Left & Right Subtrees are also BST with no duplicates
+- Left subtree Node < Root
+- Right Subtree Node > Root
+- Left & Right Subtrees are also BST with no duplicates
 
-* inorder (left root right ) treaversal of a bst is a sorted sequence
+- inorder (left root right ) treaversal of a bst is a sorted sequence
 
 ## Build a BST
+
 values[] ={5,1,3,4,2,7}
+
 ```java
 import java.util.*;
 
@@ -582,7 +588,7 @@ public class JavaBasic {
         int nodes[] = { 5, 1, 3, 4, 2, 7 };
         Node root=null;
         for(int i=0;i<nodes.length;i++){
-            root=insert(root, nodes[i]); 
+            root=insert(root, nodes[i]);
         }
         inorder(root);
     }
@@ -590,29 +596,29 @@ public class JavaBasic {
 ```
 
 ## BST Search ( Search an element )
+
 key = 3;
 
-
-           4                     
+           4
          /  \
         2    5
        / \    \
-      1   3    6 
-
+      1   3    6
 
 --> time complexity
 best case --> o(H)
-average case --> balanced BST longN 
+average case --> balanced BST longN
 worst case --> skewed tree O(n)
 
 key = 1;
-           8                     
-         /  \
-        5    10
-       / \    \
-      3   6    11
-     / \         \
-    1   4        14 
+8  
+ / \
+ 5 10
+/ \ \
+ 3 6 11
+/ \ \
+ 1 4 14
+
 ```java
 public static Boolean BinarySearchTree(Node root, int k) {
         if (root == null) {
@@ -632,25 +638,29 @@ public static Boolean BinarySearchTree(Node root, int k) {
 
 ## Delete a Node
 
-* No child (Lead Node)
-* one child
-* two child
- ___________________________
+- No child (Lead Node)
+- one child
+- two child
+
+---
+
 |inorder successor in a bst|  
-|           is             |  
-| left Most node in right  |
-|         sub tree         |
-----------------------------
+| is |  
+| left Most node in right |
+| sub tree |
 
-* inorder successor always has O or 1 child
+---
 
-           8                     
+- inorder successor always has O or 1 child
+
+           8
          /  \
         5    10
        / \    \
       3   6    11
-     / \         \
-    1   4        14 
+
+  / \ \
+   1 4 14
 
 ```java
 public static Node Delete(Node root, int data){
@@ -687,15 +697,17 @@ public static Node Delete(Node root, int data){
 ```
 
 ## Print in range ( including 2 )
+
 k1 =5 & K2 = 12
 
-           8                     
+           8
          /  \
         5    10
        / \    \
       3   6    11
      / \         \
-    1   4        14 
+    1   4        14
+
 ```java
  public static void printInRange(Node root, int k1, int k2) {
         if (root == null) {
@@ -717,13 +729,13 @@ k1 =5 & K2 = 12
 
 ## Root to Leaf Paths
 
-          8                     
+          8
          /  \
         5    10
        / \    \
       3   6    11
-                \         
-                14 
+                \
+                14
 
 8 - 5 - 3
 8 - 10 -11 -14
@@ -754,6 +766,7 @@ k1 =5 & K2 = 12
 ```
 
 ## Validate BST
+
 --> Approach 1
 comapare with left & right node
 
@@ -779,21 +792,23 @@ public static boolean isValidBST(Node root,Node min,Node max){
     }
 ```
 
-## Mirror a BST 
+## Mirror a BST
 
-    8                     
-   /  \
-  5    10
- / \    \
-3   6    11
+    8
+
+/ \
+ 5 10
+/ \ \
+3 6 11
 
     to
 
-    8                     
-   /  \
-  10   5
- /    / \    
-11   6   3      
+    8
+
+/ \
+ 10 5
+/ / \  
+11 6 3
 
 ```java
 
@@ -809,9 +824,9 @@ public static boolean isValidBST(Node root,Node min,Node max){
         root.left=root.right;
         root.right=temp;
     }
-    
+
     ------- OR ------
-    
+
     public static void Mirror(Node root) {
         if (root == null) {
             return;
@@ -829,9 +844,11 @@ public static boolean isValidBST(Node root,Node min,Node max){
 ```
 
 ## Sorted Array to balanced BST ( minimum possible height )
+
 --> mid from sorted array
---> left section for left bst 
+--> left section for left bst
 --> right section for right bst
+
 ```java
     public static Node createBst(int arr[], int st, int end) {
         if (st > end) {
@@ -846,25 +863,28 @@ public static boolean isValidBST(Node root,Node min,Node max){
 ```
 
 ## Convert BST to Balanced BST
+
         8
        / \
      6    10
-    /      \  
-   5        11
-  /           \
- 3            12
+    /      \
+
+5 11
+/ \
+ 3 12
 
        to
 
        8
      /   \
     5     11
-   / \    / \
-  3   6  10  12
+
+/ \ / \
+ 3 6 10 12
 
 --> Inorder traversal array to balanced BST
 
-use arrayList instead array in createBST 
+use arrayList instead array in createBST
 
 ```java
  public static void getInorder(Node root, ArrayList<Integer> inorder) {
@@ -875,7 +895,7 @@ use arrayList instead array in createBST
         inorder.add(root.data);
         getInorder(root.right, inorder);
 
-        
+
     }
 
     public static Node balanceBst(Node root) {
@@ -887,15 +907,17 @@ use arrayList instead array in createBST
     }
 
 ```
+
 ## Size of Largest BST in BT
+
        50
      /   \
     30    60
-   / \    / \
-  5   20 45  70
-            /  \
-           65  80
 
+/ \ / \
+ 5 20 45 70
+/ \
+ 65 80
 
 ```java
 static class Info {
@@ -903,7 +925,7 @@ static class Info {
         int size;
         int min;
         int max;
-        
+
         public Info(boolean isBST,int size,int min,int max){
             this.isBST=isBST;
             this.size=size;
@@ -927,7 +949,7 @@ static class Info {
         if(root.data<=left.max||root.data>=right.min){
             return new Info(false, size, min, max);
         }
-        
+
         if(left.isBST&&right.isBST){
             maxBST=Math.max(maxBST,size);
             return new Info(true, size, min, max);
@@ -935,40 +957,39 @@ static class Info {
 
         return new Info(false, size, min, max);
 
-        
+
     }
 ```
 
 ## Merge 2 BST
-1.
-       2
-     /   \
-    1     4
-2.
-       9
-     /   \
-    3     12
-       
-       to
-       
-       3
-     /   \
-    1     9
-     \    / \
-      2  4  12
-            
-* -> inorder requence of 2s
-* -> merge them 
-* -> than create a Balanced BST
 
+1.        2
+    / \
+     1 4
+2.        9
+
+    / \
+     3 12
+    to
+
+         3
+
+    / \
+     1 9
+    \ / \
+     2 4 12
+
+- -> inorder requence of 2s
+- -> merge them
+- -> than create a Balanced BST
 
 ## AVL Trees ( Self - balanced BST )
+
 property : | HL - HR | < 2
 BALANCED FACTOR : -1, 0, 1
 bf = lh - rh
 
 total possible bst ( un-balance and balance ) n!
-
 
 # Heaps / Priority Queue
 
@@ -985,7 +1006,7 @@ PQ Integer low int have high priporty
 import java.util.PriorityQueue;
 
 public class JavaBasic {
- 
+
     public static void main(String[] args) {
        // in ascending order
        PriorityQueue<Integer> pq=new PriorityQueue<>();
@@ -1000,12 +1021,14 @@ public class JavaBasic {
     }
 }
 ```
+
 ##### OBjects in PQ
+
 ```java
 import java.util.PriorityQueue;
 
 public class JavaBasic {
- 
+
    static class Student implements Comparable<Student>{
         String name;
         int rank;
@@ -1028,59 +1051,62 @@ public class JavaBasic {
 
     }
 }
-``` 
+```
 
 ### Heaps
+
 visualize --> Heap
 implement -> Array
 
 Max heap
-       10
-     /   \
-    4     5
-   / \   
-  1   2  
+10
+/ \
+ 4 5
+/ \  
+ 1 2
 
 Min Heap
-       1
-     /   \
-    2     4
-   / \   
-  5   10 
+1
+/ \
+ 2 4
+/ \  
+ 5 10
 
-* Binary Tree
-at most 2 children
+- Binary Tree
+  at most 2 children
 
-* Complete BInary Tree
-CBT is a BT in which all the levels are completely filled except possibly the last one, which is filled from the left to right.
+- Complete BInary Tree
+  CBT is a BT in which all the levels are completely filled except possibly the last one, which is filled from the left to right.
 
-* Heap Order Property
-Children >= Parent ( maxHeap )
-Children >= Parent ( maxHeap ) 
+- Heap Order Property
+  Children >= Parent ( maxHeap )
+  Children >= Parent ( maxHeap )
 
-* Heap is not implemented as a class
- to insert
-insert than correct the heap
+- Heap is not implemented as a class
+  to insert
+  insert than correct the heap
 
-* heap is visiually treated as tree because we want to show parent and child relation ship
+- heap is visiually treated as tree because we want to show parent and child relation ship
 
-* Heap as an array/arraylist
-       1
-     /   \
-    2     4
-   / \   
-  5   10 
+- Heap as an array/arraylist
+  1
+  / \
+   2 4
+  / \  
+  5 10
 
 2,3,4,5,10
 node idx = i
 left child=2i+1
 right child=2i+2
 
->> to get parent index
-x-1/2 here x is child index 
+> > to get parent index
+> > x-1/2 here x is child index
+
 ## Insert in min Heap
+
 1.  add a last
-2. fix heap (check parent  and if parent is large than swap )
+2.  fix heap (check parent and if parent is large than swap )
 
 heap has n number than height is (O)logn
 
@@ -1106,6 +1132,7 @@ static class Heap {
 ```
 
 ## get Min from Heap
+
 ```java
         public int peek(){
             if(arr.isEmpty()){
@@ -1116,11 +1143,12 @@ static class Heap {
 ```
 
 ## Delete in Heap
+
 2,3,4,5,10,6
 
-* first and last node swap
-* remove last idx
-* fix heap ( heapify )
+- first and last node swap
+- remove last idx
+- fix heap ( heapify )
 
 ```java
 public int remove() {
@@ -1129,7 +1157,7 @@ public int remove() {
             arr.set(arr.size() - 1, data);
             arr.set(0, temp);
             arr.remove(arr.size() - 1);
-            
+
             heapify(0);
             return data;
         }
@@ -1163,21 +1191,22 @@ public int remove() {
 ```
 
 ## Heap Sort O(nlogn)
->> asc -> Max Heap
->> desc -> Min Heap
-arr=1,2,4,5,3
+
+> > asc -> Max Heap
+> > desc -> Min Heap
+> > arr=1,2,4,5,3
 
        1
      /   \
     2     4
-   / \   
-  5   3  
 
+/ \  
+ 5 3
 
-* maxHeapyfy n/2 to 0 ( non leaf node ) to convert min to max Heap
-* move first to last and make last as not a part of heap
+- maxHeapyfy n/2 to 0 ( non leaf node ) to convert min to max Heap
+- move first to last and make last as not a part of heap
 
-```java 
+```java
 public static void heapifyMax(int arr[], int i, int size) {
             int left = 2 * i + 1;
             int right = 2 * i + 2;
@@ -1217,12 +1246,13 @@ public static void heapifyMax(int arr[], int i, int size) {
 ```
 
 ## Nearby Cars
+
 we are given N points in a 2D plane which are locations of N cars . if we are at the origin, print the nearest k cars.
 
 CO (3,3)
 C1 (5,-1)
 C2 (-2,4)
-K = 2 
+K = 2
 ans = CO & C2
 
 ```java
@@ -1266,7 +1296,7 @@ ropes={4,3,2,6};
 ans=29;
 
 connect 2 & 3 [5]
-connect 5  & 4 [9]
+connect 5 & 4 [9]
 connect 9 & 6 [15]
 
 ```java
@@ -1289,16 +1319,17 @@ connect 9 & 6 [15]
     }
 ```
 
-
 ## Weakest Soldier
+
 We are given an mxn binary matrix of 1's (soldiers) and O's (cicilians). the soldiers are positioned in front of the civilians. that is, all the 1's will appear to the left of alll the 0's in each row.
 
 A row is weaker than a row j if one of the following is true
-* the number of soldiers in row i is less than the number of soldiers in row j.
-* Both rows have the same number if soldiers and i<j.
-Fidn the K weakest rows.
 
-m=4,n=4,k=2  ans=row0 & row2
+- the number of soldiers in row i is less than the number of soldiers in row j.
+- Both rows have the same number if soldiers and i<j.
+  Fidn the K weakest rows.
+
+m=4,n=4,k=2 ans=row0 & row2
 1 0 0 0
 1 1 1 1
 1 0 0 0
@@ -1346,27 +1377,375 @@ m=4,n=4,k=2  ans=row0 & row2
 ## SLiding Window Maximum O(nlogk)
 
 maximum of all subarrrays of size k
-1,2,3,4,5,6,7,8,9,10  k=3
+1,2,3,4,5,6,7,8,9,10 k=3
 
 ans=3,4,5,6,7,8,9,10
 
-2.
-1,3,-1,-3,5,3,6,7 k=3
-ans=3,3,5,5,6,7 
-
+2.  1,3,-1,-3,5,3,6,7 k=3
+    ans=3,3,5,5,6,7
 
 add k number in PQ
 check the peek index should be from range i-k PQ.peek()
 add another in PQ
 
+# Hashing
 
-# Hashing 
+|-->Maps
+HashMap
+Linked HashMap
+TreeMap
+
+|--> Sets
+SetMap
+Linked SetMap
+TreeSet
+
+##### HashMap
+
+(Key Value)
+
+- insert -> TC -> O(1)
+- remove -> TC -> O(1)
+- search -> TC -> O(1)
+
+> > HeapMap Operation
+> > import java.util.\*;
+> > import java.util.HashMap;
+
+HashMap<String (Key type),Integer (value type)> hm=new HashMap<>();
+
+- put(key,value) O(1)
+- get(key) O(1)
+- containsKey(key) O(1)
+- remove(key) O(1)
+- size()
+- isEmpty()
+- clear()
+
+System.out.println(Hashmap)
+
+##### Iteration on HashMap
+
+```java
+Set<Integer (map key type)> keys=hm.keySet();
+.entrySet()
+.valueSet()
+System.our.print(key);
+for(int i=0;i<key.length;i++){
+    System.out.println(map.get(key[i]))
+}
+for(String k :keys){
+    hm.get(k)
+}
+```
+
+##### Implementation HashMap
+
+```java
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+
+public class JavaBasic {
+
+    static class HashMap<K, V> { // generics
+        public class Node {
+            K key;
+            V value;
+
+            public Node(K key, V value) {
+                this.key = key;
+                this.value = value;
+            }
+        }
+
+        private int n;
+        private int N;
+        private LinkedList<Node> bucket[];
+
+        @SuppressWarnings("unchecked")
+        public HashMap() {
+            this.N = 4;
+            this.bucket = new LinkedList[4];
+            for (int i = 0; i < 4; i++) {
+                this.bucket[i] = new LinkedList<>();
+            }
+        }
+
+        public int hashFunction(K key) {
+            int hc = key.hashCode();
+            return Math.abs(hc) % N;
+        }
+
+        public int SearchInLL(K key, int bi) {
+            LinkedList<Node> ll = bucket[bi];
+            for (int i = 0; i < ll.size(); i++) {
+                Node node = ll.get(i);
+                if (node.key == key) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public void put(K key, V value) {
+            int bi = hashFunction(key);
+            int di = SearchInLL(key, bi);
+
+            if (di != -1) {
+                bucket[bi].get(di).value = value;
+                // or
+                // Node node=bucket[bi].get(di);
+                // node.value=value;
+            } else {
+                bucket[bi].add(new Node(key, value));
+                n++;
+            }
+
+            double lambda=(double)n/N;
+            if(lambda>2.0){
+                rehash();
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        public void rehash(){
+            LinkedList<Node> oldBuck[]=bucket;
+            bucket=new LinkedList[N+2];
+            N=2*N;
+            for(int i=0;i<bucket.length;i++){
+                bucket[i]=new LinkedList<>();
+            }
+
+            for(int i=0;i<oldBuck.length;i++){
+                LinkedList<Node> ll=oldBuck[i];
+                for(int j=0;j<ll.size();j++){
+                    Node node=ll.remove();
+                    put(node.key,node.value);
+                }
+            }
+        }
+
+        public boolean containsKey(K key) {
+            return false;
+        }
+
+        // public V remove(K key) {
+
+        // }
+
+    }
+
+    public static void main(String[] args) {
+         HashMap<String,Integer> hm=new HashMap<>();
+         hm.put("India",100);
+         hm.put("Chine",100);
+
+
+    }
+}
+```
+
+##### hashMap can have n Tc if hashCOde return same value
+
+#### LinkedHashMap
+
+Keys are insertion ordered
+import java.util.LinkedHashMap
+
+> > get key in same order it put because of doubly linked list
+> > LinkedHashMap<key type, value type> hm=new LinkedHashMap<>()
+
+```java
+    LinkedHashMap<String,Integer> lhm=new LinkedHashMap<>();
+        lhm.put("Indian",100);
+```
+
+#### Tree Map
+
+> > key are sorted
+> > put , get , remove , O(logn)
+
+TreeMap< > hm=new TreeMap<>();
+
+use red black trees ( self balancing tree )
+
+## Given an integer array of size n, find all element that appear more than n/3 times
+
+nums[] ={1,3,2,5,1,3,1,5,1};
+// 1
+
+nums[]={1,2};
+// 1,2
+
+```java
+ int nums[] = { 1, 3, 2, 5, 1, 3, 1, 5, 1 };
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for (int l : nums) {
+            hm.put(l, hm.containsKey(l) ? hm.get(l) + 1 : 1);
+        }
+        int n=nums.length/3;
+        for(int k:hm.keySet()){
+            if(hm.get(k)>n){
+                System.out.println(k);
+            }
+        }
+```
+
+## Valid Anagram
+
+Given two strign s and t, return true if t is an anagram of s, and false otherwise. An Anagram is a word or phase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+s= "race" t="care" TRUE
+s= "heart" t="earth" TRUE
+s= "tulip" t="lipid" FALSE
+
+> > store s in hasmap and when come to t reduce count from t word and as last if .isEMPTY return true than it is anagram
+
+#### HashSet ( unique collection of data )
+
+no dublicate
+unordered
+NUll is allowed
+
+> > internally a Set implemented through a hashmap
+> > set values are hashmap key and its value are random
+> > HashSet<Key type> hs = new HashSet<>();
+
+- add(key) O(1)
+- contains(key) O(1)
+- remove(key) O(1)
+
+```java
+   HashSet<Integer> set = new HashSet<>();
+        set.add(1);
+        set.add(2);
+
+        set.contains(2)
+```
+
+##### Iteration on HashSet
+
+1. Using Iterators ( interface )
+
+```java
+Iterator it=set.iterator()
+while(it.hasNext()){
+    print(it.next())
+}
+```
+
+2. Using Enhanced For loop
+
+```java
+for(String city:cities){
+
+}
+```
+
+#### Linked HashSet
+
+- Ordered using DLL
+- order maintainer in this set
+- LHM < HM
+- LHS < HS
+
+insert 1,2,3,4
+if a set contain than if i iterate
+1 ,2 ,3 4
+
+```java
+LinkedHashSet<String> lhs = new LinkedHashSet<>();
+lhs.add("Delhi")
+
+
+```
+
+#### TreeSet ( Using Red Black Tree treeMap -> tree set )
+
+- Sorted in anscending order
+- NUll value are Not allowed
+
+because if hard to compare null is greate or smaller with the comparitable value
+
+```java
+TreeSet<String> ts=new TreeSet<>();
+
+```
+
+## Count Distinct Elements
+
+num = { 4,3,2,5,6,7,3,4,2,1 };
+ans = 7
+
+store all in set and than print set length
+set.size();
+
+## Union & Intersection of 2 Array
+
+arr1={7,3,9};
+arr2 = {6,3,9,2,9,4};
+a array can have same value
+union =6 (7,3,9,6,2,4)
+intersection = 2(3,9)
+
+> > add arr1 in set and iterato in
+
+## Find Itinerary from tickets
+
+"Chennai" -> "Bengaluru"
+"Mumbai" -> "Delhi"
+"Goa" -> "Chennai"
+"Delhi" -> "Goa"
+
+"Mumbai" -> "Delhi" -> "Goa" -> "Channai" -> "Benagluru"
+
+```java
+public static String getStart(HashMap<String,String> tickets){
+    HashMap<String,String> revMap=new HashMap<>();
+
+    for(String key:tickets.keySet()){
+        revMap.put(tickets.get(key),key)
+    }
+
+        for(String key:tickets.keySet()){
+       if(!revMap.containsKey(key)){
+            return key;
+       }
+    }
+
+    return null;
+}
+
+HashMap<String,String> tickets=new HashMap<>()
+
+tickets.put("Channai","Bengaluru")
+tickets.put("Mumbai","Delhi")
+tickets.put("Goa","Chennai")
+tickets.put("Delhi","Goa")
+
+String start=getStart(tickets);
+System.out.println(start);
+
+for(String key : tickets.keySet()){
+    System.out.print("-->"+tickets.get(start))
+    start=ticket.get(start)
+
+}
+```
+
+##  Largest subarray with 0 sum
+arr={15,-2,2,-8,1.7.10,23};
+ans = 5
+
+arr = {3, 4, 5}
+ans = 0
 
 
 
 
 
- 
 
 
 
@@ -1415,3 +1794,9 @@ add another in PQ
 
 
 
+
+
+
+
+
+```
