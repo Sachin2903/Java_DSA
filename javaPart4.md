@@ -682,7 +682,21 @@ directed graph s=5 d=1
 
 ![alt text](./assests/allpathsfromsourcetodest.png)
 
+```java O(V^v)
+    public static void printAllPath(ArrayList<Edge> graph[],int src,int dest,String path){
+        if(src==dest){
+            System.out.println(path+dest);
+        }
+        for(int i=0;i<graph[src].size();i++){
+            Edge e=graph[src].get(i);
+            printAllPath(graph, e.src, dest, path+src);
+        }
+    }
+```
 
+## Dijkstra's algorithm
+Shortest path from the source to all vertices (weighted graph)
 
+![alt text](./assests/dijk.png)
 
 
