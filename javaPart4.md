@@ -699,4 +699,208 @@ Shortest path from the source to all vertices (weighted graph)
 
 ![alt text](./assests/dijk.png)
 
+```java O(V+ElogV) nlogn
+static class Pair implements Comparable<Pair>{
+        int n; int path;
+        public Pair(int n,int path){
+            this.n=n;
+            this.path=path;
+        }
+        @Override
+        public int compareTo(JavaBasic.Pair arg0) {
+            return this.path-arg0.path; 
+        }
+    }
+
+    public static void dijkstra(ArrayList<Edge> graph[],int src){
+        int dist[] = new int [graph.length];
+        boolean vis[] = new boolean [graph.length];
+        for(int i=0;i<graph.length;i++){
+            if(i!=src){
+                dist[i]=Integer.MAX_VALUE;
+            }
+        }
+
+        PriorityQueue<Pair> pq= new PriorityQueue<>();
+        pq.add(new Pair(src,0));
+
+        while(!pq.isEmpty()){
+            Pair curr=pq.remove();
+            if(!vis[curr.n]){
+                vis[curr.n]=true;
+
+                for(int i=0;i<graph[curr.n].size();i++){
+                    Edge e=graph[curr.n].get(i);
+                    int u=e.src;
+                    int v=e.dest;
+                    int wt=e.wt;
+
+                    if(dist[u]+wt<dist[v]){
+                        dist[v]=dist[u]+wt;
+                        pq.add(new Pair(v,dist[v]));
+                    }
+                }
+            }
+        }
+        for(int i=0;i<dist.length;i++){
+            System.out.print(dist[i]+" ");
+        }
+        System.out.println();
+    }
+```
+
+>> dijkstra algorithm goes not garunttee wheather final anawer will be correct  where a graph can contain negative weight
+
+## Bellma FOrd Algorithm
+Shortest path from the source to all vertices (negartive edges)
+
+took more TC than Dijkstra algo
+
+it does not work with negative weight cycle
+
+```java O(V*E)
+public static void bellmanFord(ArrayList<Edge> graph[],int src){
+        int dist[] = new int[graph.length];
+        for(int i=0;i<dist.length;i++){
+            if(i!=src){
+                dist[i]=Integer.MAX_VALUE;
+            }
+        }
+        int V=graph.length;
+        for(int i=0;i<V-1;i++){
+            for(int j=0;j<graph.length;j++){
+                for(int k=0;k<graph[j].size();k++){
+                    Edge e =graph[j].get(k);
+                    int u=e.src;
+                    int v=e.dest;
+                    int wt=e.wt;
+                    if(dist[u]!=Integer.MAX_VALUE&&dist[u]+wt<dist[v]){
+                        dist[v]=dist[u]+wt;
+                    }
+                }
+            }
+        }
+        for(int i=0;i<dist.length;i++){
+            System.out.print(dist[i]+"");
+        }
+        System.out.println();
+    }
+```
+
+## Bellma ford algorithem using edge based graph
+
+in main 
+```java
+int V=5;
+ArrayList<Edge> edges = new ArrayList<>();
+createGraph2(edges)
+```
+```java
+createGraph2(ArrayList<Edge> graph){
+graph.add(new Edge(0,1,2))
+graph.add(new Edge(0,2,4))
+graph.add(new Edge(1,2,-4))
+graph.add(new Edge(2,3,2))
+graph.add(new Edge(3,4,4))
+graph.add(new Edge(4,1,-1))
+}
+here V is total vertices 
+public static void bellmanFord
+(ArrayList<Edge> graph,int src,int V){
+        int dist[] = new int[V];
+        for(int i=0;i<dist.length;i++){
+            if(i!=src){
+                dist[i]=Integer.MAX_VALUE;
+            }
+        }
+        for(int i=0;i<V-1;i++){
+           for(int j=0;j<graph.size();j++){
+                    Edge e =graph.get(j);
+                    int u=e.src;
+                    int v=e.dest;
+                    int wt=e.wt;
+                    if(dist[u]!=Integer.MAX_VALUE&&dist[u]+wt<dist[v]){
+                        dist[v]=dist[u]+wt;
+                    }
+                }
+        }
+        for(int i=0;i<dist.length;i++){
+            System.out.print(dist[i]+"");
+        }
+        System.out.println();
+    }
+
+
+```
+
+
+
+
+
+## Minimum spanning tree (MST)
+![alt text](./assests/MSt.png)
+
+## Prim's Algorithm
+![alt text](./assests/prims.png)
+
+```java
+    static class Pairs implements Comparable<Pairs> {
+        int v;
+        int cost;
+
+        public Pairs(int v, int c) {
+            this.v = v;
+            this.cost = c;
+        }
+
+        @Override
+        public int compareTo(JavaBasic.Pairs arg0) {
+            return this.cost - arg0.cost;
+        }
+    }
+
+    public static void primts(ArrayList<Edge> graph[]) {
+        boolean vis[] = new boolean[graph.length];
+        PriorityQueue<Pairs> pq = new PriorityQueue<>();
+        pq.add(new Pairs(0, 0));
+        int finalCost = 0;
+
+        while (!pq.isEmpty()) {
+            Pairs curr = pq.remove();
+            if (!vis[curr.v]) {
+                vis[curr.v] = true;
+                finalCost += curr.cost;
+               
+                for(int i=0;i<graph[curr.v].size();i++){
+                    Edge e=graph[curr.v].get(i);
+                    pq.add(new Pairs(e.dest,e.wt));
+                }
+            }
+        }
+        System.out.println(finalCost);
+    }
+```
+
+## Cheapest flights within K stops
+there are n cities connected by some number of flights. You are given an array flights where flights[i] = [from , to , price] indicates that there is a flight.
+
+you are also given three integers src, dest,and k , return the cheapest price from src to dst with at most k stops if there is no such route, return -1.
+
+all values are positive 
+
+flights = [[0,1,100],[1,2,100],[0,2,500]]
+src = 0, dst = 2, k=1
+ans = 200
+
+       0
+ 100 /   \ 100
+    /     \
+    2------1
+      100
+
+
+
+
+
+
 

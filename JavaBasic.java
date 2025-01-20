@@ -178,58 +178,138 @@ public class JavaBasic {
             System.out.println(s.pop());
         }
     }
+
     public static void topSortUtils(ArrayList<Edge> graph[], int curr, boolean vis[], Stack<Integer> s) {
         vis[curr] = true;
-        for(int i=0;i<graph.length;i++){
-            Edge e=graph[curr].get(i);
-            if(!vis[i]){
+        for (int i = 0; i < graph.length; i++) {
+            Edge e = graph[curr].get(i);
+            if (!vis[i]) {
                 topSortUtils(graph, e.dest, vis, s);
             }
         }
         s.push(curr);
     }
 
-    public static void calcIndeg(ArrayList<Edge> graph[], int indeg[]){
-        for(int i=0;i<graph.length;i++){
-            int v=1;
-            for(int j=0;j<graph[v].size();j++){
-                Edge e =graph[v].get(j);
+    public static void calcIndeg(ArrayList<Edge> graph[], int indeg[]) {
+        for (int i = 0; i < graph.length; i++) {
+            int v = 1;
+            for (int j = 0; j < graph[v].size(); j++) {
+                Edge e = graph[v].get(j);
                 indeg[e.dest]++;
             }
         }
     }
-    public static void topSortBfs(ArrayList<Edge> graph[]){
-        int indeg[]=new int[graph.length];
-        Queue<Integer> q =new LinkedList<>();
 
-        for(int i=0;i<indeg.length;i++){
-            if(indeg[i]==0){
+    public static void topSortBfs(ArrayList<Edge> graph[]) {
+        int indeg[] = new int[graph.length];
+        Queue<Integer> q = new LinkedList<>();
+
+        for (int i = 0; i < indeg.length; i++) {
+            if (indeg[i] == 0) {
                 q.add(i);
             }
         }
-        while(!q.isEmpty()){
-            int curr=q.remove();
-            System.out.println(curr+"");
-            for(int i=0;i<graph[curr].size();i++){
-                Edge e=graph[curr].get(i);
+        while (!q.isEmpty()) {
+            int curr = q.remove();
+            System.out.println(curr + "");
+            for (int i = 0; i < graph[curr].size(); i++) {
+                Edge e = graph[curr].get(i);
                 indeg[e.dest]--;
-                if(indeg[e.dest]==0){
-                  q.add(e.dest);
+                if (indeg[e.dest] == 0) {
+                    q.add(e.dest);
                 }
             }
         }
         System.out.println("");
     }
 
-    public static void printAllPath(ArrayList<Edge> graph[],int src,int dest,String path){
-        if(src==dest){
-            System.out.println(path+dest);
+    static class Pair implements Comparable<Pair> {
+        int n;
+        int path;
+
+        public Pair(int n, int path) {
+            this.n = n;
+            this.path = path;
         }
-        for(int i=0;i<graph[src].size();i++){
-            Edge e=graph[src].get(i);
-            printAllPath(graph, e.src, dest, path+src);
+
+        @Override
+        public int compareTo(JavaBasic.Pair arg0) {
+            return this.path - arg0.path;
         }
     }
+
+    public static void dijkstra(ArrayList<Edge> graph[], int src) {
+        int dist[] = new int[graph.length];
+        boolean vis[] = new boolean[graph.length];
+        for (int i = 0; i < graph.length; i++) {
+            if (i != src) {
+                dist[i] = Integer.MAX_VALUE;
+            }
+        }
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.add(new Pair(src, 0));
+        while (!pq.isEmpty()) {
+            Pair curr = pq.remove();
+            if (!vis[curr.n]) {
+                vis[curr.n] = true;
+                for (int i = 0; i < graph[curr.n].size(); i++) {
+                    Edge e = graph[curr.n].get(i);
+                    int u = e.src;
+                    int v = e.dest;
+                    int wt = e.wt;
+                    if (dist[u] + wt < dist[v]) {
+                        dist[v] = dist[u] + wt;
+                        pq.add(new Pair(v, dist[v]));
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < dist.length; i++) {
+            System.out.print(dist[i] + " ");
+        }
+        System.out.println();
+    }
+
+    public static void bellmanFord(ArrayList<Edge> graph[], int src) {
+        int dist[] = new int[graph.length];
+        for (int i = 0; i < dist.length; i++) {
+            if (i != src) {
+                dist[i] = Integer.MAX_VALUE;
+            }
+        }
+        int V = graph.length;
+        for (int i = 0; i < V - 1; i++) {
+            for (int j = 0; j < graph.length; j++) {
+                for (int k = 0; k < graph[j].size(); k++) {
+                    Edge e = graph[j].get(k);
+                    int u = e.src;
+                    int v = e.dest;
+                    int wt = e.wt;
+                    if (dist[u] != Integer.MAX_VALUE && dist[u] + wt < dist[v]) {
+                        dist[v] = dist[u] + wt;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < dist.length; i++) {
+            System.out.print(dist[i] + "");
+        }
+        System.out.println();
+    }
+
+ 
+
+    public static void printAllPath(ArrayList<Edge> graph[], int src, int dest, String path) {
+        if (src == dest) {
+            System.out.println(path + dest);
+        }
+        for (int i = 0; i < graph[src].size(); i++) {
+            Edge e = graph[src].get(i);
+            printAllPath(graph, e.src, dest, path + src);
+        }
+    }
+
     public static void main(String[] args) {
         int V = 7;
         @SuppressWarnings("unchecked")
