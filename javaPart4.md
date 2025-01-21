@@ -898,6 +898,246 @@ ans = 200
     2------1
       100
 
+```java
+import java.util.*;
+
+public class Java {
+    public static class Edge {
+        int src;
+        int dest;
+        int wt;
+
+        public Edge(int s, int d, int wt) {
+            this.src = s;
+            this.dest = d;
+            this.wt = wt;
+        }
+    }
+
+    public static void createGraph(int flights[][], ArrayList<Edge> graph[]) {
+        for (int i = 0; i < graph.length; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        for (int i = 0; i < flights.length; i++) {
+            int src = flights[i][0];
+            int dest = flights[i][1];
+            int wt = flights[i][2];
+
+            Edge e = new Edge(src, dest, wt);
+            graph[src].add(e);
+        }
+    }
+
+    public static class Info {
+        int v;
+        int cost;
+        int stops;
+
+        public Info(int v, int c, int s) {
+            this.v = v;
+            this.cost = c;
+            this.stops = s;
+        }
+    }
+
+    public static int cheapestFlight(int n, int flights[][], int src, int dest, int k) {
+        ArrayList<Edge> graph[] = new ArrayList[n];
+        createGraph(flights, graph);
+
+        int dist[] = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            if (i != src) {
+                dist[i] = Integer.MAX_VALUE;
+            }
+        }
+
+        Queue<Info> q = new LinkedList<>();
+        q.add(new Info(src, 0, 0));
+
+        while (!q.isEmpty()) {
+            Info curr = q.remove();
+            if (curr.stops > k) {
+                break;
+            }
+
+            for (int i = 0; i < graph[curr.v].size(); i++) {
+                Edge e = graph[curr.v].get(i);
+                int u = e.src;
+                int v = e.dest;
+                int wt = e.wt;
+
+                if (dist[u] != Integer.MAX_VALUE && curr.cost + wt < dist[v]) {
+                    dist[v] = dist[u] + wt;
+                    q.add(new Info(v, dist[v], curr.stops + 1));
+
+                }
+            }
+        }
+
+        if (dist[dest] == Integer.MAX_VALUE) {
+            return -1;
+        } else {
+            return dist[dest];
+        }
+    }
+
+    public static void main(String arg[]) {
+        int n = 4;
+        int flights[][] = { { 0, 1, 100 }, { 1, 2, 100 }, { 2, 0, 100 }, { 1, 3, 600 }, { 2, 3, 200 } };
+        int src = 0, dist = 3, k = 1;
+        cheapestFlight(n, flights, src, dist, k);
+
+    }
+}
+```
+
+## COnnecting CIties with Minum COst 
+FInd the minumum cost for connecting all cities on the map
+
+cities[][] ={
+    {0,1,2,3,4}
+    {1,0,5,0,7}
+    {2,5,0,6,0}
+    {3,0,6,0,0}
+    {4,7,0,0,0}
+}
+
+ans = 10
+
+![alt text](./assests/conncities.png)
+
+same as MST
+
+```java
+    
+    static class Edge implements Comparable<Edge>{
+        int dest;
+        int cost;
+
+        public Edge(int d,int c){
+            this.dest=d;
+            this.cost=c;
+        }
+
+        @Override
+        public int compareTo(Java.Edge arg0) {
+            return  this.cost - arg0.cost;
+        }
+
+    }
+
+    public static int connectCities(int cities[][]){
+        PriorityQueue<Edge> pq=new PriorityQueue<>();
+        boolean vis[] =  new boolean[cities.length];
+
+        pq.add(new Edge(0,0));
+
+        int finalCost=0;
+
+        while(!pq.isEmpty()){
+            Edge curr=pq.remove();
+            if(!vis[curr.dest]){
+                vis[curr.dest]=true;
+                finalCost+=curr.cost;
+            
+                for(int i=0;i<cities[curr.dest].length;i++){
+                    if(cities[curr.dest][i]!=0){
+                        pq.add(new Edge(i, cities[curr.dest][i]));
+                    }
+                }
+            }
+        }
+
+        return finalCost;
+    }
+```
+
+## Disjoint set Data structure / union find DS 
+
+![alt text](./assests/disjoint.png)
+
+used in 
+* cycle detection
+* kruskal algorithm  
+
+find :- find one to which set it belongs / leader / parent
+union :- join two set
+ 
+>> Implements
+Parent + Union by rank
+
+union(1,3)
+find(3)
+union(2,4)
+union(3,6)
+union(1,4)
+find(3)
+union(1,5)
+
+[] parent / group leader
+
+[] rank
+
+* create 2 array parent and rank initial self is parent and rank is 0.
+* rank is height of tree
+
+> union leaders
+> rank parent A = rank parent B
+join any one with any one , than change parent
+
+> rank parent A < rank parent B
+parent A connect Parent B, and change parent Of A and vice-versa
+
+
+```java
+import java.util.PriorityQueue;
+
+public class Java {
+
+    static int n = 7;
+    static int par[] = new int[n];
+    static int rank[] = new int[n];
+
+    public static void init() {
+        for (int i = 0; i < n; i++) {
+            par[i] = i;
+        }
+    }
+
+    public static int find(int x) {
+        if (x == par[x]) {
+            return x;
+        }
+        return find(par[x]);
+    }
+
+    public static void union(int a, int b) {
+        int parA = find(a);
+        int parB = find(b);
+
+        if(rank[parA]==rank[parB]){
+            par[parB]=parA;
+            rank[parA]++;
+        }else if(rank[parA] < rank[parB]){
+            par[parA]=parB;
+        }else{
+            par[parB]=parA;
+        }
+    }
+    public static void main(String arg[]) {
+        // union(1,3)
+        // find(3)
+        // union(2,4)
+        // union(3,6)
+        // union(1,4)
+        // find(3)
+        // union(1,5)
+    }
+}
+```
+
+
 
 
 
