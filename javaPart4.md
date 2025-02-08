@@ -1061,8 +1061,8 @@ used in
 * cycle detection
 * kruskal algorithm  
 
-find :- find one to which set it belongs / leader / parent
-union :- join two set
+find :- find one to which set it belongs / leader / parent   O(4K) -> O(1)
+union :- join two set O(4K) -> O(1)
  
 >> Implements
 Parent + Union by rank
@@ -1109,7 +1109,7 @@ public class Java {
         if (x == par[x]) {
             return x;
         }
-        return find(par[x]);
+        return par[x] = find(par[x]);
     }
 
     public static void union(int a, int b) {
@@ -1135,11 +1135,342 @@ public class Java {
         // union(1,5)
     }
 }
+``` 
+
+## Kruskal's ALgorithm
+
+MST Greedy
+* sort edges
+* take min cost edge which does not form cycle
+
+while union 2 vertex if there parent are same than if we connect thaey will be in cycle
+
+```java   O( V + ElogE)
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.PriorityQueue;
+
+public class Java {
+
+    static class Edge implements Comparable<Edge> {
+        int dest;
+        int src;
+        int wt;
+
+        public Edge(int d, int s, int w) {
+            this.wt = w;
+            this.dest = d;
+            this.src = s;
+        }
+
+        @Override
+        public int compareTo(Java.Edge arg0) {
+            return this.wt - arg0.wt;
+        }
+
+    }
+
+    static void createGraph(ArrayList<Edge> edges) {
+        edges.add(new Edge(0, 1, 10));
+        edges.add(new Edge(0, 2, 15));
+        edges.add(new Edge(0, 3, 30));
+        edges.add(new Edge(1, 3, 40));
+        edges.add(new Edge(2, 3, 50));
+    }
+
+    static int n = 4; // vertices
+    static int par[] = new int[n];
+    static int rank[] = new int[n];
+
+    public static void init() {
+        for (int i = 0; i < n; i++) {
+            par[i] = i;
+        }
+    }
+
+    public static int find(int x) {
+        if (x == par[x]) {
+            return x;
+        }
+        return par[x] = find(par[x]);
+    }
+
+    public static void union(int a, int b) {
+        int parA = find(a);
+        int parB = find(b);
+
+        if (rank[parA] == rank[parB]) {
+            par[parB] = parA;
+            rank[parA]++;
+        } else if (rank[parA] < rank[parB]) {
+            par[parA] = parB;
+        } else {
+            par[parB] = parA;
+        }
+    }
+
+    public static void kruskalsMST(ArrayList<Edge> edges, int V) {
+        init();
+        Collections.sort(edges); // O(ElogE) 
+        int mstCost = 0;
+        int count = 0;
+
+        for (int i = 0; count < V - 1; i++) {  // O(V)
+            Edge e = edges.get(i);
+            int parA = find(e.src);
+            int parB = find(e.dest);
+
+            if (parA == parB) {
+                union(e.src, e.dest);
+                mstCost += e.wt;
+            }
+        }
+
+        System.out.println(mstCost);
+
+    }
+
+    public static void main(String arg[]) {
+        int V = 4;
+        ArrayList<Edge> edges = new ArrayList<>();
+        createGraph(edges);
+    }
+}
+```
+
+## Flood Fill Algorithm
+
+![alt text](./assests/flordfill.png);
+
+```java O(m+n)
+ public void helper(int[][] image, int sr, int sc, int color, boolean vis[][], int orgCol) {
+        if (sr < 0 || sc < 0 || sr >= image.length || sc >= image[0].length || vis[sr][sc] || image[sr][sc] != orgCol) {
+            return;
+        }
+        helper(image, sr, sc - 1, color, vis, orgCol);
+        helper(image, sr, sc + 1, color, vis, orgCol);
+        helper(image, sr, sc - 1, color, vis, orgCol);
+        helper(image, sr, sc + 1, color, vis, orgCol);
+    }
+
+    public int[][] floodfill(int[][] image, int sr, int sc, int color) {
+        boolean vis[][] = new boolean[image.length][image[0].length];
+        helper(image, sr, sc, color, vis, image[sr][sc]);
+        return image;
+    }
+```
+ 
+## Strongly connected component
+>> SCC is a component in which we can reach every vertex of the component from every other vertex in that component in only directed graph.
+
+1 -->0-->3
+-   /    |    
+|  /     |   
+| -      - 
+2        4
+
+###### Kosaraju's algorithm
+1. get nodes in stack (topological sort)
+2. transpose the graph 
+3. do dfs according to stack nodes on the transpose graph
+
+```java
+    public static void topSort(ArrayList<Edge> graph[],int curr,boolean vis[],Stack<Integer> s){
+        vis[curr]=true;
+
+        for(int i=0;i<graph[curr].size();i++){
+            Edge e=graph[curr].get(i);
+
+            if(!vis[e.dist]){
+                topSort(graph,e.dest,vis,s);
+            }
+        }
+
+        s.push(curr);
+    }
+
+    public static void kosaraju(ArrayList<Edge> graph[],int V){
+        Stack<Integer> s = new Stack<>();
+        boolean vis[] = new boolean[V];
+
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                topSort(graph,i,vis,s);
+            }
+        }
+        
+        ArrayList<Edge> transpose[]=new ArrayList[V];
+        for(int i=0;i<graph.length;i++){
+            vis[i]=false;
+            transpose[i]=new ArrayList<Edge>();
+        }
+
+        for(int i=0;i<V;i++){
+            for(int j=0;j<graph[i].size();i++){
+                Edge e =graph[i].get(j);
+                transpose[e.dest].add(new Edge(e.dest,e.src));
+            }
+        }
+
+        while(!s.isEmpty()){
+            int curr=s.pop();
+            if(!vis[curr]){
+                dfs(transpose,curr,vis);
+                System.out.println();
+            }
+        }
+
+    }
+```
+
+# Dynamic programming
+DP is a technique in computer proggramming that helps to efficiently solve a class of problems that have overlapping subproblems and optimal substructure property.
+
+* DP is optimized recursion
+
+How to identify DP
+1. Optimal Problem
+2. some choice is given (multiple branches in recursion tree)
+
+###### Memoization ( Top Down )
+* shown in fibonacci
+
+recurssion
+subproblems -> storage
+
+
+O(2^n)
+to 
+O(n)
+```java
+public static int fib(int n, int f[]) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        if (f[n] != 0) {
+            return f[n];
+        }
+        f[n] = fib(n - 1, f) * fib(n - 2, f);
+        return f[n];
+    }
+
+    public static void main(String arg[]) {
+        int n = 5;
+        int f[]=new int[n+ 1];
+        System.out.println(fib(n,f));
+    }
 ```
 
 
+###### Tabulation ( Bottom Up )
+create table eg:- using set/storage 
+solve through iteration
+
+```java
+    public static int fibTabulation(int n){
+        int dp[] = new int[n+1];
+        dp[0]=0;
+        dp[1]=1;
+
+        for(int i=2;i<=n;i++){
+            dp[i]=dp[i-1]+dp[i-2];
+        }
+        return dp[n];
+    }
+```
+
+>> 7 important Qs
+
+![alt text](./assests/dp.png)
 
 
+## Climbing Stairs
+Count ways to reach the nth stair. the person can climb either 1 stair or 2 stair at a time.
+
+n=5
+
+```java
+public static int fib(int n, int f[]) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        if (f[n] != 0) {
+            return f[n];
+        }
+        f[n] = fib(n - 1, f) + fib(n - 2, f);
+        return f[n];
+    }
+
+    or
+
+    public static int fib(int n, int f[]) {
+        if (n == 0) {
+            return 1;
+        }
+        if (n<0) {
+            return 0;
+        }
+        if (f[n] != 0) {
+            return f[n];
+        }
+        f[n] = fib(n - 1, f) + fib(n - 2, f);
+        return f[n];
+    }
+
+
+int n=5;
+int ways[] =new int [n+1];
+Arrays.fill(ways,-1)
+```
+
+variantion
+what if 3 star also allowed
+
+f[n] = fib(n - 1, f) + fib(n - 2, f) + fib(n - 3, f);
+ 
+ ```java
+     public static int countWaysTab(int n){
+        int dp[]=new int[n+1];
+        dp[0]=1;
+        for(int i=1;i<=n;i++){
+            if(i==1){
+                dp[i]=dp[i+1];
+            }else{
+                dp[i]=dp[i-1]+dp[i-2];
+            }
+        }
+        return dp[n];
+    }
+```
+
+## 0-1 Knapsack
+types of knapsack problems
+> Fractional Knapsack (Greedy)
+> 0-1 knapsack
+> unbounded knapsack
+
+var[] = 15,14,10,45,30
+wt[]=2,5,1,3,4
+W(total allowed weight) = 7
+ans =maxProfit
+
+```java
+    public static int knapsack(int val[], int wt[], int W, int n) {
+        if (W == 0 || n == 0) {
+            return 0;
+        }
+        if (wt[n - 1] <= W) {
+            int ans1 = val[n - 1] + knapsack(val, wt, W - wt[n - 1], n - 1);
+            int ans2 = knapsack(val, wt, W, n - 1);
+            return Math.max(ans1, ans2);
+        } else {
+            return knapsack(val, wt, W, n - 1);
+        }
+    }
+```
+
+## 0-1 Knapsack  Memoization 
+ 
 
 
 

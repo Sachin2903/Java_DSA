@@ -1,44 +1,44 @@
-import java.util.PriorityQueue;
-
 public class Java {
+    public static int stairsClimb(int n, int f[]) {
+        if (n == 2 || n == 1 || n == 0) {
+            return n;
+        }
+        if (f[n] != 0) {
+            return f[n];
+        }
+        f[n] = stairsClimb(n - 1, f) + stairsClimb(n - 2, f);
+        return f[n];
+    }
 
-    static int n = 7;
-    static int par[] = new int[n];
-    static int rank[] = new int[n];
+    public static int countWaysTab(int n) {
+        int dp[] = new int[n + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            if (i == 1) {
+                dp[i] = dp[i + 1];
+            } else {
+                dp[i] = dp[i - 1] + dp[i - 2];
+            }
+        }
+        return dp[n];
+    }
 
-    public static void init() {
-        for (int i = 0; i < n; i++) {
-            par[i] = i;
+    public static int knapsack(int val[], int wt[], int W, int n) {
+        if (W == 0 || n == 0) {
+            return 0;
+        }
+        if (wt[n - 1] <= W) {
+            int ans1 = val[n - 1] + knapsack(val, wt, W - wt[n - 1], n - 1);
+            int ans2 = knapsack(val, wt, W, n - 1);
+            return Math.max(ans1, ans2);
+        } else {
+            return knapsack(val, wt, W, n - 1);
         }
     }
 
-    public static int find(int x) {
-        if (x == par[x]) {
-            return x;
-        }
-        return find(par[x]);
-    }
-
-    public static void union(int a, int b) {
-        int parA = find(a);
-        int parB = find(b);
-
-        if(rank[parA]==rank[parB]){
-            par[parB]=parA;
-            rank[parA]++;
-        }else if(rank[parA] < rank[parB]){
-            par[parA]=parB;
-        }else{
-            par[parB]=parA;
-        }
-    }
     public static void main(String arg[]) {
-        // union(1,3)
-        // find(3)
-        // union(2,4)
-        // union(3,6)
-        // union(1,4)
-        // find(3)
-        // union(1,5)
+        int n = 44;
+        int f[] = new int[n + 1];
+        System.out.println(stairsClimb(n, f));
     }
 }
