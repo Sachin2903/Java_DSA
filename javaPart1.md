@@ -1,4 +1,4 @@
-> .java extendion to save java file , .cpp (c++) .py (python programming) .c(c programming)
+> .java extention to save java file , .cpp (c++) .py (python programming) .c(c programming)
 
 > To Run Java Locally we Need Java JDK in Our System
 
@@ -9,6 +9,8 @@ Compile the code with JDK in byte code and run on JVM , JRE (provide external li
 JDK java development kit provides environment to develop and run java code (jre + development tool )
 JRE provide enviroment to run java code (jvm + library)
 JVM execute code line by line that is an reason if java as interpreted language
+
+Java can be considered both a compiled and an interpreted language because its source code is first compiled into a binary byte-code. This byte-code runs on the Java Virtual Machine (JVM), which is usually a software-based interpreter
 
 ```java
 public class JavaBasic{
@@ -32,19 +34,20 @@ javac file_name.java To compile and run file
 1. Primitive
    store data of one type , size depend on type of data type , ex:- int float , double , it start with lower case
 2. Non-Primitive
-   store data of maore then one type , size is not fixed ex:- class array , it start with uppercase
+   store data of more then one type , size is not fixed ex:- class array , it start with uppercase
 
 ### Primitive (Store Single data type value)
 
-byte byte a=5; -128 to 127 (256) 1byte
-boolean boolean var=true; 1byte
-short 2byte
-char char c="a"; 2byte  
-int int a=10; 4byte
-float float a=10.5; 4byte
-long 8byte
-double 8byte
-1 byte --> 8 bites
+byte byte a=5; -128 to 127 (256)                 1byte
+boolean boolean var=true;                        1byte
+short                                            2byte
+char char c="a";                                 2byte  
+int int a=10;                                    4byte
+float float a=10.5;                              4byte
+long                                             8byte
+double                                           8byte
+
+                    1 byte --> 8 bites
 
 ### Non-Primitive (Can Store Multi data type value)
 
@@ -146,7 +149,7 @@ java always call by value , value pass in function is a copy of original one any
 
 ## Binomial Cofficient
 
-nCr = n!/r!\* (n-r)!
+nCr = n!/r! * (n-r)!
 
 public class BinomialCoefficient {
 
@@ -196,8 +199,6 @@ public static boolean prime(long num){
 if(num<0)
 return false;
 
-    if(num==0||num==1)
-    return true;
     // or i<=Math.sqrt(num)
         for(int i=2;i<=num/2;i++){
             if(num%i==0)
@@ -208,7 +209,7 @@ return false;
     }
 
 ## convert from binary to decimal
-
+```js
 public static void binToDec(long a) {
 long pow = 0;
 long dec = 0;
@@ -220,22 +221,22 @@ long dec = 0;
         }
         System.out.println(dec);
     }
-
+```
 ## decimal to binary
-
+```js
 public static void decimalToBinary(long num) {
 long bin = 0;
 long pow = 0;
 while (num >0) {
-bin+=(num%2)\*(int)Math.pow(10,pow);
+bin+=(num%2) * (int)Math.pow(10,pow);
 num=num/2;
 pow++;
 }
 System.out.println(bin);
 }
-
+```
 ## hallow rectangle
-
+```js
 public static void makeHollowPattern(int totRows, int totCols) {
 
         for (int i = 1; i <= totRows; i++) {
@@ -249,7 +250,7 @@ public static void makeHollowPattern(int totRows, int totCols) {
             System.out.println();
         }
     }
-
+```
 ## to print odd things
 
 we need to follow 2i+1 or 2i-1
@@ -277,6 +278,9 @@ Integer.MIN_VALUE;
 
 # Binary Search
 
+mid =(start+end)/2
+mid =start + (end-start)/2
+```js
 public static int binarySearch(int arr[], int key) {
 
         if (arr.length == 0) {
@@ -309,9 +313,10 @@ worst case will be when finding element is at first or at last
 2/2-->1 8/2 pow 3
 
 n/2 pow k --> logn
-
+```
 ### reverse an array
 
+```js
 public static void ReverseArray(int arr[]){
 int a=0;
 int b=arr.length;
@@ -326,6 +331,7 @@ int b=arr.length;
     }
 
 }
+```
 
 ### pairs in an array
 
@@ -339,8 +345,12 @@ Integer.MIN_VALUE
 Integer.MAX_VALUE
 
 ## Max subarray
+Given an array of integers, find the maximum sum of any contiguous subarray
+int arr[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
 
 PREFIX[END]-PREFIX[START-1]
+
+```js
 public static void maxSubarrayPrifix(int arr[]) {
 
         int newArr[] = new int[arr.length];
@@ -363,8 +373,9 @@ public static void maxSubarrayPrifix(int arr[]) {
 
         System.out.println(maxSum);
     }
-
+```
 ## Kadane's algorithm
+Given an array of integers (which may include negative numbers), find the contiguous subarray that has the maximum sum and return that sum.
 
 [-2,-3,4,-1,-2,1,5,-3]
 
@@ -389,6 +400,8 @@ public static void maxSubarrayPrifix(int arr[]) {
 ```
 
 ## trapping rainwater
+Given an array arr[] representing the height of bars in a histogram where the width of each bar is 1, compute how much water it can trap after raining."
+int arr[] = {4,2,0,3,2,5};
 
 ```java
  public static void rainWaterTrapping(int arr[]) {
@@ -423,12 +436,18 @@ public static void maxSubarrayPrifix(int arr[]) {
 ```
 
 ## Best time to buy and sell stock
+You are given an array arr[], where arr[i] represents the stock price on the iᵗʰ day. You can buy and sell the stock only once. Find the maximum profit you can achieve. If no profit can be made, return 0
 
+int arr[] = {7, 1, 5, 3, 6, 4};
+int arr[] = {7, 6, 4, 3, 1};
+System.out.println(bestTimeToBuyAndSell(arr));
+
+```js
 public static int bestTimeToBuyAndSell(int arr[]) {
-int min=arr[0];
-int maxEarn=0;
-if(arr.length<2)
-return maxEarn;
+        int min=arr[0];
+        int maxEarn=0;
+        if(arr.length<2)
+        return maxEarn;
 
         for (int i = 1; i < arr.length; i++) {
             if(arr[i]-min>maxEarn){
@@ -440,6 +459,7 @@ return maxEarn;
         }
         return maxEarn;
     }
+```
 
 # Sorting
 
