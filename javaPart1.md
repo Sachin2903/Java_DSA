@@ -468,30 +468,36 @@ arranging things in a order , it can be decrease and increase
 1. Bubble Sort best time :- best O(n) worst O(n2)
 2. Selection Sort :-best O(n2) worst O(n2)
 3. Insertion Sort :- best O(n2) worst O(n2)
-4. Counting Sort
+4. Counting Sort 
+O(n+k)
+Where:
+n is the number of elements in the input array.
+k is the range of input values (maximum value in the array).
+
+-- divide and conquer --
+
 5. Merge Sort
 6. Quick Sort
 
 ##### 1> Bubble sort ------------->
 
 ```java
-for (int i = 0; i < arr.length - 1; i++) {
-            int swap = 0;
-            for (int j = 1; j < arr.length - i; j++) {
-                if (arr[j - 1] > arr[j]) {
-                    int temp = arr[j];
-                    arr[j] = arr[j - 1];
-                    arr[j - 1] = temp;
-                    swap++;
-                }
-            }
-            if (swap == 0) {
-                // if there is no swap that means array is already sorted , this help in reducing number of iteration
-                break;
-            }
-            System.out.println(i);
+            for (int i = 0; i < arr.length - 1; i++) {
+                        int swap = 0;
+                        for (int j = 1; j < arr.length - i; j++) {
+                            if (arr[j - 1] > arr[j]) {
+                                int temp = arr[j];
+                                arr[j] = arr[j - 1];
+                                arr[j - 1] = temp;
+                                swap++;
+                            }
+                        }
+                        if (swap == 0) {
+                            break;
+                        }
+                        System.out.println(i);
 
-        }
+                    }
 ```
 
 ##### 2> Selection Sort ---------------->
