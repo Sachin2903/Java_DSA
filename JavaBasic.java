@@ -2,28 +2,35 @@ import java.util.*;
 
 public class JavaBasic {
 
-    public static void insertionSort(int arr[]) {
+    public static int rotateSort(int arr[], int tar, int s, int e) {
+        if (s > e) {
+            return -1;
+        }
+        int mid = s + (e - s) / 2;
+        if (arr[mid] == tar) {
+            return mid;
+        }
 
-        for (int i = 1; i < arr.length; i++) {
-            int temp = arr[i];
-            int j = i - 1;
-
-            while(j>=0&&arr[j]>temp){
-                arr[j+1]=arr[j];
-                j--;
+        if (arr[s] <= arr[mid]) {
+            if (arr[s] <= tar && tar <= arr[mid]) {
+                return rotateSort(arr, tar, s, mid - 1);
+            } else {
+                return rotateSort(arr, tar, mid + 1, e);
             }
 
-            if(i!=j+1){
-                arr[j+1]=temp;
-
+        } else {
+            if(arr[mid]<=tar&&tar<=arr[e]){
+                return rotateSort(arr, tar, mid + 1, e);
+            }else{
+                return rotateSort(arr, tar, s, mid-1);
             }
         }
 
     }
 
     public static void main(String[] args) {
-        int arr[] = { 7, 1, 5, 3, 6, 4 };
-        insertionSort(arr);
-        System.out.println(Arrays.toString(arr));
+        int arr[] = { 4, 5, 6, 7, 0, 1, 2 };
+        int index = rotateSort(arr, 2, 0, arr.length - 1);
+        System.out.println(index);
     }
 }

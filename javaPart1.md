@@ -579,6 +579,7 @@ this is good when start index and end index are too large
 mid = startIndex+(endIndex-startIndex)/2
 
 ```java
+nlongn
 
 public static void mergeSort(int s, int e, int arr[]) {
         if (s >= e) {
@@ -660,7 +661,7 @@ work in pivot & partition logic
    }
 ```
 
-> work case occurs  when pivot is always the smallest or the largest element. (means already sorted in increasing , decreasing)
+> worst case occurs  when pivot is always the smallest or the largest element. (means already sorted in increasing , decreasing)
 
 on each level the traverse goes n ->n n-1 n-2 ...n-(n-1) --> n(n+1)/2 ->O(n2) 
 
@@ -671,46 +672,46 @@ sorted,rotated array with distinct numbers ( in ascending order ) it is rotated 
 
 using modified binary search
 
+1. Find `mid`, check if `arr[mid] == tar`.
+2. If left half is sorted (`arr[si] ≤ arr[mid]`):
+   - Search left if `tar` is in range (`arr[si] ≤ tar ≤ arr[mid]`), else search right.
+3. else Search right if `tar` is in range (`arr[mid] ≤ tar ≤ arr[ei]`), else search left.
+4. Repeat until found or return `-1`.
+**Time Complexity:** `O(log n)`
+
 ```java
   public static int targetsearch(int arr[], int tar, int si, int ei) {
       if (si > ei) {
          return -1;
       }
       int mid = si + (ei - si) / 2;
-
       if (arr[mid] == tar)
          return mid;
-
       if (arr[si] <= arr[mid]) {
          if (arr[si] <= tar && tar <= arr[mid]) {
             return targetsearch(arr, tar, si, mid-1);
          } else {
             return targetsearch(arr, tar, mid + 1, ei);
          }
-
       } else {
          if (arr[mid] <= tar && tar <= arr[ei]) {
             return targetsearch(arr, tar, mid + 1, ei);
          } else {
             return targetsearch(arr, tar, si, mid - 1);
          }
-
       }
-
    }
-
 ```
 
 # 2-D Array
 
 we have 1D 2D 3D ---ND Array
-nD array generally used in AL an Ml
-
-0 1 2
+nD array generally used in AI and Ml
+  0 1 2
 0
 1
 2
-3
+
 n*m n -> row and m->column
 totol number of cell =n*m;
 
@@ -739,9 +740,9 @@ column major -->
 
 ## spiral matrix
 
-1 2 3 4
-5 6 7 8
-9 10 11 12
+1   2  3  4
+5   6  7  8
+9  10 11 12
 13 14 15 16
 
 ```java
