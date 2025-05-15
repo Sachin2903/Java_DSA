@@ -148,8 +148,8 @@ function also occupy space in memory called call stack
 java always call by value , value pass in function is a copy of original one any change made in that will not effect the original one
 
 ## Binomial Cofficient
-
-nCr = n!/r! * (n-r)!
+```java
+// nCr = n!/r! * (n-r)!
 
 public class BinomialCoefficient {
 
@@ -182,6 +182,7 @@ public class BinomialCoefficient {
     }
 
 }
+```
 
 ## user defined method and in-built methods
 
@@ -195,6 +196,7 @@ It does not depend on return type
 
 ## check whether the number is prime or not
 
+```java
 public static boolean prime(long num){
 if(num<0)
 return false;
@@ -207,6 +209,7 @@ return false;
         return true;
 
     }
+```
 
 ## convert from binary to decimal
 ```js
@@ -334,12 +337,23 @@ int b=arr.length;
 ```
 
 ### pairs in an array
+```java
+static void printPairs(int arr[], int n){
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            System.out.print("(" +  arr[i]+ ", "
+                 + arr[j]+ ")"
+                + ", ");
+        }
+    }
+}
+```
 
-formula (n\*(n-1))/2
+formula (n*(n-1))/2
 
 ### print subarray
 
-formula (n\*(n+1))/2
+formula (n*(n+1))/2
 
 Integer.MIN_VALUE
 Integer.MAX_VALUE
@@ -358,6 +372,7 @@ public static void maxSubarrayPrifix(int arr[]) {
         for (int i = 0; i < arr.length; i++) {
             sum += arr[i];
             newArr[i] = sum;
+
         }
 
         int maxSum = Integer.MIN_VALUE;
@@ -370,7 +385,6 @@ public static void maxSubarrayPrifix(int arr[]) {
 
             }
         }
-
         System.out.println(maxSum);
     }
 ```
@@ -752,7 +766,7 @@ public static void SpiralMatrix(int matrix[][]) {
         int rowend = matrix.length - 1;
         int colend = matrix[0].length - 1;
 
-        while (row <= rowend && col <= colend) {
+        while (row <= rowend &&  col <= colend) {
 
             for (int i = row; i <= colend; i++) {
                 if (row == rowend)
