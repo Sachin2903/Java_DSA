@@ -27,7 +27,7 @@ System.out.println("hello world");
 
 javac file_name.java To compile and run file
 
-# Variables
+*#* Variables
 
 ## data types in java
 
@@ -494,7 +494,7 @@ k is the range of input values (maximum value in the array).
 6. Quick Sort
 
 ##### 1> Bubble sort ------------->
-
+<!-- numbers = [64, 34, 25, 12, 22, 11, 90] -->
 ```java
             for (int i = 0; i < arr.length - 1; i++) {
                         int swap = 0;
@@ -692,7 +692,7 @@ using modified binary search
 3. else Search right if `tar` is in range (`arr[mid] ≤ tar ≤ arr[ei]`), else search left.
 4. Repeat until found or return `-1`.
 **Time Complexity:** `O(log n)`
-
+[4,5,6,7,0,1,2]
 ```java
   public static int targetsearch(int arr[], int tar, int si, int ei) {
       if (si > ei) {
@@ -753,6 +753,7 @@ column major -->
 [9]
 
 ## spiral matrix
+Given a 2D array (matrix), print its elements in spiral order starting from the top-left corner.
 
 1   2  3  4
 5   6  7  8
@@ -874,7 +875,7 @@ public static void shareSearch(int matrix[][]) {
 ## String
 
 String str="abcs";
-String str2=new String["xyz"];
+String str2=new String("xyz");
 
 java string are IMMUTABLE ( CAN NOT UPDATE only reassign a new value)
 
@@ -899,6 +900,21 @@ to reduce number of chances
 if(str.charAt(i)!==sta.chatAt(n-i-1))
 
 ### Short path
+You are given a string str consisting of characters 'N', 'S', 'E', and 'W'. Each character represents a move in the respective direction on a 2D Cartesian plane:
+
+'N' moves 1 unit north (y increases),
+
+'S' moves 1 unit south (y decreases),
+
+'E' moves 1 unit east (x increases),
+
+'W' moves 1 unit west (x decreases).
+
+Assume the person starts at the origin (0, 0). After performing all the moves described in the string, calculate and return the shortest straight-line distance (Euclidean distance) from the starting point to the final position.
+
+Input:  "WNEENESENNN"
+Output: 5.0
+
 
 ```java
 public static float findShortDis(String str) {
@@ -938,7 +954,7 @@ str1.compareTo(str2)
 -1 str1<str2
 1 str1>str2
 
-.comapretoignorecase
+.comapreToIgnoreCase
 
 ### why string are immutable
 
@@ -976,25 +992,38 @@ this genrally take time as length of string
 
 # StirngBuilder
 
-StringBuilder str==new StringBuilder("this")
-sb.toString()
+StringBuilder str = new StringBuilder("this");
 
-for(char ch="a";ch<="z";ch++){
-sb.append(" is a")
-}
-sb.length()
+// Append
+str.append(" is Java");
+System.out.println(str);  // this is Java
 
-.toUpperCase("c")
-.toLowerCase("C")
+// Insert
+str.insert(4, " cool");
+System.out.println(str);  // this cool is Java
 
-Character.toUpperCase("c")
+// Delete
+str.delete(4, 9);
+System.out.println(str);  // this is Java
+
+// Replace
+str.replace(5, 7, "was");
+System.out.println(str);  // this was Java
+
+// Reverse
+str.reverse();
+System.out.println(str);  // avaJ saw si siht
+
+// Convert to String
+String normalString = str.toString();
+
 
 ### change first letter to uppercse in a sentence
 
 ## String compression
 
 aaabbcccdd a3b2c3d2
-
+```java
 String newStrt="";
 for(int i=0;i<str.length();i++){
 Integer count=1;
@@ -1008,6 +1037,7 @@ newStr+=count.toString();
 }
 }
 return newStr;
+```
 
 # Bit Manipulation
 
@@ -1031,7 +1061,7 @@ return newStr;
 
 ~ one's complement / not operator ~0 --> 1 ~1 --> 0
 
-<< left shit shift all to left and remaining will contain 0 3<<2 shift by 2 formula a\*2^b
+<< left shit shift all to left and remaining will contain 0 3<<2 shift by 2 formula a*2^b
 
 > > right shift shift all to right and remaining will contain 0 3>>2 shift by 2 formula a/2^b
 
@@ -1195,15 +1225,7 @@ Get: function/behaviour in object to return the value
 Set: function/behaviour in object to modify the value
 
 this: this leyword is use to refer to the curent object
-
-void setTip(int tip){
-this.tip=tip;
-}
-
-void setTip(int tipvalue){
-tip=tipvalue;
-}
-
+ 
 ## 4 pillars in oops
 
 1. Encapsulation
@@ -1304,14 +1326,21 @@ class fish extends animal{
    / \
    B C
 4. Hybrid Inheritance
-   A
-   / \
-    / \
-    B C
-   D
-   / \
-    / \
-   E F
+A combination of two or more types of inheritance.
+```java
+interface A {
+    void show();
+}
+
+interface B {
+    void display();
+}
+
+class C implements A, B {
+    public void show() {}
+    public void display() {}
+}
+```
 5. Multiple Inheritance :- java does not have direct way to achieve Multiple inheritance
    but we can achive indirectly
    A B
@@ -1324,7 +1353,7 @@ can be achieve through Interface
 ## Plymorphism
 
 1. compile Time Polymorphism (static)
-   (i). method overloading :- mutilple function with the same nam ebut different oarameters
+   (i). method overloading :- mutilple function with the same name but different oarameters
 
 sun(int a , int b)
 sum(float a, float b)
@@ -1340,13 +1369,28 @@ package is a group of similar types of classes, interfaces and sub-packages.
 
 ## Abstarction
 
-Hiding all the unnecessary details and shiwing inly the important parts to the user.
+Hiding all the unnecessary details and shiwing only the important parts to the user.
 
 1. Abstract classes
 
-(i). cannot create an instance of t=abstract class
+(i). cannot create an instance of abstract class
 (ii). can have abstract/non-abstract methods
 (iiI). can have construtors
+```java
+abstract class Animal {
+    abstract void sound();  
+
+    void sleep() {   
+        System.out.println("Sleeping...");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        System.out.println("Bark");
+    }
+}
+
 
 abstract class A{
 
@@ -1373,9 +1417,10 @@ void walk(){
     }
 
 }
+```
 
 2. Interfaces
-   Interface is a bulepr int of a class
+   Interface is a bule print of a class
    and to achive total abstraction
 
 All methods are public , abstract & without implementation
@@ -1396,10 +1441,12 @@ interface B{}
 class C implements A,B{
 
 }
+An interface in Java is a blueprint of a class. It is used to achieve abstraction and multiple inheritance. Interfaces define what a class should do but not how it does it.
+
 
 ## Static Keyword
 
-Statuc keyword in java is used to share the same variable or method of a given class
+Static keyword in java is used to share the same variable or method of a given class
 
 - Properties ( variables)
 - Function
@@ -1466,7 +1513,7 @@ A static method belongs to the class and can be called without an object.
 
 ```java
 class MathUtils {
-    static int square(int x) { // Static method
+    static int square(int x) { 
         return x * x;
     }
 }
@@ -1525,17 +1572,62 @@ to access parent's properties
 to access parent's function
 to access parent's constructor
 
-class A{
-String color;
-}
-class B{
-B(){
-super(); // is used to call A constructor
-super.color="brown";
-}
+```java
+class Animal {
+    String type = "Animal";
+
+    Animal() {
+        System.out.println("Animal constructor called");
+    }
+
+    void sound() {
+        System.out.println("Animal makes a sound");
+    }
 }
 
+class Dog extends Animal {
+    String type = "Dog";
+
+    Dog() {
+        super();  // Calling parent constructor
+        System.out.println("Dog constructor called");
+    }
+
+    void showType() {
+        System.out.println("Type from child class: " + type);       // Dog
+        System.out.println("Type from parent class: " + super.type); // Animal
+    }
+
+    @Override
+    void sound() {
+        super.sound();  // Calling parent method
+        System.out.println("Dog barks");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.showType();  // Access parent and child variables
+        dog.sound();     // Call parent and child method
+    }
+}
+
+```
+
 ## constructor chaining
+```java
+class Example {
+    Example() {
+        this(10);  // Calls constructor with int parameter
+        System.out.println("No-arg constructor");
+    }
+
+    Example(int x) {
+        System.out.println("Constructor with parameter: " + x);
+    }
+}
+```
 
 ## Extra
 
@@ -1689,7 +1781,7 @@ public statc int optimisedPower(int a , int n){
 
 ## Tiling power
 
-given a 2*n board and titles of asize 2*1 count the number od ways to the given board using the 2\*1 titles (A tile can either be olaced horizontally or vertically)
+given a 2*n board and titles of asize 2*1 count the number of ways to the given board using the 2\*1 titles (A tile can either be olaced horizontally or vertically)
 
 ```java
     public static int tileProblem(int n) {
@@ -1704,20 +1796,31 @@ given a 2*n board and titles of asize 2*1 count the number od ways to the given 
 "appnnacollege"
 
 ```java
- public static void removeDublicate(Strign str,int idx,StringBuilder newStr,boolean){
-    if(idx==str.length()){
-        System.out.println(newStr);
-        return
-    }
-    char currChar=str.charAt(idx);
-    if(map[currChar-"a"]==true){
-        removeDublicate(str,idx+1,newStr,map)
-    }else{
-        map[currChar-"a"]=true;
-        removeDuplicate(str,idx+1,newStr.append(currChar), map)
+ public class RemoveDuplicates {
+    public static void removeDuplicate(String str, int idx, StringBuilder newStr, boolean[] map) {
+        if (idx == str.length()) {
+            System.out.println(newStr);
+            return;
+        }
+
+        char currChar = str.charAt(idx);
+        if (map[currChar - 'a']) {
+            // Current char already exists, skip it
+            removeDuplicate(str, idx + 1, newStr, map);
+        } else {
+            // Include this character
+            map[currChar - 'a'] = true;
+            removeDuplicate(str, idx + 1, newStr.append(currChar), map);
+        }
     }
 
-  }
+    public static void main(String[] args) {
+        String str = "aabccbd";
+        boolean[] map = new boolean[26]; // For lowercase a-z
+        removeDuplicate(str, 0, new StringBuilder(), map);
+    }
+}
+
 ```
 
 ## Friends pairing problem

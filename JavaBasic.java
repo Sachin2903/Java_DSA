@@ -1,17 +1,12 @@
-import java.util.*;
-
 public class JavaBasic {
-    public static int getMaxSubArray(int[] arr){
-        int maxSum=0;
-        
-        
+    public static int getNthFibonacciNumber(int n) {
+        if (n == 0 || n == 1)
+            return n;
 
-
-        return -1;
+        return getNthFibonacciNumber(n - 1) + getNthFibonacciNumber(n - 2);
     }
+
     public static void main(String[] args) {
-        int arr[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-        getMaxSubArray(arr);
-        
+        System.out.println(getNthFibonacciNumber(5));
     }
 }
