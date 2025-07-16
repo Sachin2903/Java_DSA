@@ -27,7 +27,7 @@ System.out.println("hello world");
 
 javac file_name.java To compile and run file
 
-*#* Variables
+# Variables
 
 ## data types in java
 
@@ -36,6 +36,10 @@ javac file_name.java To compile and run file
 2. Non-Primitive
    store data of more then one type , size is not fixed ex:- class array , it start with uppercase
 
+Primitive: Basic types, store actual value (e.g., int, char, boolean)
+
+Non-Primitive: Reference types, store memory address (e.g., String, Array, Object)
+Stored in	Stack (primitive)	Heap (reference in stack) (non kj+- primitive)
 ### Primitive (Store Single data type value)
 
 byte byte a=5; -128 to 127 (256)                 1byte
@@ -47,14 +51,14 @@ float float a=10.5;                              4byte
 long                                             8byte
 double                                           8byte
 
-                    1 byte --> 8 bites
+                    1 byte --> 8 bites                                                
 
 ### Non-Primitive (Can Store Multi data type value)
 
 String
 Array
 Class
-Object
+Object 
 Interface
 
 # Comments
@@ -70,12 +74,12 @@ Scanner sc=new Scanner(System.in)
 1. String str=sc.next()
 2. String str=sc.nextLine();
 3. int number=sc.nextInt();
-   nextFloat()
-   nextDouble()
-   nextBoolean()
-   nextShort()
-   nextLong()
-   nextByte()
+4. nextFloat()
+5. nextDouble()
+6. nextBoolean()
+7. nextShort()
+8. nextLong()
+9. nextByte()
 
 # Type Conversion (Implicit) And Type Casting
 
@@ -147,45 +151,6 @@ function also occupy space in memory called call stack
 
 java always call by value , value pass in function is a copy of original one any change made in that will not effect the original one
 
-## Binomial Cofficient
-```java
-// nCr = n!/r! * (n-r)!
-
-public class BinomialCoefficient {
-
-    public static long binomialCoefficient(int n, int k) {
-        if (k < 0 || k > n) {
-            return 0;
-        }
-        if (k == 0 || k == n) {
-            return 1;
-        }
-
-        // C(n, k) = C(n, n-k)
-        if (k > n - k) {
-            k = n - k;
-        }
-
-        long result = 1;
-        for (int i = 0; i < k; i++) {
-            result *= (n - i);
-            result /= (i + 1);
-        }
-
-        return result;
-    }
-
-    public static void main(String[] args) {
-        int n = 5;
-        int k = 2;
-        System.out.println("C(" + n + ", " + k + ") = " + binomialCoefficient(n, k)); // Output: C(5, 2) = 10
-    }
-
-}
-```
-
-## user defined method and in-built methods
-
 ## Function overloading
 
 - multiple function with same name but different parameters
@@ -209,7 +174,7 @@ return false;
         return true;
 
     }
-```
+```-
 
 ## convert from binary to decimal
 ```js
@@ -274,7 +239,7 @@ arr[0]
 TC -> (O)n
 SC ->
 
-import javaj.util.\*;
+import javaj.util.*;
 
 Integer.MAX_VALUE;
 Integer.MIN_VALUE;
@@ -340,7 +305,7 @@ int b=arr.length;
 ```java
 static void printPairs(int arr[], int n){
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+        for (int j = i+1; j < n; j++) {
             System.out.print("(" +  arr[i]+ ", "
                  + arr[j]+ ")"
                 + ", ");
@@ -514,7 +479,7 @@ k is the range of input values (maximum value in the array).
                     }
 ```
 
-##### 2> Selection Sort ---------------->
+##### 2 Selection Sort ---------------->
 
 ```java
  public static void selctionSort(int arr[]) {
