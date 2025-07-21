@@ -1209,6 +1209,14 @@ access specifier
 3. protected
 4. public
 
+| Modifier    | Meaning                                                        |
+| ----------- | -------------------------------------------------------------- |
+| `public`    | Visible to **all classes** in **all packages**                 |
+| `protected` | Visible to **same package** + **subclasses in other packages** |
+| *(default)* | (No keyword) Visible to **same package only**                  |
+| `private`   | Visible to **only the class itself**                           |
+
+
 ## constructor
 
 constructor is a special method which is invoked automatically at the time of object creation
