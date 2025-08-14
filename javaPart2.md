@@ -95,7 +95,7 @@ O(n\*n!)
 ```
 
 ## N queens
-
+TC -> n!
 place N queens on an N\*N chessboard such that no 2 queens can attack each other
 N=4
 
