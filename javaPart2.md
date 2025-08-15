@@ -308,7 +308,7 @@ permutaion of there possible pattern
 ## Sudoku
 
 write a function to complete a sudoku . ( yes or no)
-
+should not in the same row and should not in same column and grid
 ![alt text](./assests/sudoku.png)
 
 ```java
@@ -376,13 +376,13 @@ in build data strucuture and a linear type
 Array
 
 - fixed size
-- primitive data types can be stored
-
+- primitive data types can be stored 
 ArrayList
 
 - dynamic size
 - primitive data types
-  can't be stored directly
+  can't be stored directly have to use int --> Integer , char --> Caracter have to use rapper
+
 
 store object of a class
 
