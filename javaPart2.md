@@ -1068,6 +1068,19 @@ li.removeFirst()
 The Java Collections Framework (JCF) is a set of classes and interfaces that allow developers to represent and manipulate object collections in Java.
 ![alt text](./assests/collectionFramework.png)
 
+## LinkedList in collection framework
+import java.util.LinkedList;
+LinkedList<Integer> list = new LInkedList<>();
+list.addLast(2);
+list.addLast(1);
+list.addFIrst(0);
+.removeLast();
+.removeFirst();
+
+System.out.println(list);
+
+
+
 ```java
 
  Node getMid(Node head) {
