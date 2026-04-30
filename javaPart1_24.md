@@ -86,7 +86,7 @@ Scanner sc=new Scanner(System.in)
 Conversion Happen:-
 
 1. type compatible
-2. destination type > source typr
+2. destination type > source type
 
 > > TYPE conversion can be done with char to int
 > > byte --> short --> int --> float --> long --> double
@@ -106,66 +106,12 @@ int b =(int) a
 Java automatically promotes each byte, short, or char operand to int when evaluating an expression,
 if one operand is long , float or double the whole expression is promoted to long , float , double respectively
 
-# Operators
-
-symbols that tells compiler to perform some operatios
-
-1. Arithemetic operators (Binay / Uniary / Ternary) Binary --> + ,- \* ,/,% uniary --> ++, -- pre increment and postIncrement , ternary a>b?10:5;
-2. Relational Operators
-3. Logical Operators == ,!=, > ,< , >= , <=
-4. Bitwise Operatos
-5. Assignment Operators
-
-# conditional statements
-
-if else
-
-# loop
-
-for(int i =0;i<=10;i++)
-int i=1;
-while(i<10>){
-++i;
-}
-break; continue;
-
-# function / Methods
-
-block of code that can be used multiple times , help us in achieving reusability
-
-returnType name(){
-// body
-return statement
-}
-function that wrote inside a class called as methods
-
-(int a , int b) --> parameters and formal parameters
-
-function(5,10) --> argumanets , actual parameters
-
-# what happen in memory when we call a function
-
-function also occupy space in memory called call stack
-
-# call by value and call by reference
-
-java always call by value , value pass in function is a copy of original one any change made in that will not effect the original one
-
-## Function overloading
-
-- multiple function with same name but different parameters
-
-- differentiate with diff type parameters and no of parameters
-
-It does not depend on return type
-
 ## check whether the number is prime or not
 
 ```java
 public static boolean prime(long num){
 if(num<0)
 return false;
-
     // or i<=Math.sqrt(num)
         for(int i=2;i<=num/2;i++){
             if(num%i==0)
