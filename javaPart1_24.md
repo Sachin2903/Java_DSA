@@ -123,7 +123,7 @@ return false;
 ```-
 
 ## convert from binary to decimal
-```js
+```java
 public static void binToDec(long a) {
 long pow = 0;
 long dec = 0;
@@ -137,7 +137,7 @@ long dec = 0;
     }
 ```
 ## decimal to binary
-```js
+```java
 public static void decimalToBinary(long num) {
 long bin = 0;
 long pow = 0;
@@ -171,14 +171,8 @@ we need to follow 2i+1 or 2i-1
 
 # Arrays
 
-list of elements of same type plcaed in a contiguous memory location
-
 int newArr[]=new int[arr.length];
 int arr[]={1,2,3};
-
-array are pass by reference
-
-arr[0]
 
 # Linear Search
 
@@ -217,16 +211,6 @@ public static int binarySearch(int arr[], int key) {
         }
         return -1;
     }
-
-TC --> (O)logn
-best --> (O)1
-worst --> if array size is 8
-worst case will be when finding element is at first or at last
-8/2-->4 8/2 pow 1
-4/2-->2 8/2 pow 2
-2/2-->1 8/2 pow 3
-
-n/2 pow k --> logn
 ```
 ### reverse an array
 
@@ -271,7 +255,7 @@ Integer.MAX_VALUE
 
 ## Max subarray
 Given an array of integers, find the maximum sum of any contiguous subarray
-int arr[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+int arr[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4}; = 6
 
 PREFIX[END]-PREFIX[START-1]
 
@@ -283,7 +267,6 @@ public static void maxSubarrayPrifix(int arr[]) {
         for (int i = 0; i < arr.length; i++) {
             sum += arr[i];
             newArr[i] = sum;
-
         }
 
         int maxSum = Integer.MIN_VALUE;
@@ -297,7 +280,7 @@ public static void maxSubarrayPrifix(int arr[]) {
             }
         }
         System.out.println(maxSum);
-    }
+}
 ```
 ## Kadane's algorithm
 Given an array of integers (which may include negative numbers), find the contiguous subarray that has the maximum sum and return that sum.
@@ -326,7 +309,7 @@ Given an array of integers (which may include negative numbers), find the contig
 
 ## trapping rainwater
 Given an array arr[] representing the height of bars in a histogram where the width of each bar is 1, compute how much water it can trap after raining."
-int arr[] = {4,2,0,3,2,5};
+int arr[] = {4,2,0,3,2,5}; = 9 units
 
 ```java
  public static void rainWaterTrapping(int arr[]) {
@@ -363,7 +346,7 @@ int arr[] = {4,2,0,3,2,5};
 ## Best time to buy and sell stock
 You are given an array arr[], where arr[i] represents the stock price on the iᵗʰ day. You can buy and sell the stock only once. Find the maximum profit you can achieve. If no profit can be made, return 0
 
-int arr[] = {7, 1, 5, 3, 6, 4};
+int arr[] = {7, 1, 5, 3, 6, 4}; Final Answer: 5
 int arr[] = {7, 6, 4, 3, 1};
 System.out.println(bestTimeToBuyAndSell(arr));
 
@@ -409,7 +392,7 @@ k is the range of input values (maximum value in the array).
 ```java
             for (int i = 0; i < arr.length - 1; i++) {
                         int swap = 0;
-                        for (int j = 1; j < arr.length - i; j++) {
+                        for (int j = i+1; j < arr.length - i; j++) {
                             if (arr[j - 1] > arr[j]) {
                                 int temp = arr[j];
                                 arr[j] = arr[j - 1];
@@ -481,7 +464,6 @@ public static void CountingSort(int arr[]) {
         int count[] = new int[max+1];
         for (int j = 0; j < arr.length; j++) {
             count[arr[j]]++;
-
         }
         int k = 0;
         for (int i = 0; i < count.length; i++) {
@@ -490,18 +472,14 @@ public static void CountingSort(int arr[]) {
                 --count[i];
                 k++;
             }
-
         }
-
     }
 ```
+
 > Divide and Conquer
 ##### 5> Merge Sort ------------> O(nlogn)
 
 mid = (startIndex+endIndex)/2
-
-this is good when start index and end index are too large 
-mid = startIndex+(endIndex-startIndex)/2
 
 ```java
 nlongn
