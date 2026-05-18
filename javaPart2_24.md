@@ -1,55 +1,18 @@
 # Bracktracking
 
-##### types of backtracking
-
-1. decision ( yes or no )
-2. optimization ( get optimise one )
-3. enumeration ( listing )
-
-### backtracking on an array
-
-TC --> O(n) SC --> O(n)
-
-```java
-   public static void backtrackArray(int[] arr,int i){
-      if(i>=arr.length){
-         return;
-      }
-      arr[i]=i+1;
-      backtrackArray(arr, i+1);
-      arr[i]=arr[i]-2;
-   }
-```
-
-or
-
-```java
-   public static void backtrackArray(int[] arr,int i){
-      if(i<arr.length){
-         arr[i]=i+1;
-      backtrackArray(arr, i+1);
-      arr[i]=arr[i]-2;
-      }
-   }
-```
-
-```java
-   public static void backtrackArray(int[] arr,int i){
-      if(i>=arr.length){
-    return;
-      }
-
-        arr[i]=i+1;
-      backtrackArray(arr, i+1);
-      arr[i]=arr[i]-2;
-   }
-```
-
 ## String Subset
+Given a string str, generate and print all possible subsequences of the string.
+Input:
+"abc"
 
-"abc" -> a b c ab bc ac abc (extra "" null set )
-
-total subset =2^n or 2^n -1 ( if null set is not consider ) work for string and array
+""
+a
+b
+c
+ab
+ac
+bc
+abc
 
 TC --> O(n*2^n)
 total substring --> 2^n * time to cat 1 sub string
@@ -71,7 +34,7 @@ SC --> O(n)
 
 ```
 
-## FInd & Print all permutaion of a string "abc" -> abc,acb,bac,bca,cab,cba
+## Find & Print all permutaion of a string "abc" -> abc,acb,bac,bca,cab,cba
 
 for n elements -> total permutation are n!;
 
@@ -392,6 +355,7 @@ ArrayList<type> list
 ArrayList<String> list =new ArrayList<>()
 ArrayList<Integer> list2 =new ArrayList<>()
 ArrayList<Boolean> list3 =new ArrayList<>()
+ArrayList<Object> list3 =new ArrayList<>()
 
 Operations :-
 
@@ -421,29 +385,6 @@ return true/false
 --> size of an array list
 list.size()
 
-#### print reverse of an array list
-
-for(int i=list.size()-1;i>=0;i--){
-System.out.println(list.get(i))
-}
-
-#### find maximum in an ArrayList
-
-int max=Integer.MAX_VALUE;
-for(int i=0;i<list.size();i++){
-if(max>list.get(i)){
-max=list.get(i);
-}
-or
-max=Math.max(max,list.get(i))
-}
-
-#### Swap 2 numbers
-
-int index=0,int sindex=3;
-int temp=list.get(index);
-list.set(index,list.get(sindex));
-list.set(sindex,temp);
 
 ##### inbuild method or sorting and array
 
@@ -513,8 +454,13 @@ list.add(new Double[]{1.1, 2.2, 3.3});
 ## Container with most water
 
 For given n lines on x-axis, use 2 lines to form to container such that it holds maximum water.
+Choose any two lines such that together with the x-axis they form a container that can store the maximum amount of water.
 
-height=[1,8,6,2,5,4,8,3,7]
+Input:
+height = [1,8,6,2,5,4,8,3,7]
+
+Output:
+49
 
 1. bruste approach
    find pair and get collected water and get max from a comparitive variable
@@ -537,16 +483,14 @@ height=[1,8,6,2,5,4,8,3,7]
                 l++;
             }
         }
-
         System.out.println("max water store     "+maxWater);
     }
 ```
 
 ## pair sum - 1
+Given a sorted ArrayList of integers and a target value, determine whether there exists a pair of elements whose sum is equal to the target.
 
-find if any pair in a sorted arraylist has a target sum.
-
-list =[1,2,3,4,5,6] target=5;
+list =[1,2,3,4,5,6] target=5;  Output: true
 
 ```java
 public static void findPairSum(ArrayList<Integer> list, int target) {
@@ -907,6 +851,11 @@ void IterativeReverse() {
 Nstart=N−Nend +1 for 1 2 3 4 5
 Nstart=N−Nend for 0 1 2 3 4
 
+Input:
+LinkedList = 1 -> 2
+ -> 3 -> 4 -> 5
+N = 2
+1 -> 2 -> 3 -> 5
 ```java
 void DeleteNFromEnd(int n){
             int sz=0;
@@ -1044,104 +993,119 @@ void removeCycle() {
         }
 ```
 
-> > this fail if linked list is cyclic list
-
-import java.util.LinkedList;
-// create
-LinkedList<Integer> li=new LinkedList<>()
-
-// add
-li.addLast(2)
-li.addFirst(1)
-
-// remove
-li.removeLast()
-li.removeFirst()
-
-// print
-(li)
-
-## Merge Sort on a Linked List
-
-## Collection FrameWord
-
-The Java Collections Framework (JCF) is a set of classes and interfaces that allow developers to represent and manipulate object collections in Java.
-![alt text](./assests/collectionFramework.png)
-
-## LinkedList in collection framework
-import java.util.LinkedList;
-LinkedList<Integer> list = new LInkedList<>();
-list.addLast(2);
-list.addLast(1);
-list.addFIrst(0);
-.removeLast();
-.removeFirst();
-
-System.out.println(list);
-
-
-
 ```java
+import java.util.LinkedList;
 
- Node getMid(Node head) {
-           Node slow = head;
-           Node fast = head.next;
+public class Main {
+    public static void main(String[] args) {
 
-           while (fast != null && fast.next != null) {
-               slow = slow.next;
-               fast = fast.next.next;
-           }
-           return slow;
-       }
+        // Create LinkedList
+        LinkedList<Integer> li = new LinkedList<>();
 
-       Node merge(Node head1, Node head2) {
-           Node mergeLL = new Node(-1);
-           Node temp = mergeLL;
 
-           while (head != null && head2 != null) {
-               if (head1.data <= head2.data) {
-                   temp.next = head1;
-                   head1 = head.next;
-                   temp = temp.next;
+        // ================= ADD =================
 
-               } else {
-                   temp.next = head2;
-                   head2 = head2.next;
-                   temp = temp.next;
-               }
-           }
+        li.add(10);          // add at end
+        li.addLast(20);      // add at last
+        li.addFirst(5);      // add at first
+        li.add(1, 15);       // add at specific index
 
-           while (head1 != null) {
-               temp.next = head1;
-               head1 = head1.next;
-               temp = temp.next;
-           }
+        System.out.println(li);
 
-           while (head2 != null) {
-               temp.next = head2;
-               head2 = head2.next;
-               temp = temp.next;
-           }
 
-           return mergeLL.next;
-       }
+        // ================= ACCESS =================
 
-       public Node mergeSort(Node head) {
+        System.out.println(li.get(0));       // element at index 0
+        System.out.println(li.getFirst());   // first element
+        System.out.println(li.getLast());    // last element
 
-           if (head == null || head.next != null) {
-               return head;
-           }
+        System.out.println(li.size());       // size of list
 
-           Node mid = getMid(head);
 
-           Node rightHead = mid.next;
-           mid.next = null;
+        // ================= REMOVE =================
 
-           Node newLeft = mergeSort(head);
-           Node newRight = mergeSort(rightHead);
+        li.remove();          // removes first element
+        li.removeFirst();     // removes first
+        li.removeLast();      // removes last
+        li.remove(0);         // remove by index
+        li.remove(Integer.valueOf(15)); // remove by value
 
-           return merge(newLeft, newRight);
-       }
+        System.out.println(li);
+
+
+        // ================= UPDATE =================
+
+        li.set(0, 100);   // replace element at index 0
+
+        System.out.println(li);
+
+
+        // ================= CHECK =================
+
+        System.out.println(li.contains(100)); // true/false
+        System.out.println(li.isEmpty());     // true/false
+
+
+        // ================= LOOP =================
+
+        for (Integer val : li) {
+            System.out.print(val + " ");
+        }
+    }
+}
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+
+        // Create ArrayList
+        ArrayList<Integer> arr = new ArrayList<>();
+
+
+        // ================= ADD =================
+
+        arr.add(10);          // add at end
+        arr.add(20);
+        arr.add(0, 5);        // add at specific index
+
+        System.out.println(arr);
+
+
+        // ================= ACCESS =================
+
+        System.out.println(arr.get(0));   // element at index 0
+
+        System.out.println(arr.size());   // size of list
+
+
+        // ================= REMOVE =================
+
+        arr.remove(0);                    // remove by index
+        arr.remove(Integer.valueOf(20)); // remove by value
+
+        System.out.println(arr);
+
+
+        // ================= UPDATE =================
+
+        arr.set(0, 100);   // replace element at index 0
+
+        System.out.println(arr);
+
+
+        // ================= CHECK =================
+
+        System.out.println(arr.contains(100)); // true/false
+        System.out.println(arr.isEmpty());     // true/false
+
+
+        // ================= LOOP =================
+
+        for (Integer val : arr) {
+            System.out.print(val + " ");
+        }
+    }
+}
 ```
 
 ## Zig-Zag linked list
@@ -1298,7 +1262,7 @@ public class JavaBasic {
                         }
 
                         public  int pop() {
-                            if(isEmpty()){
+                            if(isEmp+ty()){
                                 return -1
                             }
                             int top = list.get(list.size() - 1);

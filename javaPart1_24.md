@@ -480,6 +480,7 @@ public static void CountingSort(int arr[]) {
 ##### 5> Merge Sort ------------> O(nlogn)
 
 mid = (startIndex+endIndex)/2
+mid = startIndex+(endIndex-startIndex)/2
 
 ```java
 nlongn
@@ -573,6 +574,10 @@ sorted,rotated array with distinct numbers ( in ascending order ) it is rotated 
 
 [4,5,6,7,0,1,2]  target:0 output:4
 
+Given the array nums and an integer target, return the index of target if it exists in the array.
+
+If it does not exist, return -1.
+
 using modified binary search
 
 1. Find `mid`, check if `arr[mid] == tar`.
@@ -607,6 +612,28 @@ using modified binary search
 ```
 
 # 2-D Array
+
+int[][] arr = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+int[][] arr = new int[3][4];
+
+
+for (int i = 0; i < arr.length; i++) {
+    Arrays.fill(arr[i], -1);
+}
+
+int[][] arr = new int[3][];
+Arrays.fill(arr, new int[4]); // ❌ WRONG
+
+import java.util.Arrays;
+
+int[][] arr = Arrays.stream(new int[3])
+                    .map(i -> new int[4])
+                    .toArray(int[][]::new);
 
 we have 1D 2D 3D ---ND Array
 nD array generally used in AI and Ml
@@ -689,8 +716,9 @@ public static void SpiralMatrix(int matrix[][]) {
 
     }
 ```
+TC -> m*n => n2
 
-## diagonal som
+## diagonal some
 
 primary and secondary
 
@@ -733,6 +761,11 @@ optimise O(n)
 staircase search
 ends when i=0 to n-1
 or j=m-1 to 0
+
+1   4   7   11
+2   5   8   12
+3   6   9   16
+10 13  14  17
 
 ```java
 O(n+m) worst case
@@ -829,55 +862,15 @@ public static float findShortDis(String str) {
     }
 ```
 
-String comparison
-str.equals(str)
-
-"HelloWord"
-substring ="Hel"
-subsequence ="lod"
-
-.substring(startIndex,endIndex);
-
-str1.compareTo(str2)
-0 => equal
--1 str1<str2
-1 str1>str2
-
-.comapreToIgnoreCase
-
-### why string are immutable
-
-heap memory and stack memory
-String str="sachin";
-
-stack memory
-
----
-
-| |  
-| str |  
-| |  
-| |
-
----
-
-heap memory / string pool / inter pool+
-
----
-
-| |  
-| sachin |  
-| |  
-| |
-
----
-
-because the point to an address
-
-str=str+"a"
-
-here this is copying and adding a and storing
-this genrally take time as length of string
+.equals()	             ---->      checks content equality
+.substring(a,b)     	 ---->      continuous part
+subsequence	             ---->      ordered but not continuous
+.compareTo()	         ---->      lexicographical compare
+Result	     Meaning
+0	        both strings equal
+negative	str1 < str2
+positive	str1 > str2
+.compareToIgnoreCase()	 ---->      compare ignoring case
 
 # StirngBuilder
 
@@ -911,7 +904,7 @@ String normalString = str.toString();
 
 ## String compression
 
-aaabbcccdd a3b2c3d2
+aaabbcccdd ---> a3b2c3d2
 ```java
 String newStrt="";
 for(int i=0;i<str.length();i++){
@@ -928,193 +921,8 @@ newStr+=count.toString();
 return newStr;
 ```
 
-# Bit Manipulation
-
-0 -- 000
-1 -- 001
-2 -- 10
-3 -- 011
-4 -- 100
-5 -- 101
-6 -- 110
-7 -- 111
-8 -- 1000
-
-## bitwise operator
-
-& AND 0 & 1 -> 0 1 & 0 -> 1 1 & 1 -> 1
-
-| Or 0 | 1 -> 1 0 | 0 -> 0 1 | 1 -> 1
-
-^ XOR 0 ^ 1 -> 1 0 ^ 0 -> 0 1 ^ 1 -> 0
-
-~ one's complement / not operator ~0 --> 1 ~1 --> 0
-
-<< left shit shift all to left and remaining will contain 0 3<<2 shift by 2 formula a*2^b
-
-> > right shift shift all to right and remaining will contain 0 3>>2 shift by 2 formula a/2^b
-
-00000101
-0 -> positive number
-1 -> negative number
-
-### check odd or even
-
-```java
-public static void checkWhetherOddOrEven(int n) {
-        int bitMask = 1;
-        if ((n & bitMask) == 0) {
-            System.out.println("Even Number");
-        }else{
-            System.out.println("Odd Number");
-        }
-    }
-```
-
-## git operation
-
-1. Get ith bit
-
-```java
- public static int ithValue(int no,int po){
-       int bitMask=1<<po;
-       return (no&bitMask)==0?0:1;
-    }
-```
-
-2. Set ith Bit ( make 1 at ith position )
-
-```java
- public static int setIth(int n , int p){
-        int bitMask=1<<p;
-        return  n|bitMask;
-    }
-```
-
-3. Clear ith bit
-
-```java
-  public static int clearIth(int n , int p){
-        int bitMask=~(1<<p);
-        return  n & bitMask;
-    }
-```
-
-4. Update ith bit
-   if(newBit==0){
-   clearBit
-   }else{
-   setBit
-   }
-
-or
-
-n=clearBut(n,i);
-int bitmask=newBit<<i;
-return n|bitMask;
-
-5. Clear Last i bits
-
-```java
-    public static int clearLastITh(int n, int i){
-      int bitWise=(~0)<<i;
-      return n & bitWise;
-    }
-```
-
-6. Clear Range of bits i=2, j=7
-
-2^1-1 --> 1 --> 01
-2^2-1 --> 3 --> 011
-2^3-1 --> 7 --> 0111
-2^4-1 --> 15 --> 0111
-
-2^b --> 1 << b
-
-```java
-public static int clearRangeOfBit(int n, int s, int e) {
-        int bitMask1 = (~0) << (e + 1);
-        int bitMask2 = (int) Math.pow(2, s) - 1;
-        // or
-        // int bitMask2 =(1<<s)-1;
-        int newBitMask= bitMask1|bitMask2;
-
-        return n&newBitMask;
-    }
-```
-
-7. Check if a number is a power of 2 or not
-   2^2 --> 4
-   2^3 --> 8
-
-8&8-1 or 8&7 --> 0 then it is power of 2
-
-8. Count set bits in a number
-   1010 -> no of set bit is 2
-
-16 --> 10000 -> length would be log16 -> 4+1
-
-> > length --> logn + 1
-
-let count =0;
-while(n>0){
-if((n&1)!=0){
-count++;
-}
-n=n>>1;
-}
-return count
-
-9. fast exponentiation
-   a*n --> a*a*a*---n ---> O(n)
-
-O(n) ---> O(logn) // using fast exponentiation
-
-```java
- public statuc int fatExpo(int a,int n){
-        int ans =1;
-        while(n>0){
-            if((n&1)!=0){
-                ans=ans*a;
-            }
-            a=a*a;
-            n=n>>1;
-        }
-    }
-```
-
 # OOP ( Object Orineted programming )
 
-## Classes & Object
-
-object --> entites int he world
-classes --> group / collection of these entities
-
-pen
-blue is property
-
-car is an object it color and size is property and it start is function/behaviour
-
-class
-public class Opps{
-
-}
-
-object
-className p1=new className()
-Pen p1=new Pen();
-
-p1.functionName()
-p1.valriableName
-p1.variableName=value;
-
-## getters & setters
-
-Get: function/behaviour in object to return the value
-Set: function/behaviour in object to modify the value
-
-this: this leyword is use to refer to the curent object
- 
 ## 4 pillars in oops
 
 1. Encapsulation
@@ -1141,46 +949,6 @@ access specifier
 | `private`   | Visible to **only the class itself**                           |
 
 
-## constructor
-
-constructor is a special method which is invoked automatically at the time of object creation
-
-it have the same name as class
-
-class Student{
-String name ;
-int roll;
-
-    Student(){
-
-    }
-
-}
-
-### type of constructor
-
-1. non parameterized
-   Pen()
-
-2. parameterized
-   Pen(sachin)
-
-3. copy constructor
-   have to create manually
-   copy of one object property to another
-
-Student s1=new Student();
-s1.name="shradha";
-s1.roll=456;
-s1.password="abcd";
-
-Student s2=new Student(s1);
-
-Student(Student s1){
-this.name=s1.name;
-this.roll=s1.roll;
-}
-
 ### constructor overloading
 
 class Student{
@@ -1193,13 +961,6 @@ class Student{
     }
 
 }
-
-### Shallow & deep copy & lazy copy
-
-### destructors
-
-java have garbage collector
-that done automatically are known as destructors
 
 ## Inheritance
 
@@ -1224,6 +985,14 @@ class fish extends animal{
    B C
 4. Hybrid Inheritance
 A combination of two or more types of inheritance.
+5. Multiple Inheritance :- java does not have direct way to achieve Multiple inheritance
+   but we can achive indirectly
+   A B
+   \ /
+   \ /
+   C
+
+can be achieve through Interface
 ```java
 interface A {
     void show();
@@ -1238,15 +1007,6 @@ class C implements A, B {
     public void display() {}
 }
 ```
-5. Multiple Inheritance :- java does not have direct way to achieve Multiple inheritance
-   but we can achive indirectly
-   A B
-   \ /
-   \ /
-   C
-
-can be achieve through Interface
-
 ## Plymorphism
 
 1. compile Time Polymorphism (static)
@@ -1258,11 +1018,6 @@ sum(float a, float b)
 2. run time pilymorphism (dynamic)
    (ii). method overriding
    parent and child classes both contain the same function with a different definition
-
-## packages in java
-
-package is a group of similar types of classes, interfaces and sub-packages.
---> build In packages / user defined packages
 
 ## Abstarction
 
@@ -1526,39 +1281,7 @@ class Example {
 }
 ```
 
-## Extra
-
-- private and protected class are useless
-  class can not private and protected
-
-- can use private and protected in nested class
-
-- class A{
-
-}
-class B extends A{
-
-}
-A a=new B()
-
 # Recursion
-
-is a method of solving a computational problem where the solution depends on solutions to smaller instance os the same problem
-
-1. base case or final case
-2. code
-3. call again
-
-call stack
-| f(1) |
-| f(2) |
-| f(3) |
-| f(4) |
-| f(5) |
-|**\_\_\_\_**|
-
-stack overflow
-no memory
 
 ## sum of n natural number
 
@@ -1593,6 +1316,7 @@ time ---> O (2^n)
 ```
 
 ## check if a given array is sorted or not
+Given an integer array arr of size n, determine whether the array is sorted in ascending order or not.
 
 Tc -> O(n)
 Sc -> O(n)
@@ -1611,9 +1335,11 @@ Sc -> O(n)
 ```
 
 ## First ocucrence of an element in an array
+arr = [4,2,7,2,9]
+target = 2
 
-Tc -> O(n)
-Sc -> O(n)
+Output:
+1
 
 ```java
 public static int findNumber(int arr[], int i, int k) {
@@ -1629,6 +1355,12 @@ public static int findNumber(int arr[], int i, int k) {
 ```
 
 ## Last occurence of an element in an array
+Input:
+arr = [4,2,7,2,9]
+target = 2
+
+Output:
+3
 
 ```java
 Tc -> O(n)
@@ -1646,7 +1378,12 @@ public static int lastOcccurence(int arr[], int i, int k) {
 ```
 
 ## Power x to the power of n
+Input:
+x = 2
+n = 5
 
+Output:
+32
 Tc -> O(n)
 Sc -> O(n)
 
@@ -1659,26 +1396,39 @@ public static int power(int x,int n){
 }
 ```
 
+
+
 ### Optimised Approach
+If n is even:
+x^n = (x^(n/2))^2
+
+If n is odd:
+x^n = x * (x^(n/2))^2
 
 ```java
-public statc int optimisedPower(int a , int n){
-    if(n==0){
-        return 1;
-    }
-    int halfPower=optimisedPower(a,n/2);
-    int halfPowerSq=halfPower*halfPower;
+public static int power(int x, int n) {
 
-    if(n%2!=0){
-        halPowerSq=a*halpPowerSq;
+    if (n == 0)
+        return 1;
+
+    int half = power(x, n / 2);
+
+    if (n % 2 == 0) {
+        return half * half;
     }
-    return halfPowerSq;
+
+    return x * half * half;
 }
 ```
 
 ## Tiling power
 
 given a 2*n board and titles of asize 2*1 count the number of ways to the given board using the 2\*1 titles (A tile can either be olaced horizontally or vertically)
+
+Input:
+n = 4
+Output:
+5
 
 ```java
     public static int tileProblem(int n) {
@@ -1689,6 +1439,7 @@ given a 2*n board and titles of asize 2*1 count the number of ways to the given 
 ```
 
 ## Remove dublicate in a string a-z
+Given a string consisting of lowercase English letters (a-z), remove duplicate characters while preserving the order of first occurrence.
 
 "appnnacollege"
 
@@ -1735,8 +1486,27 @@ public static long findTotalPair(long n) {
 ```
 
 ## BInary String Problem
+Given an integer N, generate and print all binary strings of length N such that:
 
-print all binary string of size N without consecutive ones.
+no two consecutive 1s appear in the string
+
+Return or print all valid binary strings.
+
+🧪 Example 1
+Input:
+N = 3
+
+Output:
+
+000
+001
+010
+100
+101
+❌ Invalid strings
+011
+110
+111
 
 ```java
 public static void printBinStrings(int n,int lastPlace,String str){
@@ -1754,20 +1524,3 @@ if(lastPlace==0){
 
 
 ```
-
-# Time & space complexity
-time taken by the proccess with respect to t  ime
-#### Bog 0 Notation
-O -> upper bound
-time and input size relation
-
-![alt text](./assests/nestedloop.png)
-
-![alt text](./assests/ntimenestedloop.png )
- 
-###### time complexity in recursion
-Work done  =no of calls * time in each call;
- 
-space complexity is total stack created * space per level
-
-> ----------------------------------------Till Recursion---------------------------------------------
